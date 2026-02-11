@@ -73,11 +73,21 @@ theorem baseAxiom_flux_barrier_contradiction
     False := by
   exact hardStep_flux_barrier_contradiction R.lower_flux R.upper_tail
 
+/-- Primitive contradiction theorem in direct theorem-argument form. -/
+theorem baseAxiom_flux_barrier_contradiction_direct
+    {m : HardStepMinimalElement}
+    {U : VelocityTrajectory .torus3}
+    {E : DefectEnvelope .torus3}
+    (lower_flux : PersistentCascadeWitness m U)
+    (upper_tail : TailVanishingWitness E U lower_flux.t0) :
+    False := by
+  exact hardStep_flux_barrier_contradiction lower_flux upper_tail
+
 /-- Primitive all-minimal exclusion consequence used by global-control derivation. -/
 theorem baseAxiom_excludes_all_minimal_elements
     {C : BaseAxiomPrimitiveCompactness}
     (R : BaseAxiomPrimitiveRigidity C) :
-    ∀ m : HardStepMinimalElement, False := by
+    ∀ _m : HardStepMinimalElement, False := by
   exact hardStep_global_closure_of_flux_barrier R.flux_package
 
 /-- Primitive global-closure consequence from the base-axiom rigidity data. -/
@@ -86,5 +96,11 @@ theorem baseAxiom_global_closure_from_primitive_rigidity
     (R : BaseAxiomPrimitiveRigidity C) :
     HardStepGlobalClosure := by
   exact hardStep_global_closure_of_flux_barrier R.flux_package
+
+/-- Primitive global-closure consequence in direct theorem-argument form. -/
+theorem baseAxiom_global_closure_from_flux_package
+    (flux_package : HardStepFluxContradictionPackage) :
+    HardStepGlobalClosure := by
+  exact hardStep_global_closure_of_flux_barrier flux_package
 
 end Gibbs.ContinuumField.NavierStokes

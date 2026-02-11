@@ -15,11 +15,27 @@ structure DecisiveSpineProfileRoute where
   threshold : DecisiveDefinitionFirstThreshold
   exactCompactness : FullProofExactCompactnessData
 
+/-- Exact profile decomposition theorem in direct form. -/
+def decisiveSpine_exact_profile_decomposition_direct
+    (X : FullProofExactCompactnessData) :
+    ProfileDecompositionData :=
+  fullProof_exact_profile_decomposition X
+
 /-- Exact profile decomposition theorem for decisive spine. -/
 def decisiveSpine_exact_profile_decomposition
     (R : DecisiveSpineProfileRoute) :
     ProfileDecompositionData :=
-  fullProof_exact_profile_decomposition R.exactCompactness
+  decisiveSpine_exact_profile_decomposition_direct R.exactCompactness
+
+/-- Exact minimizing-sequence extraction theorem in direct form. -/
+theorem decisiveSpine_minimizing_sequence_extraction_direct
+    (X : FullProofExactCompactnessData) :
+    ∃ seq : Nat → ℝ,
+      (∀ n, X.compactness.threshold.Astar ≤ seq n) ∧
+      (∀ ε : ℝ, 0 < ε →
+        ∃ N0 : Nat, ∀ n ≥ N0,
+          seq n ≤ X.compactness.threshold.Astar + ε) := by
+  exact fullProof_exact_minimizing_sequence_extraction X
 
 /-- Exact minimizing-sequence extraction theorem for decisive spine. -/
 theorem decisiveSpine_minimizing_sequence_extraction
@@ -29,14 +45,21 @@ theorem decisiveSpine_minimizing_sequence_extraction
       (∀ ε : ℝ, 0 < ε →
         ∃ N0 : Nat, ∀ n ≥ N0,
           seq n ≤ R.exactCompactness.compactness.threshold.Astar + ε) := by
-  exact fullProof_exact_minimizing_sequence_extraction R.exactCompactness
+  exact decisiveSpine_minimizing_sequence_extraction_direct R.exactCompactness
+
+/-- Exact compactness-modulo-symmetry extraction theorem in direct form. -/
+theorem decisiveSpine_compactness_mod_symmetry_direct
+    (X : FullProofExactCompactnessData) :
+    ∃ Φ : ℝ → Nat, ∀ ε : ℝ, 0 < ε →
+      0 < Φ ε ∧ X.compactness.minimal_element.profile.nontrivial := by
+  exact fullProof_exact_almostPeriodic_modulus X
 
 /-- Exact compactness-modulo-symmetry extraction theorem for decisive spine. -/
 theorem decisiveSpine_compactness_mod_symmetry
     (R : DecisiveSpineProfileRoute) :
     ∃ Φ : ℝ → Nat, ∀ ε : ℝ, 0 < ε →
       0 < Φ ε ∧ R.exactCompactness.compactness.minimal_element.profile.nontrivial := by
-  exact fullProof_exact_almostPeriodic_modulus R.exactCompactness
+  exact decisiveSpine_compactness_mod_symmetry_direct R.exactCompactness
 
 /-- Profile-layer policy marker for decisive spine. -/
 def DecisiveSpineProfilePolicy : Prop := True

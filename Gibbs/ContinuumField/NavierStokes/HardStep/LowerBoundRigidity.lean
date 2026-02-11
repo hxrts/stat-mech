@@ -40,7 +40,7 @@ theorem persistent_cascade_incompatible_with_quiescence
   have hη_nonpos : W.η ≤ 0 := by
     have hbound := W.persistent_flux W.N0 (le_rfl : W.N0 ≤ W.N0)
     have hzero : |scaleFlux W.N0 W.t0 U| = 0 := by
-      simpa [hquiescent W.N0 (le_rfl : W.N0 ≤ W.N0)]
+      simp [hquiescent W.N0 (le_rfl : W.N0 ≤ W.N0)]
     simpa [hzero] using hbound
   exact not_le_of_gt W.η_pos hη_nonpos
 

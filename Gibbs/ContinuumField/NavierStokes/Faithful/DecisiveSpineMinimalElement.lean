@@ -13,20 +13,43 @@ open scoped Classical
 structure DecisiveSpineMinimalElementPackage where
   profileRoute : DecisiveSpineProfileRoute
 
+/-- Minimal blow-up element existence theorem in direct form. -/
+theorem decisiveSpine_minimal_element_exists_direct
+    (X : FullProofExactCompactnessData) :
+    ∃ m : HardStepMinimalElement,
+      m.profile.nontrivial ∧
+      AlmostPeriodicModuloSymmetry m.profile := by
+  exact fullProof_exact_minimal_element_exists X
+
 /-- Minimal blow-up element existence theorem for decisive spine. -/
 theorem decisiveSpine_minimal_element_exists
     (P : DecisiveSpineMinimalElementPackage) :
     ∃ m : HardStepMinimalElement,
       m.profile.nontrivial ∧
       AlmostPeriodicModuloSymmetry m.profile := by
-  exact fullProof_exact_minimal_element_exists P.profileRoute.exactCompactness
+  exact decisiveSpine_minimal_element_exists_direct P.profileRoute.exactCompactness
+
+/-- Minimal-element nontriviality theorem in direct form. -/
+theorem decisiveSpine_minimal_element_nontrivial_direct
+    (X : FullProofExactCompactnessData) :
+    ∃ x i,
+      X.compactness.minimal_element.profile.limitingVelocity x i ≠ 0 := by
+  exact X.compactness.minimal_element.nontrivial_mode
 
 /-- Minimal-element nontriviality theorem for decisive spine. -/
 theorem decisiveSpine_minimal_element_nontrivial
     (P : DecisiveSpineMinimalElementPackage) :
     ∃ x i,
       P.profileRoute.exactCompactness.compactness.minimal_element.profile.limitingVelocity x i ≠ 0 := by
-  exact P.profileRoute.exactCompactness.compactness.minimal_element.nontrivial_mode
+  exact decisiveSpine_minimal_element_nontrivial_direct P.profileRoute.exactCompactness
+
+/-- Almost-periodicity modulus theorem in direct form. -/
+theorem decisiveSpine_minimal_element_almostPeriodic_modulus_direct
+    (X : FullProofExactCompactnessData) :
+    ∃ Φ : ℝ → Nat, ∀ ε : ℝ, 0 < ε →
+      0 < Φ ε ∧
+      X.compactness.minimal_element.profile.nontrivial := by
+  exact decisiveSpine_compactness_mod_symmetry_direct X
 
 /-- Almost-periodicity modulus theorem for decisive spine. -/
 theorem decisiveSpine_minimal_element_almostPeriodic_modulus
@@ -34,7 +57,7 @@ theorem decisiveSpine_minimal_element_almostPeriodic_modulus
     ∃ Φ : ℝ → Nat, ∀ ε : ℝ, 0 < ε →
       0 < Φ ε ∧
       P.profileRoute.exactCompactness.compactness.minimal_element.profile.nontrivial := by
-  exact decisiveSpine_compactness_mod_symmetry P.profileRoute
+  exact decisiveSpine_minimal_element_almostPeriodic_modulus_direct P.profileRoute.exactCompactness
 
 /-- Minimal-element layer policy marker for decisive spine. -/
 def DecisiveSpineMinimalElementPolicy : Prop := True

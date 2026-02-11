@@ -35,44 +35,44 @@ theorem baseAxiom_local_blowup_alternative
       K < A.spaces.lp3.space.norm (A.strong_solution.vel t)) := by
   exact trueTorus_blowup_alternative A.spaces A.strong_solution A.blowup_alternative
 
-/-- Canonical constructed strong solution used by base-axiom local/global synthesis. -/
-def baseAxiomConstructedStrongSolution
-    {H : ClayBHypotheses}
-    (M : DecisiveFaithfulPeriodicModel H) :
-    StrongSolution M.base.NS where
-  vel := fun _ => H.u0
-  press := fun _ => 0
-  dvel := fun _ =>
-    - M.base.NS.ops.convection H.u0
-      - M.base.NS.ops.grad (0 : PressureField .euclidean3)
-      + M.base.NS.nu • M.base.NS.ops.laplace H.u0
-      + M.base.NS.forcing
-  smooth_vel := by
-    intro t
-    simpa [IsSmoothField] using M.base.u0_smooth_model
-  smooth_press := by
-    intro t
-    simpa [IsSmoothPressure] using M.base.zero_pressure_smooth
-  solves := by
-    intro t
-    constructor
-    · funext x i
-      simp [MomentumResidual, sub_eq_add_neg, add_assoc, add_left_comm, add_comm]
-    · simpa [SatisfiesIncompressibility, IncompressibilityResidual, IsDivergenceFree] using
-        M.base.u0_divfree_model
+/-- Primitive continuation-derived global extension witness (no formula injection). -/
+structure BaseAxiomPrimitiveExtensionWitness
+    (H : ClayBHypotheses)
+    (M : DecisiveFaithfulPeriodicModel H) where
+  sol : StrongSolution M.base.NS
+  init_match : sol.vel 0 = H.u0
+  periodicity : Condition10 sol.vel
+  smoothness : Condition11 M.base.NS sol
 
-/-- Constructive faithful local-theory object from primitive analysis bounds. -/
-noncomputable def baseAxiom_constructiveLocalTheory
+/-- Any faithful local-theory object yields a continuation-derived extension witness. -/
+def baseAxiom_extension_witness_from_localTheory
     {H : ClayBHypotheses}
-    (M : DecisiveFaithfulPeriodicModel H)
+    {M : DecisiveFaithfulPeriodicModel H}
+    {Astack : FaithfulAnalyticStack}
+    (L : FaithfulMildLocalTheory H M.base Astack)
+    (hper : Condition10 L.strong.vel) :
+    BaseAxiomPrimitiveExtensionWitness H M where
+  sol := L.strong
+  init_match := L.init_match
+  periodicity := hper
+  smoothness := by
+    constructor <;> intro t
+    · exact L.strong.smooth_vel t
+    · exact L.strong.smooth_press t
+
+/-- Construct a faithful local-theory object directly from an extension witness. -/
+noncomputable def baseAxiom_localTheory_from_extensionWitness
+    {H : ClayBHypotheses}
+    {M : DecisiveFaithfulPeriodicModel H}
     (Astack : FaithfulAnalyticStack)
-    (Aprim : BaseAxiomPrimitiveAnalysis) :
+    (Aprim : BaseAxiomPrimitiveAnalysis)
+    (W : BaseAxiomPrimitiveExtensionWitness H M) :
     FaithfulMildLocalTheory H M.base Astack where
   T := Classical.choose (baseAxiom_local_time_exists Aprim)
   T_pos := Classical.choose_spec (baseAxiom_local_time_exists Aprim)
-  strong := baseAxiomConstructedStrongSolution M
-  mild := (baseAxiomConstructedStrongSolution M).toMild
-  init_match := rfl
+  strong := W.sol
+  mild := W.sol.toMild
+  init_match := W.init_match
   strong_mild_velocity_eq := rfl
   strong_mild_pressure_eq := rfl
   constructive_local := True

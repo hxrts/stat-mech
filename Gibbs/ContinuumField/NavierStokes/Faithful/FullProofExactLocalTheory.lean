@@ -84,17 +84,20 @@ noncomputable def fullProof_constructiveFaithfulLocalTheory
     {H : ClayBHypotheses}
     (M : DecisiveFaithfulPeriodicModel H)
     (A : FaithfulAnalyticStack)
-    (L : FullProofExactLocalTheoryData) :
+    (L : FullProofExactLocalTheoryData)
+    (W : BaseAxiomPrimitiveExtensionWitness H M) :
     FaithfulMildLocalTheory H M.base A :=
-  baseAxiom_constructiveLocalTheory M A (fullProof_to_baseAxiomPrimitiveAnalysis L.route)
+  baseAxiom_localTheory_from_extensionWitness
+    A (fullProof_to_baseAxiomPrimitiveAnalysis L.route) W
 
 /-- The full-proof route produces a faithful local-theory object by theorem construction. -/
 theorem fullProof_faithfulLocalTheory_exists_from_exact_theorems
     {H : ClayBHypotheses}
     (M : DecisiveFaithfulPeriodicModel H)
     (A : FaithfulAnalyticStack)
-    (L : FullProofExactLocalTheoryData) :
-    ∃ LT : FaithfulMildLocalTheory H M.base A, True := by
-  exact ⟨fullProof_constructiveFaithfulLocalTheory M A L, trivial⟩
+    (L : FullProofExactLocalTheoryData)
+    (W : BaseAxiomPrimitiveExtensionWitness H M) :
+    ∃ _LT : FaithfulMildLocalTheory H M.base A, True := by
+  exact ⟨fullProof_constructiveFaithfulLocalTheory M A L W, trivial⟩
 
 end Gibbs.ContinuumField.NavierStokes

@@ -55,9 +55,7 @@ theorem cumulativeHighFrequencyTail_monotone
   | zero =>
       simp [cumulativeHighFrequencyTail]
   | succ k ih =>
-      have hnonneg : 0 ≤ |scaleFlux (N + k + 1 + 1) t U| := abs_nonneg _
-      simpa [cumulativeHighFrequencyTail, Nat.add_assoc, Nat.add_left_comm,
-        Nat.add_comm] using le_add_of_nonneg_right hnonneg
+      simp [cumulativeHighFrequencyTail, Nat.add_assoc, Nat.add_left_comm, Nat.add_comm]
 
 /-- Witness package for tail-window concatenation identities. -/
 structure TailConcatWitness (U : VelocityTrajectory .torus3) where
