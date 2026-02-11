@@ -452,6 +452,12 @@ private lemma softmax_value (n : ℕ) [NeZero n] (θ : Config n) :
     ⟪θ, toConfig (softmax n (fromConfig θ))⟫_ℝ -
       negEntropyConfig n (toConfig (softmax n (fromConfig θ))) =
     Real.log (∑ i : Fin n, Real.exp ((fromConfig θ) i)) := by
+  have hsum_inv :
+      ∑ i : Fin n,
+        Real.exp ((fromConfig θ) i) *
+          (∑ j : Fin n, Real.exp ((fromConfig θ) j))⁻¹ = 1 := by
+    simpa [softmax, div_eq_mul_inv] using
+      (softmax_sum_one n (fromConfig θ))
   unfold negEntropyConfig softmax toConfig fromConfig
   norm_num [← Finset.sum_div, Real.exp_ne_zero,
     ne_of_gt (show 0 < ∑ i : Fin n, Real.exp (fromConfig θ i) from
@@ -462,10 +468,34 @@ private lemma softmax_value (n : ℕ) [NeZero n] (θ : Config n) :
     ne_of_gt (Finset.sum_pos (fun i _ => Real.exp_pos (θ i))
       Finset.univ_nonempty)]
   simp +decide [Finset.sum_add_distrib, mul_add, mul_comm,
-    ne_of_gt (Finset.sum_pos (fun i _ => Real.exp_pos (θ i))
-      Finset.univ_nonempty)]
+    ]
   ring!
-  simp +decide [mul_comm, mul_left_comm, inner]
+  have hinner :
+      ⟪θ, WithLp.toLp 2 fun i => Real.exp (θ.ofLp i) * (∑ x, Real.exp (θ.ofLp x))⁻¹⟫_ℝ =
+        ∑ x, (∑ x, Real.exp (θ.ofLp x))⁻¹ * θ.ofLp x * Real.exp (θ.ofLp x) := by
+    simp [inner, mul_comm, mul_left_comm]
+  rw [hinner]
+  have hcancel :
+      ∑ x, (∑ x, Real.exp (θ.ofLp x))⁻¹ * θ.ofLp x * Real.exp (θ.ofLp x) +
+          (∑ x, (∑ x, Real.exp (θ.ofLp x))⁻¹ * Real.exp (θ.ofLp x) *
+              Real.log (∑ x, Real.exp (θ.ofLp x)) -
+            ∑ x, (∑ x, Real.exp (θ.ofLp x))⁻¹ * θ.ofLp x * Real.exp (θ.ofLp x)) =
+        ∑ x, (∑ x, Real.exp (θ.ofLp x))⁻¹ * Real.exp (θ.ofLp x) *
+          Real.log (∑ x, Real.exp (θ.ofLp x)) := by
+    ring
+  rw [hcancel]
+  calc
+    ∑ x, (∑ x, Real.exp (θ.ofLp x))⁻¹ * Real.exp (θ.ofLp x) *
+      Real.log (∑ x, Real.exp (θ.ofLp x)) =
+      (∑ x, (∑ x, Real.exp (θ.ofLp x))⁻¹ * Real.exp (θ.ofLp x)) *
+        Real.log (∑ x, Real.exp (θ.ofLp x)) := by
+      rw [Finset.sum_mul]
+    _ = Real.log (∑ x, Real.exp (θ.ofLp x)) := by
+      have hsum_inv_ofLp :
+          ∑ x, (∑ x, Real.exp (θ.ofLp x))⁻¹ * Real.exp (θ.ofLp x) = 1 := by
+        simpa [fromConfig, mul_comm, mul_left_comm, mul_assoc] using hsum_inv
+      rw [hsum_inv_ofLp]
+      ring
 
 /-- Jensen upper bound: for any x in the simplex, the objective
     ⟪θ, x⟫ - negEntropy(x) is bounded by log(Σ exp θᵢ). -/
@@ -536,7 +566,19 @@ private lemma upper_bound_simplex (n : ℕ) [NeZero n]
     refine' Finset.sum_congr rfl fun i _ => _
     by_cases hi : fromConfig x i = 0
     · simp +decide [hi]
-    · simp +decide [hi]; ring
+    · have hxi_pos : 0 < fromConfig x i :=
+        lt_of_le_of_ne (hx.1 i) (Ne.symm hi)
+      have hlog :
+          Real.log (Real.exp (fromConfig θ i) * (fromConfig x i)⁻¹) =
+            fromConfig θ i - Real.log (fromConfig x i) := by
+        rw [Real.log_mul (Real.exp_ne_zero _) (inv_ne_zero hi)]
+        simp [Real.log_inv, sub_eq_add_neg]
+      simp [hi]
+      calc
+        fromConfig θ i * fromConfig x i - fromConfig x i * Real.log (fromConfig x i) =
+          fromConfig x i * (fromConfig θ i - Real.log (fromConfig x i)) := by ring
+        _ = fromConfig x i * Real.log (Real.exp (fromConfig θ i) * (fromConfig x i)⁻¹) := by
+          rw [hlog]
   · exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
 
 /-- The Legendre dual of negative entropy (on the simplex) is log-sum-exp.
