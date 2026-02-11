@@ -16,6 +16,10 @@ test:
     @lean --version
     @lake --version
 
+# Check Lean architecture and style conformance
+check-arch-lean *args:
+    ./scripts/check-arch-lean.sh {{args}}
+
 # Clean build artifacts
 clean:
     rm -rf .lake docs/book
