@@ -1,7 +1,6 @@
 import Gibbs.MeanField.Examples.Ising.Drift
 
-/-!
-# Ising Phase Transition
+/-! # Ising Phase Transition
 
 The mean-field Ising model exhibits a phase transition at beta J = 1.
 In the paramagnetic phase (beta J < 1), the self-consistency equation

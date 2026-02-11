@@ -1,7 +1,6 @@
 import Gibbs.Hamiltonian.Examples.GradientDescent
 
-/-!
-# Unique Minimizer for Strongly Convex Objectives
+/-! # Unique Minimizer for Strongly Convex Objectives
 
 A strongly convex continuous function on a finite-dimensional space has a
 unique global minimizer. The proof uses strong convexity to establish strict

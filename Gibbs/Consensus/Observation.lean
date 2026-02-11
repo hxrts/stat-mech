@@ -1,8 +1,7 @@
 import Mathlib.Data.Set.Basic
 import Gibbs.Consensus.Basic
 
-/-!
-# Observations and indistinguishability
+/-! # Observations and indistinguishability
 
 Each process observes only a local projection of the global execution, called
 its "view". Two executions are *indistinguishable* to an honest set `H` when every

@@ -1,7 +1,6 @@
 import Gibbs.Session
 
-/-!
-# Mean-Field Foundations
+/-! # Mean-Field Foundations
 
 In mean-field theory, a large population of agents is described not by
 individual states but by the fraction of agents in each state. As the

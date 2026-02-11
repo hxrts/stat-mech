@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.Projection
 
-/-!
-# Continuum-field Navier-Stokes representation
+/-! # Continuum-field Navier-Stokes representation
 
 This module gives a structural encoding of incompressible Navier-Stokes in
 the continuum-field layer. We reuse `FieldState` as

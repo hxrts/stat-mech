@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Erasure.Operators
 
-/-!
-# Exact erasure identities
+/-! # Exact erasure identities
 
 Exact algebraic identities for coarse/residual decomposition and defect terms.
 -/

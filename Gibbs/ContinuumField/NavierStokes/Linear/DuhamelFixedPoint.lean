@@ -1,8 +1,7 @@
 import Gibbs.ContinuumField.NavierStokes.Linear.Semigroup
 import Gibbs.ContinuumField.NavierStokes.LocalTheory
 
-/-!
-# Duhamel and fixed-point local theory
+/-! # Duhamel and fixed-point local theory
 
 Duhamel formulation interfaces and fixed-point witnesses for local
 well-posedness.

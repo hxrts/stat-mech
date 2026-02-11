@@ -5,8 +5,7 @@ import Mathlib.Tactic
 import Gibbs.Consensus.Quorum
 import Gibbs.Consensus.InteractiveDistance
 
-/-!
-# Byzantine thresholds from distance conditions
+/-! # Byzantine thresholds from distance conditions
 
 The classic `2f+1` and `3f+1` bounds are not protocol artifacts but phase
 boundaries. The `2f+1` threshold comes from static unique decoding: a

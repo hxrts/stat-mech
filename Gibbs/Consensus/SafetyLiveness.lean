@@ -1,7 +1,6 @@
 import Mathlib.Data.Set.Basic
 
-/-!
-# Safety and liveness monotonicity
+/-! # Safety and liveness monotonicity
 
 Safety and liveness have opposite monotonicity in the execution set, which
 is why randomness helps liveness but cannot help safety.

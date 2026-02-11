@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Functional.HelmholtzLeray
 
-/-!
-# Linear semigroup layer
+/-! # Linear semigroup layer
 
 Heat/Stokes semigroup interfaces and norm bounds in critical spaces.
 -/

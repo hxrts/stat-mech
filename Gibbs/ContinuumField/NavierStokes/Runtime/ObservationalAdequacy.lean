@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Runtime.CertifiedApproximation
 
-/-!
-# Observational adequacy hooks
+/-! # Observational adequacy hooks
 
 Interfaces that connect Navier certificates to Telltale-style theorem-pack
 runtime observations.

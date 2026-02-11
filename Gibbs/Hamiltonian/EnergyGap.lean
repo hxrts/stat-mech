@@ -1,14 +1,13 @@
 import Mathlib.Data.ENNReal.Basic
 import Gibbs.Hamiltonian.EnergyDistance
 
-/-!
-# Energy Gap
+/-! # Energy Gap
 
 The energy gap between two sets of states is the infimum of pairwise distances
 across the sets. A positive gap means every path from one set to the other must
 cross a nontrivial energy barrier. In physics this distinguishes ordered from
-disordered phases. In consensus it separates safe (agreement) from unsafe
-(disagreement) executions, with the gap quantifying finality strength.
+disordered phases. In consensus it separates agreement from disagreement
+executions, with the gap quantifying finality strength.
 -/
 
 namespace Gibbs.Hamiltonian

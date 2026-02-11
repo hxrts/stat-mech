@@ -2,8 +2,7 @@ import Mathlib.Data.ENNReal.Basic
 import Mathlib.Data.Set.Basic
 import Gibbs.Consensus.Basic
 
-/-!
-# Adversary model
+/-! # Adversary model
 
 An adversary is a bounded perturbation of the execution. It can apply any
 transformation from its `allowed` set, subject to a corruption `budget` that

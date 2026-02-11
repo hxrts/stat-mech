@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Blowup.Extraction
 
-/-!
-# Blow-up compactness scaffolding
+/-! # Blow-up compactness scaffolding
 
 Profile/compactness interfaces used for contradiction-style blow-up analysis.
 -/

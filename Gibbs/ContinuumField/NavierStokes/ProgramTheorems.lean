@@ -5,8 +5,7 @@ import Gibbs.ContinuumField.NavierStokes.Defect.Continuation
 import Gibbs.ContinuumField.NavierStokes.Global.ClosureAttempt
 import Gibbs.ContinuumField.NavierStokes.Blowup.Rigidity
 
-/-!
-# Major theorems with explicit scaling regime hypotheses
+/-! # Major theorems with explicit scaling regime hypotheses
 
 This module wraps milestone-level theorems with explicit scaling-regime
 assumptions so each major statement carries concrete dimension/index data.

@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Erasure.ExactIdentities
 
-/-!
-# Energy/flux identities
+/-! # Energy/flux identities
 
 Pointwise energy and defect-flux bookkeeping for exact erasure analyses.
 -/

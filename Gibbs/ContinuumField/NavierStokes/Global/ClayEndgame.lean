@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Global.ClayPeriodic
 
-/-!
-# Clay endgame scaffolding
+/-! # Clay endgame scaffolding
 
 One explicit Clay `(B)` instance plus a minimal unresolved lemma isolating what
 would be required to upgrade from instance-level to full-schema proof.
@@ -10,6 +9,8 @@ would be required to upgrade from instance-level to full-schema proof.
 namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
+
+/-! ## Zero constructions -/
 
 /-- Concrete zero velocity field on `R^3` coordinate model. -/
 def zeroVelocityFieldEuclidean : VelocityField .euclidean3 := fun _ => 0
@@ -67,6 +68,8 @@ theorem zeroStrongSolutionEuclidean_condition11 :
     Condition11 zeroNSEuclidean zeroStrongSolutionEuclidean := by
   constructor <;> intro t <;> trivial
 
+/-! ## Clay instance theorem -/
+
 /-- Concrete Clay `(B)` hypotheses used for a full instance theorem. -/
 def zeroClayBHypotheses : ClayBHypotheses where
   ν := 1
@@ -97,6 +100,8 @@ theorem clayB_full_instance_zero_data :
   · rfl
   · exact zeroStrongSolutionEuclidean_condition10
   · exact zeroStrongSolutionEuclidean_condition11
+
+/-! ## Unresolved lemma interface -/
 
 /-- Minimal unresolved lemma required to lift from instance-level to full Clay `(B)` schema. -/
 def UnresolvedClayBGlobalClosureLemma : Type :=

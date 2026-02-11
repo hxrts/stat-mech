@@ -1,8 +1,7 @@
 import Gibbs.MeanField.Choreography
 import Mathlib.Topology.MetricSpace.Lipschitz
 
-/-!
-# Lipschitz Bridge to Mathlib ODE Infrastructure
+/-! # Lipschitz Bridge to Mathlib ODE Infrastructure
 
 Mathlib's Picard-Lindelof and Gronwall theorems require globally Lipschitz
 functions on normed spaces, but our drift is defined only on the simplex. This

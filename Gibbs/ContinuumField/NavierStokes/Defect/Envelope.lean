@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Erasure.EnergyFlux
 
-/-!
-# Defect envelope
+/-! # Defect envelope
 
 Envelope objects used to bound unresolved-scale defect contributions.
 -/

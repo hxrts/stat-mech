@@ -29,8 +29,7 @@ import Gibbs.Hamiltonian.Examples.GradientDescentMinimizer
 import Gibbs.Hamiltonian.Examples.HeavyBallConvergence
 import Gibbs.Hamiltonian.Examples.LatticeMaxwell
 
-/-!
-# Hamiltonian Layer
+/-! # Hamiltonian Layer
 
 Single entry point for the Hamiltonian mechanics layer. Importing this file
 brings in phase space foundations, convex and general Hamiltonians, damped and

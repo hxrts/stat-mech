@@ -1,8 +1,7 @@
 import Mathlib.Data.Fin.Basic
 import Mathlib.Data.Fintype.Basic
 
-/-!
-# Consensus execution model
+/-! # Consensus execution model
 
 The degrees of freedom of a consensus system. A system of `N` processes, each
 carrying a local state from some type `S`, evolves through a finite sequence of

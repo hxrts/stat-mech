@@ -2,8 +2,7 @@ import Gibbs.Hamiltonian.Basic
 import Gibbs.Hamiltonian.ConvexHamiltonian
 import Gibbs.Hamiltonian.NoseHoover
 
-/-!
-# Thermostat Oscillator
+/-! # Thermostat Oscillator
 
 A harmonic oscillator coupled to a Nose-Hoover thermostat. This is the
 simplest nontrivial instance of the extended-phase-space machinery: the

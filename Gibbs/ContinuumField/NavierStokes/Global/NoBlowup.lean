@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Global.ClosureAttempt
 
-/-!
-# Global no-blowup consequence
+/-! # Global no-blowup consequence
 
 Deduction layer from global regularity closure to global no-blowup statement.
 -/

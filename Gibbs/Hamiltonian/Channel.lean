@@ -2,8 +2,7 @@ import Gibbs.Hamiltonian.Entropy
 import Gibbs.Hamiltonian.PartitionFunction
 import Mathlib.Tactic
 
-/-!
-# Discrete Memoryless Channels
+/-! # Discrete Memoryless Channels
 
 Defines DMCs, mutual information induced by an input distribution, and channel
 capacity as a supremum. Deep coding-theoretic statements are axiomatized.

@@ -1,8 +1,7 @@
 import Gibbs.Hamiltonian.NoseHoover
 import Gibbs.Hamiltonian.Stochastic.Basic
 
-/-!
-# Simplex-Projected Langevin Drift
+/-! # Simplex-Projected Langevin Drift
 
 On the probability simplex, any drift must preserve the constraint that
 coordinates sum to one. The standard technique is to project an unconstrained

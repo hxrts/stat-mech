@@ -1,8 +1,7 @@
 import Gibbs.MeanField.Basic
 import Mathlib.Analysis.Calculus.Deriv.Basic
 
-/-!
-# Mean-Field Choreography
+/-! # Mean-Field Choreography
 
 A mean-field choreography specifies the global constraints on population
 dynamics: a drift function F on the simplex that is probability-conserving

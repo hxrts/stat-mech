@@ -2,13 +2,12 @@ import Gibbs.MeanField.Choreography
 import Gibbs.MeanField.Rules
 import SessionTypes.GlobalType
 
-/-!
-# Mean-Field Choreography → Global Session Type
+/-! # Mean-Field Choreography → Global Session Type
 
 Encodes a `MeanFieldChoreography` as a Telltale `GlobalType`. Since mean-field
 models have no intrinsic roles, a `MeanFieldRoleAssignment` must be provided to
 partition species among roles. Coupling between roles is passed as an explicit
-predicate (drift function dependencies are opaque).
+predicate (drift function dependencies are abstract).
 
 One time step is: all concentration exchanges between coupled roles, wrapped in
 `mu "step"` for iteration.

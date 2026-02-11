@@ -3,8 +3,7 @@ import Mathlib.Data.ENNReal.Basic
 import Gibbs.Consensus.Basic
 import Gibbs.Consensus.Adversary
 
-/-!
-# Transcript distance
+/-! # Transcript distance
 
 The metric on executions that measures how many processes were corrupted.
 Two executions are close if they differ on few processes' local traces. This

@@ -20,8 +20,7 @@ import Gibbs.Consensus.Examples.RepetitionCode
 import Gibbs.Consensus.Examples.QuorumBFT
 import Gibbs.Consensus.Examples.NakamotoSketch
 
-/-!
-# Consensus layer facade
+/-! # Consensus layer facade
 
 Single entry point for the consensus-as-statistical-mechanics framework.
 Importing this file brings in the full stack: execution model, observation

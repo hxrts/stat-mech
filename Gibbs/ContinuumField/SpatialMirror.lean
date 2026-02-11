@@ -1,8 +1,7 @@
 import Gibbs.Session
 import Protocol.Spatial
 
-/-!
-# Spatial model bridge
+/-! # Spatial model bridge
 
 `Gibbs.ContinuumField` now aliases Telltale's canonical `Protocol.Spatial`
 definitions directly. This removes local drift and keeps Gibbs aligned with the

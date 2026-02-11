@@ -1,7 +1,6 @@
 import Gibbs.Hamiltonian.Coding
 
-/-!
-# Axioms
+/-! # Axioms
 
 This file collects all axioms in the Gibbs library. Every other result in the
 codebase is proved from Lean's type theory and Mathlib. These two statements

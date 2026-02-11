@@ -2,8 +2,7 @@ import Mathlib.Data.Finset.Card
 import Gibbs.Consensus.Basic
 import Gibbs.Consensus.Quorum
 
-/-!
-# Certificates and quorum consistency
+/-! # Certificates and quorum consistency
 
 A *certificate* is a quorum all of whose members vote for the same value.
 When two quorums intersect, any process in the intersection has cast a vote

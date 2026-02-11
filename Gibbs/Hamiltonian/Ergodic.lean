@@ -8,8 +8,7 @@ import Mathlib.MeasureTheory.Measure.Real
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Gibbs.Hamiltonian.GaussianIntegrals
 
-/-!
-# Gibbs Measures and Ergodic Averages
+/-! # Gibbs Measures and Ergodic Averages
 
 In statistical mechanics, the Gibbs measure mu_beta(dx) ~ exp(-beta H(x)) dx
 describes thermal equilibrium at inverse temperature beta. Ergodicity connects

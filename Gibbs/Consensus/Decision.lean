@@ -1,8 +1,7 @@
 import Mathlib.Data.Set.Basic
 import Gibbs.Consensus.Observation
 
-/-!
-# Decisions and macrostates
+/-! # Decisions and macrostates
 
 A *decision macrostate* is the coarse-grained observable of consensus. It is the
 vector of values that honest processes have decided on (or `none` if undecided).
@@ -11,7 +10,7 @@ executions can produce the same macrostate, and the physics of consensus is abou
 which macrostates dominate the partition function.
 
 Agreement means all decided values coincide (ordered phase). Disagreement means
-at least two differ (disordered / unsafe phase).
+at least two differ (disordered phase).
 -/
 
 namespace Gibbs.Consensus

@@ -1,8 +1,7 @@
 import Gibbs.Consensus.Basic
 import Gibbs.MeanField.OrderParameter
 
-/-!
-# Consensus order parameter
+/-! # Consensus order parameter
 
 The magnetization `m(s) = (1/N) Σ σ_i` measures the degree of agreement in
 a configuration, exactly as it measures spin alignment in an Ising model.

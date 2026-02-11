@@ -1,8 +1,7 @@
 import Gibbs.Hamiltonian.Legendre
 import Gibbs.MeanField.ODE
 
-/-!
-# Bregman-Lyapunov Bridge
+/-! # Bregman-Lyapunov Bridge
 
 Packages the Bregman divergence from the Hamiltonian layer as a Lyapunov function
 for MeanField ODE stability. This bridge file exists to keep the Hamiltonian layer

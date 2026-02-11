@@ -7,8 +7,7 @@ import Mathlib.Analysis.InnerProductSpace.Dual
 import Mathlib.Tactic
 import Mathlib.Topology.MetricSpace.Basic
 
-/-!
-# Legendre Transform and Bregman Divergence
+/-! # Legendre Transform and Bregman Divergence
 
 The Legendre transform f*(p) = sup_x { <p, x> - f(x) } converts between
 conjugate descriptions of a convex function, exchanging slopes and intercepts.

@@ -2,8 +2,7 @@ import Gibbs.Hamiltonian.Channel
 import Gibbs.Hamiltonian.Stochastic.Basic
 import Mathlib.Tactic
 
-/-!
-# Channel Noise and Temperature
+/-! # Channel Noise and Temperature
 
 Connects noise variance to inverse temperature and channel capacity.
 -/

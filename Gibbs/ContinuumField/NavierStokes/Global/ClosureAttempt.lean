@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Defect.Continuation
 
-/-!
-# Global closure attempt
+/-! # Global closure attempt
 
 Interface for the key closure step: turning defect control into global
 regularity continuation.

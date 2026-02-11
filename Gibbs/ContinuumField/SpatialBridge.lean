@@ -1,8 +1,7 @@
 import Gibbs.ContinuumField.TimeBridge
 import Gibbs.ContinuumField.SpatialMirror
 
-/-!
-# Spatial bridge to Telltale
+/-! # Spatial bridge to Telltale
 
 Aligns the continuum-field role-location map with Telltale's spatial type
 system. The `AlignedRoleLoc` predicate requires that roles assigned to the

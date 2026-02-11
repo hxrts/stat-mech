@@ -1,8 +1,7 @@
 import Gibbs.ContinuumField.Basic
 import Gibbs.ContinuumField.Kernel
 
-/-!
-# Adaptive kernel dependence
+/-! # Adaptive kernel dependence
 
 In many continuum models the interaction kernel is not fixed but evolves
 with the field state. For example, the effective coupling range may grow

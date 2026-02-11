@@ -4,8 +4,7 @@ import Mathlib.Topology.MetricSpace.Bounded
 import Mathlib.Topology.Order.Compact
 import Mathlib.Topology.Order.IntermediateValue
 
-/-!
-# Linearized Stability for Mean-Field ODEs
+/-! # Linearized Stability for Mean-Field ODEs
 
 If all eigenvalues of the Jacobian at a fixed point have negative real part
 (the Hurwitz condition), the fixed point is asymptotically stable. The proof

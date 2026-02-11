@@ -3,8 +3,7 @@ import Mathlib.Data.Bool.Basic
 import Mathlib.Tactic
 import Gibbs.Consensus.TranscriptDistance
 
-/-!
-# Repetition code example
+/-! # Repetition code example
 
 The simplest gapped phase in the consensus/coding framework. Encoding one
 bit as `N` identical copies is the coding-theory analogue of a fully

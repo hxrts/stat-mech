@@ -1,8 +1,7 @@
 import Gibbs.MeanField.Projection
 import Gibbs.MeanField.Examples.Ising.TanhAnalysis
 
-/-!
-# Ising Drift and Choreography
+/-! # Ising Drift and Choreography
 
 The mean-field Ising drift describes the rate of change of the fraction of
 up-spins: dx/dt = (1/tau) * [tanh(beta(J m + h)) - m] where m = 2x - 1 is

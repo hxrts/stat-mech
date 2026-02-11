@@ -1,8 +1,7 @@
 import Gibbs.ContinuumField.NavierStokes.Functional.CriticalSpace
 import Gibbs.ContinuumField.NavierStokes.Projector
 
-/-!
-# Helmholtz-Leray projection properties
+/-! # Helmholtz-Leray projection properties
 
 Interface-level properties of Leray projection on selected critical spaces.
 -/

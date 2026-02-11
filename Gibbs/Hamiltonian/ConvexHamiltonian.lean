@@ -8,8 +8,7 @@ import Mathlib.Analysis.InnerProductSpace.Calculus
 import Mathlib.Analysis.Normed.Module.Convex
 import Mathlib.Tactic
 
-/-!
-# Convex Hamiltonian Structure
+/-! # Convex Hamiltonian Structure
 
 A separable Hamiltonian H(q,p) = T(p) + V(q) with convex kinetic and potential
 energy. Convexity of T and V ensures well-behaved dynamics: Lipschitz drift

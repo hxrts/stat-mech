@@ -3,8 +3,7 @@ import Gibbs.Hamiltonian.Basic
 import Gibbs.Hamiltonian.ConvexHamiltonian
 import Gibbs.Hamiltonian.DampedFlow
 
-/-!
-# Hamiltonian Choreography
+/-! # Hamiltonian Choreography
 
 A choreography partitions the degrees of freedom of a Hamiltonian system into
 roles, where each role controls a disjoint subset of coordinates. This mirrors

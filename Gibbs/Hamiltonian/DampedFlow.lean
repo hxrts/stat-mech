@@ -4,8 +4,7 @@ import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Data.NNReal.Basic
 import Mathlib.Tactic
 
-/-!
-# Damped Hamiltonian Dynamics
+/-! # Damped Hamiltonian Dynamics
 
 Adding a friction term -gamma * p to the momentum equation breaks energy
 conservation and introduces dissipation. The total energy now decreases along

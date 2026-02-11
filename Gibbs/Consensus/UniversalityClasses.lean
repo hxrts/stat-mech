@@ -6,8 +6,7 @@ import Gibbs.Consensus.Gap
 import Gibbs.Consensus.InteractiveDistance
 import Mathlib.Order.LiminfLimsup
 
-/-!
-# Universality classes of consensus protocols
+/-! # Universality classes of consensus protocols
 
 Protocols fall into universality classes determined by macroscopic gap behavior,
 not by their microscopic message-passing details.

@@ -1,8 +1,7 @@
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Real.Basic
 
-/-!
-# Order Parameters
+/-! # Order Parameters
 
 An order parameter is a coarse-grained observable that distinguishes
 macroscopic phases. The simplest example is the magnetization of a spin

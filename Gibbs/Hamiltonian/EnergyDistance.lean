@@ -1,7 +1,6 @@
 import Mathlib.Data.ENNReal.Basic
 
-/-!
-# Energy-Barrier Distance
+/-! # Energy-Barrier Distance
 
 A pseudometric valued in extended nonneg reals, intended to capture the notion
 of an energy barrier between states. In statistical mechanics, transition rates

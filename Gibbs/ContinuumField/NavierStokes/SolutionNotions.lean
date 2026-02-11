@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Projector
 
-/-!
-# Solution notions
+/-! # Solution notions
 
 Strong/mild/weak solution notions for incompressible Navier-Stokes.
 -/

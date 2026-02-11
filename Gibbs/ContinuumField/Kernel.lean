@@ -2,8 +2,7 @@ import Gibbs.ContinuumField.Basic
 import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 
-/-!
-# Interaction kernels
+/-! # Interaction kernels
 
 A `GlobalKernel` `K(x, x')` encodes nonlocal interactions between spatial
 positions, analogous to the coupling matrix `J_ij` in a lattice spin model

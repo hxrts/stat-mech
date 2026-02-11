@@ -1,8 +1,7 @@
 import Gibbs.Hamiltonian.DampedFlow
 import Mathlib.Analysis.SpecialFunctions.Exp
 
-/-!
-# Lyapunov Stability
+/-! # Lyapunov Stability
 
 For a damped Hamiltonian system, the total energy is a natural Lyapunov
 function: it is bounded below and decreases along trajectories. This file

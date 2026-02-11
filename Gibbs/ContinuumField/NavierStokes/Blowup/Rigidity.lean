@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Blowup.Compactness
 
-/-!
-# Blow-up rigidity scaffolding
+/-! # Blow-up rigidity scaffolding
 
 Rigidity interface used to exclude minimal blow-up objects.
 -/

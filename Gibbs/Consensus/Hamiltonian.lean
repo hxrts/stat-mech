@@ -2,8 +2,7 @@ import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.Data.ENNReal.Basic
 import Mathlib.Data.Fintype.Basic
 
-/-!
-# Consensus Hamiltonian decomposition
+/-! # Consensus Hamiltonian decomposition
 
 The effective Hamiltonian for consensus decomposes into three physical terms:
 

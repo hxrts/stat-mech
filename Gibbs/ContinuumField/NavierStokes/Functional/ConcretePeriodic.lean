@@ -2,8 +2,7 @@ import Gibbs.ContinuumField.NavierStokes.Functional.HelmholtzLeray
 import Gibbs.ContinuumField.NavierStokes.Functional.NonlinearEstimates
 import Mathlib.Data.Real.Basic
 
-/-!
-# Concrete periodic analytic layer
+/-! # Concrete periodic analytic layer
 
 Concrete first-pass analytic objects for the Clay target `(B)` on `T^3`:
 critical norms, LP blocks, Helmholtz-Leray packaging, and concrete estimate
@@ -13,6 +12,8 @@ statements.
 namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
+
+/-! ## Critical norms and spaces -/
 
 /-- Origin in the coordinate model used for periodic-point evaluations. -/
 def originCoord3 : Coord3 := fun _ => 0
@@ -68,6 +69,8 @@ theorem periodicL3CriticalSpace_is_critical :
     periodicL3CriticalSpace.critical_wrt canonical3DRegime := by
   exact ⟨rfl, rfl⟩
 
+/-! ## Helmholtz-Leray packaging -/
+
 /-- Assumptions needed to instantiate Helmholtz-Leray bounds concretely on `T^3`. -/
 structure PeriodicHelmholtzLerayAssumptions
     (NS : IncompressibleNavierStokes .torus3)
@@ -91,6 +94,8 @@ def periodicHelmholtzLerayPackage
     simpa [periodicL3CriticalSpace] using H.bounded u⟩
   commutes_laplace := H.commutes_laplace
 
+/-! ## Littlewood-Paley blocks -/
+
 /-- Concrete periodic dyadic block model. -/
 def periodicDyadicBlock (j : Int) (u : VelocityField .torus3) : VelocityField .torus3 :=
   if j = 0 then u else 0
@@ -110,6 +115,8 @@ theorem periodicLittlewoodPaley_reconstructs :
     periodicLittlewoodPaleyFamily.reconstructs := by
   intro u
   constructor <;> simp [periodicDyadicBlock, periodicLowCut]
+
+/-! ## Concrete estimates -/
 
 /-- Concrete convection norm in the periodic setting. -/
 def periodicConvectionNorm (NS : IncompressibleNavierStokes .torus3)

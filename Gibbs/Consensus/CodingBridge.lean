@@ -4,8 +4,7 @@ import Mathlib.Data.ENNReal.Basic
 import Gibbs.Consensus.InteractiveDistance
 import Gibbs.Consensus.TranscriptDistance
 
-/-!
-# Error-correcting codes as non-interactive consensus
+/-! # Error-correcting codes as non-interactive consensus
 
 An ECC is the degenerate case of interactive consensus: a single sender, one
 round of communication (`T = 1`), and a memoryless channel. The "execution" is

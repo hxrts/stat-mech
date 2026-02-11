@@ -1,8 +1,7 @@
 import Gibbs.ContinuumField.Kernel
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 
-/-!
-# Projection exactness
+/-! # Projection exactness
 
 The nonlocal operator `∫ K(x,x')(p(x') - p(x)) dx'` can be written in two
 equivalent forms: directly using the global kernel `K(x,x')`, or using the

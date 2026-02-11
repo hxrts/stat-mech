@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Runtime.ObservationalAdequacy
 
-/-!
-# Bounded-time no-blowup certificates
+/-! # Bounded-time no-blowup certificates
 
 Certified bounded-time no-blowup results from verified approximations and
 explicit envelopes.

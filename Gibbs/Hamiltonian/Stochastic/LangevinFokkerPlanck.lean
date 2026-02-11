@@ -1,8 +1,7 @@
 import Mathlib
 import Gibbs.Hamiltonian.Basic
 
-/-!
-# Langevin Dynamics and Fokker-Planck Stationarity
+/-! # Langevin Dynamics and Fokker-Planck Stationarity
 
 Langevin dynamics adds Gaussian noise to the damped Hamiltonian equations,
 modeling thermal fluctuations. The corresponding Fokker-Planck equation

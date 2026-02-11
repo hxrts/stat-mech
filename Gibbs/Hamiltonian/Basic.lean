@@ -1,8 +1,7 @@
 import Mathlib.Analysis.InnerProductSpace.EuclideanDist
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
-/-!
-# Phase Space Foundations
+/-! # Phase Space Foundations
 
 Hamiltonian mechanics lives on phase space, the product of position and momentum
 coordinates. This file defines `Config` (configuration space) and `PhasePoint`

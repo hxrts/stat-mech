@@ -2,8 +2,7 @@ import Gibbs.Hamiltonian.Channel
 import Gibbs.Session
 import Mathlib.Tactic
 
-/-!
-# Channel Constraints for Session Types
+/-! # Channel Constraints for Session Types
 
 Equips session-type edges with channel models and connects protocol feasibility
 with information-theoretic capacity.

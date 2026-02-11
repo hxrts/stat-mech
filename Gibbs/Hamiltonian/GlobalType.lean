@@ -2,8 +2,7 @@ import Gibbs.Hamiltonian.Choreography
 import SessionTypes.GlobalType
 import Choreography.Projection.Trans.Core
 
-/-!
-# Hamiltonian Choreography → Global Session Type
+/-! # Hamiltonian Choreography → Global Session Type
 
 Encodes a `HamiltonianChoreography` as a Telltale `GlobalType`. The encoding
 extracts the communication topology from coordinate coupling: role A sends its

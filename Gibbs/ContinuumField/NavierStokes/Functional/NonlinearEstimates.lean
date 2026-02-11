@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Functional.LittlewoodPaley
 
-/-!
-# Nonlinear and pressure estimates
+/-! # Nonlinear and pressure estimates
 
 Product/commutator bounds for convection and Calderon-Zygmund-style pressure
 estimates in selected critical norms.

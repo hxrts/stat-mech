@@ -2,8 +2,7 @@ import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.Data.ENNReal.Basic
 import Mathlib.Tactic
 
-/-!
-# Nakamoto consensus sketch
+/-! # Nakamoto consensus sketch
 
 A Class I (gapless/critical) system. There is no hard energy gap between
 competing chain histories, so reorganizations are always thermodynamically

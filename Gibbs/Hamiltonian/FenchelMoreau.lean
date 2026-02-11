@@ -1,8 +1,7 @@
 import Gibbs.Hamiltonian.Legendre
 import Mathlib
 
-/-!
-# Fenchel-Moreau Duality
+/-! # Fenchel-Moreau Duality
 
 The Fenchel-Moreau theorem states that a convex lower-semicontinuous function
 equals its biconjugate: f** = f. The Legendre-Fenchel transform replaces f by

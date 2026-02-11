@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.SolutionNotions
 
-/-!
-# Local well-posedness scaffolding
+/-! # Local well-posedness scaffolding
 
 A local-theory interface that can be strengthened as analytic
 infrastructure is added.

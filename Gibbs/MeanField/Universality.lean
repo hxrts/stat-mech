@@ -1,7 +1,6 @@
 import Mathlib.Data.ENNReal.Basic
 
-/-!
-# Universality Classes
+/-! # Universality Classes
 
 Systems with qualitatively similar macroscopic behavior belong to the same
 universality class, regardless of microscopic details. Three classes cover the

@@ -1,8 +1,7 @@
 import Gibbs.ContinuumField.NavierStokes.Defect.Estimates
 import Gibbs.ContinuumField.NavierStokes.LocalTheory
 
-/-!
-# Defect-based continuation
+/-! # Defect-based continuation
 
 Conditional continuation scaffolding: envelope control implies no-blowup claims
 under explicit hypotheses.

@@ -1,8 +1,7 @@
 import Gibbs.ContinuumField.NavierStokes.Blowup.Rigidity
 import Gibbs.ContinuumField.NavierStokes.ClaySpec
 
-/-!
-# Clay-periodic contradiction route
+/-! # Clay-periodic contradiction route
 
 Periodic `(D)`-aligned wrappers for first-singular-time setup, compactness
 extraction, minimal blow-up construction, and rigidity/obstruction endgames.

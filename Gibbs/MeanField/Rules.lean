@@ -1,7 +1,6 @@
 import Gibbs.MeanField.Choreography
 
-/-!
-# Population Transition Rules
+/-! # Population Transition Rules
 
 Microscopic dynamics are specified by transition rules, each with a
 stoichiometric update (which states gain or lose agents) and a rate function

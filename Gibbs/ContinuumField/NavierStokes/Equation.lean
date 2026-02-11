@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Domain
 
-/-!
-# Navier-Stokes equation layer
+/-! # Navier-Stokes equation layer
 
 Equation-level objects for incompressible 3D Navier-Stokes on a chosen domain.
 This layer keeps operators abstract while making the equation predicates explicit.

@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Defect.Envelope
 
-/-!
-# Defect estimates
+/-! # Defect estimates
 
 Basic estimate lemmas that connect envelopes to continuation-style control.
 -/

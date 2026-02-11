@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Equation
 
-/-!
-# Erasure operators
+/-! # Erasure operators
 
 Exact coarse-graining operator interface for Navier-Stokes erasure analysis.
 -/

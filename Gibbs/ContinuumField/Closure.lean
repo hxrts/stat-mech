@@ -1,8 +1,7 @@
 import Gibbs.ContinuumField.Kernel
 import Mathlib.Data.Real.Basic
 
-/-!
-# Kernel closure approximation
+/-! # Kernel closure approximation
 
 A closure compresses a full kernel field into a few low-order descriptors
 (interaction range, anisotropy, total mass) and provides a reconstruction

@@ -3,8 +3,7 @@ import Mathlib.Tactic
 import Gibbs.Consensus.Quorum
 import Gibbs.Consensus.Thresholds
 
-/-!
-# Quorum-based BFT example
+/-! # Quorum-based BFT example
 
 Instantiates the framework at `N = 3f+1` with quorum size `q = 2f+1`,
 the standard BFT setting. The key result is that any two quorums intersect

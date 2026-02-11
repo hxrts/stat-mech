@@ -2,8 +2,7 @@ import Mathlib.Data.ENNReal.Basic
 import Mathlib.Data.Set.Basic
 import Gibbs.Hamiltonian.EnergyDistance
 
-/-!
-# Interactive distance between macrostates
+/-! # Interactive distance between macrostates
 
 The central quantity unifying coding theory and consensus. The *interactive
 distance* `Δ_H(M, M')` between two decision macrostates is the minimum

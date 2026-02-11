@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Equation
 
-/-!
-# Critical spaces and scaling regime
+/-! # Critical spaces and scaling regime
 
 Critical-space interfaces used by continuation and closure arguments.
 -/

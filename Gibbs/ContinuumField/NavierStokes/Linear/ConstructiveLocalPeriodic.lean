@@ -2,8 +2,7 @@ import Gibbs.ContinuumField.NavierStokes.Linear.DuhamelFixedPoint
 import Gibbs.ContinuumField.NavierStokes.Functional.ConcretePeriodic
 import Gibbs.ContinuumField.NavierStokes.Defect.Continuation
 
-/-!
-# Constructive local theory on the periodic target
+/-! # Constructive local theory on the periodic target
 
 Concrete periodic `(B)`-setting wrappers for Duhamel fixed-point local theory,
 with explicit small-time contraction data and continuation criteria.
@@ -12,6 +11,8 @@ with explicit small-time contraction data and continuation criteria.
 namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
+
+/-! ## Trajectory norms and balls -/
 
 /-- Concrete trajectory norm proxy for periodic local theory. -/
 def periodicTrajectoryNorm (U : VelocityTrajectory .torus3) : ℝ :=
@@ -40,6 +41,8 @@ def periodicDuhamelMap
 /-- Explicit small-time condition for contraction on a trajectory ball. -/
 def SmallTimeContractionCondition (T L : ℝ) : Prop :=
   0 < T ∧ 0 ≤ L ∧ L < 1
+
+/-! ## Contraction data and theorem -/
 
 /-- Contraction data for periodic Duhamel fixed-point construction. -/
 structure PeriodicContractionWitness
@@ -86,6 +89,8 @@ theorem periodic_duhamel_contraction_on_ball
           (fun t => periodicDuhamelMap S NS u0 U t - periodicDuhamelMap S NS u0 V t) ≤
           W.L * periodicTrajectoryNorm (fun t => U t - V t)) := by
   exact ⟨W.smallness, W.maps_ball, W.contractive⟩
+
+/-! ## Local solution construction -/
 
 /-- Constructive periodic local strong solution carrying explicit fixed-point data. -/
 structure ConstructivePeriodicLocalSolution
@@ -146,6 +151,8 @@ theorem periodic_constructive_local_existence_uniqueness
   refine ⟨C.toStrong, C.initial_value, C.fixed_point, ?_⟩
   intro v hv hfp hv0
   exact hunique v hv hfp hv0
+
+/-! ## Continuation criteria -/
 
 /-- Concrete periodic critical norm object for continuation statements. -/
 def periodicContinuationCriticalNorm : CriticalNorm .torus3 where

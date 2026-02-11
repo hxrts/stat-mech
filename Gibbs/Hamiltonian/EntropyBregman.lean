@@ -6,8 +6,7 @@ import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
 import Mathlib.Tactic
 
-/-!
-# Entropy as a Bregman Generator
+/-! # Entropy as a Bregman Generator
 
 Connects negative entropy to Bregman divergence and the Legendre transform.
 The deep convex-analytic results are stated as axioms to keep this file a
@@ -459,22 +458,14 @@ private lemma softmax_value (n : ℕ) [NeZero n] (θ : Config n) :
       Finset.sum_pos (fun _ _ => Real.exp_pos _)
         ⟨⟨0, NeZero.pos n⟩, Finset.mem_univ _⟩)]
   ring
-  simp +decide [← Finset.mul_sum _ _ _, ← Finset.sum_mul,
-    mul_assoc, mul_comm, mul_left_comm, Real.log_mul,
-    Real.exp_ne_zero,
+  simp +decide [Real.log_mul,
     ne_of_gt (Finset.sum_pos (fun i _ => Real.exp_pos (θ i))
       Finset.univ_nonempty)]
-  simp +decide [← mul_assoc, ← Finset.sum_mul, Real.exp_ne_zero,
-    Finset.sum_add_distrib, mul_add, add_mul,
-    Finset.mul_sum _ _ _, Finset.sum_add_distrib, mul_add,
-    add_mul, mul_assoc, mul_comm, mul_left_comm,
-    Finset.sum_mul _ _ _,
-    inv_mul_cancel₀,
+  simp +decide [Finset.sum_add_distrib, mul_add, mul_comm,
     ne_of_gt (Finset.sum_pos (fun i _ => Real.exp_pos (θ i))
       Finset.univ_nonempty)]
   ring!
-  simp +decide [mul_assoc, mul_comm, mul_left_comm,
-    Finset.mul_sum _ _ _, inner]
+  simp +decide [mul_comm, mul_left_comm, inner]
 
 /-- Jensen upper bound: for any x in the simplex, the objective
     ⟪θ, x⟫ - negEntropy(x) is bounded by log(Σ exp θᵢ). -/
@@ -544,8 +535,8 @@ private lemma upper_bound_simplex (n : ℕ) [NeZero n]
   · rw [← Finset.sum_sub_distrib]
     refine' Finset.sum_congr rfl fun i _ => _
     by_cases hi : fromConfig x i = 0
-    · simp +decide [hi, Real.log_div, Real.exp_ne_zero]
-    · simp +decide [hi, Real.log_div, Real.exp_ne_zero]; ring
+    · simp +decide [hi]
+    · simp +decide [hi]; ring
   · exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
 
 /-- The Legendre dual of negative entropy (on the simplex) is log-sum-exp.
@@ -580,7 +571,7 @@ theorem legendre_negEntropy_eq_logSumExp (n : ℕ) [NeZero n] (θ : Config n) :
     Proof: the Legendre dual at θ = -βH gives log(Σ exp(-βHᵢ)) = log Z.
     Then -(1/β) log Z = F by definition of free energy. -/
 theorem freeEnergy_eq_scaled_legendre_dual (n : ℕ) [NeZero n]
-    (H : Fin n → ℝ) (β : ℝ) (hβ : 0 < β) :
+    (H : Fin n → ℝ) (β : ℝ) (_hβ : 0 < β) :
     PartitionFunction.freeEnergy H β =
       -(1/β) * Gibbs.Hamiltonian.legendreOn (negEntropyConfig n) (simplex n)
         (toConfig (fun i => -β * H i)) := by

@@ -3,8 +3,7 @@ import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Real.Basic
 import Mathlib.Tactic
 
-/-!
-# Shannon Entropy and KL Divergence
+/-! # Shannon Entropy and KL Divergence
 
 Foundational information-theoretic definitions for finite distributions.
 This file is intentionally self-contained (no Gibbs dependencies) so it can

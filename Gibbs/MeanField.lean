@@ -12,8 +12,7 @@ import Gibbs.MeanField.Universality
 import Gibbs.MeanField.BregmanBridge
 import Gibbs.MeanField.Examples.Ising
 
-/-!
-# Mean-Field Layer
+/-! # Mean-Field Layer
 
 Single entry point for the mean-field layer. Importing this file brings in
 simplex and population types, transition rules, choreography constraints,

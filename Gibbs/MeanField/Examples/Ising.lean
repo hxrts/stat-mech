@@ -3,8 +3,7 @@ import Gibbs.MeanField.Examples.Ising.Drift
 import Gibbs.MeanField.Examples.Ising.Glauber
 import Gibbs.MeanField.Examples.Ising.PhaseTransition
 
-/-!
-# Ising Model
+/-! # Ising Model
 
 Facade for the mean-field Ising example. Imports the tanh analysis needed for
 Lipschitz bounds, the Ising drift and choreography, Glauber dynamics (local

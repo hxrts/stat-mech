@@ -3,8 +3,7 @@ import Gibbs.ContinuumField.Projection
 import Gibbs.ContinuumField.Closure
 import Mathlib.Data.Real.Basic
 
-/-!
-# Anisotropic 2D kernel example
+/-! # Anisotropic 2D kernel example
 
 A concrete worked example on `ℝ²` illustrating the kernel machinery. The
 local kernel `K_x(ξ) = (1 + α·(axis·ξ)) / (1 + |ξ|²/range)` is a rational

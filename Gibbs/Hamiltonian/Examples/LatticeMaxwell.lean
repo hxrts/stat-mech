@@ -1,7 +1,6 @@
 import Mathlib
 
-/-!
-# Yee Lattice Maxwell Equations
+/-! # Yee Lattice Maxwell Equations
 
 Maxwell's equations on a staggered (Yee) lattice place E on edges and B on
 faces so that the discrete curl operators use only nearest-neighbor stencils.

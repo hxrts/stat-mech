@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Functional.CriticalSpace
 
-/-!
-# Littlewood-Paley and paraproduct interfaces
+/-! # Littlewood-Paley and paraproduct interfaces
 
 Abstract LP-block machinery for nonlinear decomposition estimates.
 -/

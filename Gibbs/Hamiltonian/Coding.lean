@@ -1,8 +1,7 @@
 import Gibbs.Hamiltonian.Channel
 import Mathlib.Algebra.BigOperators.Ring.Finset
 
-/-!
-# Block Coding Infrastructure
+/-! # Block Coding Infrastructure
 
 Defines the n-fold memoryless extension of a discrete memoryless channel and the
 average error probability of a code. These are the basic objects needed to state

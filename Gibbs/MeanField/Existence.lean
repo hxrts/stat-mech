@@ -2,8 +2,7 @@ import Gibbs.MeanField.LipschitzBridge
 import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.ODE.PicardLindelof
 
-/-!
-# ODE Existence and Simplex Invariance
+/-! # ODE Existence and Simplex Invariance
 
 Given a Lipschitz mean-field choreography, this file proves that the ODE
 dx/dt = F(x) has a unique global solution that remains on the simplex. The

@@ -2,8 +2,7 @@ import Gibbs.MeanField.Projection
 import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 
-/-!
-# Analytic Properties of tanh
+/-! # Analytic Properties of tanh
 
 The mean-field Ising model depends on tanh being 1-Lipschitz (ensuring the
 drift is Lipschitz) and strictly sublinear (tanh(x) < x for x > 0, which

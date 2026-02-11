@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Global.NoBlowup
 
-/-!
-# Blow-up extraction scaffolding
+/-! # Blow-up extraction scaffolding
 
 Data objects for first-singular-time normalization and blow-up sequence setup.
 -/

@@ -2,8 +2,7 @@ import Gibbs.Hamiltonian.Channel
 import Gibbs.ContinuumField.TimeBridge
 import Mathlib.Tactic
 
-/-!
-# Spatial Capacity Bridge
+/-! # Spatial Capacity Bridge
 
 Connects spatial distance to information-theoretic channel capacity.
 -/

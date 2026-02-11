@@ -1,8 +1,7 @@
 import Mathlib.Data.Finset.Card
 import Mathlib.Tactic
 
-/-!
-# Quorum systems
+/-! # Quorum systems
 
 Quorums are the stabilizing interactions of BFT consensus, analogous to the
 coupling constants in a ferromagnet. Any two quorums of size `q` in a system

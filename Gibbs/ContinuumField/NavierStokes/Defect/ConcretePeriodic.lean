@@ -1,8 +1,7 @@
 import Gibbs.ContinuumField.NavierStokes.Defect.Estimates
 import Gibbs.ContinuumField.NavierStokes.Functional.ConcretePeriodic
 
-/-!
-# Concrete periodic defect envelope layer
+/-! # Concrete periodic defect envelope layer
 
 Concrete envelope objects and differential-inequality consequences for the
 periodic Clay target `(B)`.

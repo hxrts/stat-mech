@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Erasure.EnergyFlux
 
-/-!
-# Concrete periodic erasure layer
+/-! # Concrete periodic erasure layer
 
 Concrete scale-indexed erasure choices and exact defect/flux identities for the
 periodic Clay target `(B)`.

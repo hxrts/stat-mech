@@ -3,8 +3,7 @@ import Gibbs.Consensus.Gap
 import Gibbs.Consensus.CodingBridge
 import Mathlib.Tactic
 
-/-!
-# Channel Capacity as a Consensus Phase Boundary
+/-! # Channel Capacity as a Consensus Phase Boundary
 
 States the noisy channel coding theorem as a gap/phase transition and
 connects the capacity threshold to consensus-style safety gaps.

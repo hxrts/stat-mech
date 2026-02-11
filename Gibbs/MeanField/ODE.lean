@@ -6,8 +6,7 @@ import Mathlib.Analysis.Calculus.FDeriv.Basic
 import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.LinearAlgebra.Eigenspace.Basic
 
-/-!
-# Mean-Field ODE
+/-! # Mean-Field ODE
 
 The mean-field limit reduces stochastic population dynamics to the
 deterministic ODE dx/dt = F(x) on the simplex. This file defines what it means

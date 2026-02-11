@@ -5,8 +5,7 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Data.Finset.Image
 import Mathlib.Tactic
 
-/-!
-# Finite-State Partition Function
+/-! # Finite-State Partition Function
 
 The partition function Z(beta) = sum_x exp(-beta H(x)) is the central object
 of equilibrium statistical mechanics. It encodes the Boltzmann weights of all

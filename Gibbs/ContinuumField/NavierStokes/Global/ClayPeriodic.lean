@@ -1,8 +1,7 @@
 import Gibbs.ContinuumField.NavierStokes.Global.NoBlowup
 import Gibbs.ContinuumField.NavierStokes.ClaySpec
 
-/-!
-# Clay-periodic global closure route
+/-! # Clay-periodic global closure route
 
 Periodic `(B)`-target wrappers connecting invariant packages, global envelope
 control, critical-norm no-blowup bounds, and Clay statement instantiation.

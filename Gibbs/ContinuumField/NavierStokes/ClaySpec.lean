@@ -2,8 +2,7 @@ import Gibbs.ContinuumField.NavierStokes.SolutionNotions
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Real.Sqrt
 
-/-!
-# Clay Navier-Stokes specification layer
+/-! # Clay Navier-Stokes specification layer
 
 This module encodes the official Clay problem variants (A/B/C/D) and the
 condition bundles (4)-(11) from the Fefferman statement as reusable Lean
@@ -14,6 +13,8 @@ namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
 noncomputable section
+
+/-! ## Basic definitions -/
 
 /-- Time-dependent external forcing field `f(x,t)`. -/
 abbrev ExternalForceField (D : SpatialDomain3) : Type :=
@@ -56,6 +57,8 @@ def SpacePeriodicVelocity {D : SpatialDomain3} (u : VelocityField D) : Prop :=
 /-- Spatial periodicity predicate for pressure fields. -/
 def SpacePeriodicPressure {D : SpatialDomain3} (p : PressureField D) : Prop :=
   ∀ j x, p (shiftByUnit x j) = p x
+
+/-! ## Fefferman condition predicates -/
 
 /-- Differential operators used to express decay conditions (4),(5),(9). -/
 structure ClayDerivativeOps where
@@ -123,6 +126,8 @@ def CompatibleWithExternalForce {D : SpatialDomain3}
     (NS : IncompressibleNavierStokes D) (f : ExternalForceField D) : Prop :=
   ∀ t, NS.forcing = f t
 
+/-! ## Statement labels and hypothesis packages -/
+
 /-- Clay theorem labels from Fefferman's statement. -/
 inductive ClayStatementLabel where
   | A
@@ -184,6 +189,8 @@ structure ClayDHypotheses where
   cond8 : Condition8 u0 f
   cond9 : Condition9 derivOps f
 
+/-! ## Statement templates -/
+
 /-- Clay statement (A) as a theorem template. -/
 def ClayAStatement : Prop :=
   ∀ H : ClayAHypotheses,
@@ -227,6 +234,8 @@ def ClayDStatement : Prop :=
           sol.vel 0 = H.u0 ∧
           Condition10 sol.vel ∧
           Condition11 NS sol)
+
+/-! ## Working assumptions -/
 
 /-- Working periodic assumptions currently used in this project. -/
 structure WorkingPeriodicAssumptions where

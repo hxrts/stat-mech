@@ -2,8 +2,7 @@ import Gibbs.Consensus.Basic
 import Mathlib.Data.Set.Basic
 import Gibbs.Hamiltonian.PartitionFunction
 
-/-!
-# Partition function over executions
+/-! # Partition function over executions
 
 The Boltzmann partition function `Z = Σ_ω exp(-β H(ω))` summed over
 executions, where `H(ω)` is the total inconsistency energy (conflict + delay +

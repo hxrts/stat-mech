@@ -1,7 +1,6 @@
 import Mathlib.Data.Real.Basic
 
-/-!
-# Navier-Stokes domain setup
+/-! # Navier-Stokes domain setup
 
 Foundational domain-level declarations for the 3D incompressible
 Navier-Stokes program.

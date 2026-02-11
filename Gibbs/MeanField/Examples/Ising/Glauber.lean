@@ -1,7 +1,6 @@
 import Gibbs.MeanField.Examples.Ising.Drift
 
-/-!
-# Glauber Dynamics
+/-! # Glauber Dynamics
 
 Glauber dynamics are local spin-flip rates that implement the global Ising
 drift at the microscopic level. The rate alpha (down to up) and gamma (up to

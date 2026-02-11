@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Global.NoBlowup
 
-/-!
-# Certified finite-dimensional approximations
+/-! # Certified finite-dimensional approximations
 
 Interfaces for Galerkin/spectral approximations with explicit error envelopes.
 -/

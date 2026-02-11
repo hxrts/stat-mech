@@ -2,8 +2,7 @@ import Gibbs.Hamiltonian.Basic
 import Gibbs.Hamiltonian.ConvexHamiltonian
 import Gibbs.Hamiltonian.DampedFlow
 
-/-!
-# Heavy-Ball Method as Damped Hamiltonian
+/-! # Heavy-Ball Method as Damped Hamiltonian
 
 The heavy-ball (momentum) method for minimizing a convex objective V(q) is
 exactly the damped Hamiltonian system with H(q,p) = (1/2) norm(p)^2 + V(q).

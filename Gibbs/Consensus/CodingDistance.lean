@@ -4,8 +4,7 @@ import Gibbs.Hamiltonian.EnergyDistance
 import Gibbs.Hamiltonian.EnergyGap
 import Gibbs.Consensus.TranscriptDistance
 
-/-!
-# Coding distance and unique decoding
+/-! # Coding distance and unique decoding
 
 Connects classical coding theory to the energy-gap framework. The minimum
 distance `d_min` of a code is the smallest pairwise distance between distinct

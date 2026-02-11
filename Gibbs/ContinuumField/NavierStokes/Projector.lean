@@ -1,7 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Equation
 
-/-!
-# Leray projector interface
+/-! # Leray projector interface
 
 Abstract Leray projection interface used by pressure-eliminated formulations.
 -/

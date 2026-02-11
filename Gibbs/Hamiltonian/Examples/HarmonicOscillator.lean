@@ -5,8 +5,7 @@ import Mathlib
 
 set_option maxHeartbeats 0
 
-/-!
-# Damped Harmonic Oscillator
+/-! # Damped Harmonic Oscillator
 
 The harmonic oscillator H = (1/2) omega^2 q^2 + (1/2) p^2 is the universal
 small-oscillation approximation. Adding linear damping gives the canonical

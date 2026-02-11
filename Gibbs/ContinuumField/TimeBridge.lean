@@ -2,8 +2,7 @@ import Gibbs.Session
 import Gibbs.ContinuumField.Basic
 import Mathlib
 
-/-!
-# Space and time bridge
+/-! # Space and time bridge
 
 Connects the discrete role-based world of choreographies to the continuous
 space-time of field theory. Each protocol role is assigned a location in a

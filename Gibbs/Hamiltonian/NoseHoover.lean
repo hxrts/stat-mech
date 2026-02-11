@@ -4,8 +4,7 @@ import Gibbs.Hamiltonian.Ergodic
 import Mathlib.Data.NNReal.Basic
 import Mathlib.Tactic
 
-/-!
-# Nose-Hoover Thermostat
+/-! # Nose-Hoover Thermostat
 
 The Nose-Hoover thermostat extends phase space by a scalar friction variable xi
 that couples to the momentum equation. Unlike fixed damping, xi evolves

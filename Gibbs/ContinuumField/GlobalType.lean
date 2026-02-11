@@ -1,8 +1,7 @@
 import Gibbs.ContinuumField.EffectsIntegration
 import SessionTypes.GlobalType
 
-/-!
-# Continuum Field → Global Session Type
+/-! # Continuum Field → Global Session Type
 
 Encodes a spatial field interaction as a Telltale `GlobalType`. Each role
 occupies a spatial location; nonlocal kernel coupling between locations becomes

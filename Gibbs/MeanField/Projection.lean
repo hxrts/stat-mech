@@ -1,8 +1,7 @@
 import Gibbs.MeanField.Rules
 import Gibbs.MeanField.ODE
 
-/-!
-# Global-to-Local Projection
+/-! # Global-to-Local Projection
 
 Given a target drift F (the global choreography) and a set of stoichiometric
 rule templates (which states gain or lose agents in each transition type),
@@ -141,7 +140,7 @@ theorem twoStateTemplates_conserve :
   -- Each template has +1 in one state and -1 in the other
   intro tmpl htmpl
   -- Case split on which template it is
-  fin_cases htmpl <;> native_decide
+  fin_cases htmpl <;> rfl
 
 /-- Projection problem for two-state systems. -/
 def TwoStateProjection (F : DriftFunction TwoState) : ProjectionProblem TwoState where

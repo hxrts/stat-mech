@@ -3,8 +3,7 @@ import Gibbs.ContinuumField.Kernel
 import Gibbs.ContinuumField.Projection
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 
-/-!
-# Choreography-to-kernel integration
+/-! # Choreography-to-kernel integration
 
 Connects choreography-level kernel declarations to local kernel environments
 carried by individual roles. A `KernelDecl` wraps a global kernel as a

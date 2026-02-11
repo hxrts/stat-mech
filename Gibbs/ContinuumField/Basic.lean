@@ -1,7 +1,6 @@
 import Mathlib
 
-/-!
-# Continuum field primitives
+/-! # Continuum field primitives
 
 The basic degrees of freedom for spatially extended models. A *field* is a
 function from positions `X` to values `V`, and the global state bundles three

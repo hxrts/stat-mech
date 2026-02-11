@@ -11,8 +11,7 @@ import Gibbs.ContinuumField.SpatialBridge
 import Gibbs.ContinuumField.CapacityBridge
 import Gibbs.ContinuumField.Examples.Anisotropic2D
 
-/-!
-# Continuum field layer facade
+/-! # Continuum field layer facade
 
 Single entry point for the continuum-field layer. Importing this file brings
 in field primitives, interaction kernels, projection exactness, closure

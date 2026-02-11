@@ -6,8 +6,7 @@ import Gibbs.Hamiltonian.EnergyGap
 import Gibbs.Consensus.PartitionFunction
 import Gibbs.Consensus.InteractiveDistance
 
-/-!
-# Gaps, safety, and finality
+/-! # Gaps, safety, and finality
 
 The gap between ordered and disordered phases determines whether a protocol
 has *finality*. A positive energy gap between good (agreement) and bad
@@ -15,7 +14,7 @@ has *finality*. A positive energy gap between good (agreement) and bad
 to push the system from one phase to the other. This is deterministic safety.
 
 A positive *free-energy* gap `ΔF > 0` provides exponential suppression of
-unsafe outcomes, with reversal probability scaling as `exp(-ΔF)`. When `ΔF`
+non-agreement outcomes, with reversal probability scaling as `exp(-ΔF)`. When `ΔF`
 grows with `N` the system has finality in the thermodynamic limit. When
 `ΔF = 0` (no gap) competing histories coexist and only probabilistic finality
 is possible. This is the Nakamoto regime.

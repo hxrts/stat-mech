@@ -16,8 +16,7 @@ open MeasureTheory
 
 variable {n : ℕ}
 
-/-!
-## Gaussian integral over Euclidean configuration space
+/-! ## Gaussian integral over Euclidean configuration space
 -/
 
 lemma integral_gaussian_pi (a : ℝ) :
