@@ -1115,6 +1115,14 @@ ContinuumField/NavierStokes.lean  -- facade
 ├── NavierStokes/Projector.lean
 ├── NavierStokes/SolutionNotions.lean
 ├── NavierStokes/LocalTheory.lean
+├── NavierStokes/Functional/
+│   ├── CriticalSpace.lean
+│   ├── HelmholtzLeray.lean
+│   ├── LittlewoodPaley.lean
+│   └── NonlinearEstimates.lean
+├── NavierStokes/Linear/
+│   ├── Semigroup.lean
+│   └── DuhamelFixedPoint.lean
 ├── NavierStokes/Erasure/
 │   ├── Operators.lean
 │   ├── ExactIdentities.lean
@@ -1126,10 +1134,15 @@ ContinuumField/NavierStokes.lean  -- facade
 ├── NavierStokes/Global/
 │   ├── ClosureAttempt.lean
 │   └── NoBlowup.lean
-└── NavierStokes/Blowup/
-    ├── Extraction.lean
-    ├── Compactness.lean
-    └── Rigidity.lean
+├── NavierStokes/Blowup/
+│   ├── Extraction.lean
+│   ├── Compactness.lean
+│   └── Rigidity.lean
+├── NavierStokes/Runtime/
+│   ├── CertifiedApproximation.lean
+│   ├── ObservationalAdequacy.lean
+│   └── NoBlowupCertificate.lean
+└── NavierStokes/ProgramTheorems.lean
 ```
 
 | Kind | Name | Notes |
@@ -1138,10 +1151,12 @@ ContinuumField/NavierStokes.lean  -- facade
 | structure | `IncompressibleNavierStokes` | PDE parameter bundle (`nu > 0`) |
 | structure | `LerayProjector` | Projection interface for pressure elimination |
 | structure | `StrongSolution`, `MildSolution`, `LerayHopfSolution` | Solution notion interfaces |
+| structure | `CriticalSpace`, `HelmholtzLerayPackage`, `StokesSemigroup` | Functional + linear analysis interfaces |
 | structure | `ErasureOperator`, `DefectEnvelope`, `GlobalClosureHypothesis` | Erasure/defect/closure scaffolding |
-| theorem | `exact_decomposition`, `defect_zero_of_idempotent` | Exact coarse/residual identities |
-| theorem | `continuation_of_defect_envelope` | Conditional continuation interface |
-| theorem | `global_regularity_of_closure` | Global-closure interface theorem |
+| structure | `CertifiedApproximation`, `ObservationalAdequacyHook`, `BoundedTimeNoBlowupCertificate` | Runtime certification bridge |
+| theorem | `exact_decomposition`, `projector_defect_zero_of_idempotent`, `exact_coarse_momentum_identity` | Exact coarse/residual identities |
+| theorem | `continuation_of_defect_envelope`, `global_regularity_of_closure`, `backward_uniqueness_liouville_excludes_minimal_blowup` | Continuation/closure/rigidity interfaces |
+| theorem | `major_local_existence_uniqueness`, `major_global_regularity_of_closure` | Scaling-explicit major theorem wrappers |
 
 ---
 

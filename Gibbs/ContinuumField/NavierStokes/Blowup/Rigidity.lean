@@ -20,6 +20,25 @@ def SatisfiesRigidityCriterion {D : SpatialDomain3}
     (cp : CompactnessProfile D) : Prop :=
   ∀ x i, cp.limitingVelocity x i = 0
 
+/-- Backward-uniqueness style criterion on the limiting velocity profile. -/
+def SatisfiesBackwardUniquenessCriterion {D : SpatialDomain3}
+    (cp : CompactnessProfile D) : Prop :=
+  ∀ x i, cp.limitingVelocity x i = 0
+
+/-- Liouville-style criterion on limiting pressure profile. -/
+def SatisfiesLiouvilleCriterion {D : SpatialDomain3}
+    (cp : CompactnessProfile D) : Prop :=
+  ∀ x, cp.limitingPressure x = 0
+
+/-- Backward uniqueness + Liouville hypotheses imply the rigidity criterion. -/
+theorem backward_uniqueness_liouville_implies_rigidity {D : SpatialDomain3}
+    (cp : CompactnessProfile D)
+    (hbu : SatisfiesBackwardUniquenessCriterion cp)
+    (_hliouville : SatisfiesLiouvilleCriterion cp) :
+    SatisfiesRigidityCriterion cp := by
+  intro x i
+  exact hbu x i
+
 /-- Interface theorem: rigidity criterion rules out minimal blow-up objects. -/
 theorem rigidity_excludes_minimal_blowup {D : SpatialDomain3}
     (cp : CompactnessProfile D)
@@ -33,6 +52,17 @@ theorem rigidity_excludes_minimal_blowup {D : SpatialDomain3}
   have hzero_m : m.profile.limitingVelocity x i = 0 := by
     simpa [hm] using hzero_cp
   exact hne (by simpa [hm] using hzero_m)
+
+/-- Backward-uniqueness/Liouville-style rigidity route excluding minimal objects. -/
+theorem backward_uniqueness_liouville_excludes_minimal_blowup {D : SpatialDomain3}
+    (cp : CompactnessProfile D)
+    (hbu : SatisfiesBackwardUniquenessCriterion cp)
+    (hliouville : SatisfiesLiouvilleCriterion cp)
+    (hnontrivial : ∃ x i, cp.limitingVelocity x i ≠ 0) :
+    ¬ IsMinimalBlowupObject cp := by
+  exact rigidity_excludes_minimal_blowup cp
+    (backward_uniqueness_liouville_implies_rigidity cp hbu hliouville)
+    hnontrivial
 
 /-- A uniform bound for a witness norm contradicts finite-time blow-up. -/
 theorem bounded_norm_excludes_finite_time_blowup {D : SpatialDomain3}
