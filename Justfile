@@ -20,6 +20,10 @@ test:
 check-arch-lean *args:
     ./scripts/check-arch-lean.sh {{args}}
 
+# Report escape hatches (sorry, axiom, unsafe, partial, etc.)
+escape:
+    ./scripts/check-escape.sh
+
 # Clean build artifacts
 clean:
     rm -rf .lake docs/book
