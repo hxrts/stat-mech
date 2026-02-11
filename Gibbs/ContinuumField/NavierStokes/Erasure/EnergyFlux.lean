@@ -14,7 +14,7 @@ noncomputable section
 
 /-- Pointwise kinetic energy density (up to 1/2 factor). -/
 def pointEnergy {D : SpatialDomain3} (u : VelocityField D) (x : SpatialCarrier D) : ℝ :=
-  (1 / 2 : ℝ) * ‖u x‖ ^ 2
+  (1 / 2 : ℝ) * ((u x 0) ^ 2 + (u x 1) ^ 2 + (u x 2) ^ 2)
 
 /-- Resolved energy density induced by an erasure operator. -/
 def resolvedEnergy {D : SpatialDomain3} (E : ErasureOperator D)

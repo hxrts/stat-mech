@@ -1,4 +1,4 @@
-import Gibbs.ContinuumField.NavierStokes.Core
+import Mathlib.Data.Real.Basic
 
 /-!
 # Navier-Stokes domain setup
@@ -25,7 +25,7 @@ abbrev SpatialCarrier (_D : SpatialDomain3) : Type := Coord3
 
 /-- Initial-velocity package for the 3D incompressible problem. -/
 structure InitialVelocityField (D : SpatialDomain3) where
-  /-- Initial velocity vector field u0. -/
+  /-- Initial velocity vector field `u₀`. -/
   u0 : SpatialCarrier D → Coord3
   /-- Divergence-free side condition. -/
   divergenceFree : Prop
@@ -36,5 +36,8 @@ structure InitialVelocityField (D : SpatialDomain3) where
 
 /-- Program default domain for first formalization pass. -/
 abbrev DefaultDomain : SpatialDomain3 := .torus3
+
+/-- Canonical theorem: the default domain is the 3-torus. -/
+theorem defaultDomain_is_torus3 : DefaultDomain = .torus3 := rfl
 
 end Gibbs.ContinuumField.NavierStokes

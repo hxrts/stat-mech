@@ -30,4 +30,18 @@ structure FirstSingularTimeWitness (D : SpatialDomain3) where
   /-- Positivity of first singular time. -/
   Tstar_pos : 0 < Tstar
 
+/-- Finite-time blow-up witness as failure of every finite critical bound up to `T*`. -/
+structure FiniteTimeBlowupWitness {D : SpatialDomain3} (NS : IncompressibleNavierStokes D) where
+  /-- Candidate strong solution trajectory. -/
+  sol : StrongSolution NS
+  /-- Critical norm used to witness norm inflation. -/
+  K : CriticalNorm D
+  /-- Candidate singular time. -/
+  Tstar : ℝ
+  /-- Positivity of `T*`. -/
+  Tstar_pos : 0 < Tstar
+  /-- Every finite budget is violated on `[0, T*]`. -/
+  exceed_every_budget : ∀ B : ℝ,
+    ∃ t : ℝ, 0 ≤ t ∧ t ≤ Tstar ∧ B < K.value (sol.vel t)
+
 end Gibbs.ContinuumField.NavierStokes
