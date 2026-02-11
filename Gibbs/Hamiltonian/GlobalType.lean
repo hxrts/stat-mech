@@ -1,5 +1,5 @@
 import Gibbs.Hamiltonian.Choreography
-import SessionTypes.GlobalType.Core
+import SessionTypes.GlobalType
 import Choreography.Projection.Trans.Core
 
 /-!
@@ -166,6 +166,20 @@ theorem HamiltonianChoreography.toGlobalType_wellFormed
       isProductiveBranches, Bool.and_true]
     exact chainComms_isProductive_empty tl (.var "step")
       (by simp [GlobalType.isProductive])
+
+/-- API-facing well-formedness certificate using Telltale's `GlobalType.wellFormed`. -/
+theorem HamiltonianChoreography.toGlobalType_wellFormed_api
+    {n : ℕ} (C : HamiltonianChoreography n)
+    (roleNames : List Role) (coupled : Role → Role → Bool)
+    (h_pairs : (coupledPairs roleNames coupled).length > 0)
+    (h_nodup : roleNames.Nodup) :
+    (C.toGlobalType roleNames coupled).wellFormed = true := by
+  have h :=
+    HamiltonianChoreography.toGlobalType_wellFormed
+      (C := C) roleNames coupled h_pairs h_nodup
+  dsimp at h
+  rcases h with ⟨hvars, hnonempty, hnoself, hprod⟩
+  simp [GlobalType.wellFormed, hvars, hnonempty, hnoself, hprod]
 
 /-! ## Projection example -/
 

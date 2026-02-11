@@ -1091,7 +1091,7 @@ Adapter from the Effects spatial mirror to the continuum SpatialBridge.
 
 #### `ContinuumField/SpatialMirror.lean`
 
-Self-contained mirror of the Effects system's spatial types (`Site`, `RoleName`, `SpatialReq`, `Topology`, `Satisfies`). Includes helpers: `isTop`, `isBot`, `atoms`, `fromList`, `satisfiesBool`, `satisfiesBool_iff_Satisfies`.
+Compatibility bridge that aliases Telltale `Protocol.Spatial` types (`Site`, `RoleName`, `SpatialReq`, `Topology`, `Satisfies`) into the Gibbs continuum namespace, plus `satisfiesBool` reflection.
 
 #### `ContinuumField/Examples/Anisotropic2D.lean`
 
@@ -1102,6 +1102,46 @@ Self-contained mirror of the Effects system's spatial types (`Site`, `RoleName`,
 | def | `anisotropicLocal` | 2D anisotropic kernel |
 | theorem | `example_exact` | `simpa using nonlocal_exact` |
 | theorem | `example_closure_bound` | `simpa using C.sound` |
+
+#### `ContinuumField/NavierStokes.lean` (+ submodules)
+
+Navier-Stokes program facade and scaffolding for an erasure/bounds proof path.
+
+```
+ContinuumField/NavierStokes.lean  -- facade
+├── NavierStokes/Core.lean        -- existing continuum-field NS representation
+├── NavierStokes/Domain.lean
+├── NavierStokes/Equation.lean
+├── NavierStokes/Projector.lean
+├── NavierStokes/SolutionNotions.lean
+├── NavierStokes/LocalTheory.lean
+├── NavierStokes/Erasure/
+│   ├── Operators.lean
+│   ├── ExactIdentities.lean
+│   └── EnergyFlux.lean
+├── NavierStokes/Defect/
+│   ├── Envelope.lean
+│   ├── Estimates.lean
+│   └── Continuation.lean
+├── NavierStokes/Global/
+│   ├── ClosureAttempt.lean
+│   └── NoBlowup.lean
+└── NavierStokes/Blowup/
+    ├── Extraction.lean
+    ├── Compactness.lean
+    └── Rigidity.lean
+```
+
+| Kind | Name | Notes |
+|------|------|-------|
+| structure | `SpatialDomain3`, `InitialVelocityField` | Domain and initial-data packaging |
+| structure | `IncompressibleNavierStokes` | PDE parameter bundle (`nu > 0`) |
+| structure | `LerayProjector` | Projection interface for pressure elimination |
+| structure | `StrongSolution`, `MildSolution`, `LerayHopfSolution` | Solution notion interfaces |
+| structure | `ErasureOperator`, `DefectEnvelope`, `GlobalClosureHypothesis` | Erasure/defect/closure scaffolding |
+| theorem | `exact_decomposition`, `defect_zero_of_idempotent` | Exact coarse/residual identities |
+| theorem | `continuation_of_defect_envelope` | Conditional continuation interface |
+| theorem | `global_regularity_of_closure` | Global-closure interface theorem |
 
 ---
 

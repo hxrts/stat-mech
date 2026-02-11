@@ -1,5 +1,5 @@
 import Gibbs.ContinuumField.EffectsIntegration
-import SessionTypes.GlobalType.Core
+import SessionTypes.GlobalType
 
 /-!
 # Continuum Field → Global Session Type
@@ -162,5 +162,18 @@ theorem kernelToGlobalType_wellFormed
       isProductiveBranches, Bool.and_true]
     exact chainComms_isProductive_empty tl (.var "step")
       (by simp [GlobalType.isProductive])
+
+/-- API-facing well-formedness certificate using Telltale's `GlobalType.wellFormed`. -/
+theorem kernelToGlobalType_wellFormed_api
+    (roleNames : List Gibbs.Role)
+    (coupled : Gibbs.Role → Gibbs.Role → Bool)
+    (h_pairs : (coupledPairs roleNames coupled).length > 0)
+    (h_nodup : roleNames.Nodup) :
+    (kernelToGlobalType roleNames coupled).wellFormed = true := by
+  have h :=
+    kernelToGlobalType_wellFormed roleNames coupled h_pairs h_nodup
+  dsimp at h
+  rcases h with ⟨hvars, hnonempty, hnoself, hprod⟩
+  simp [GlobalType.wellFormed, hvars, hnonempty, hnoself, hprod]
 
 end Gibbs.ContinuumField

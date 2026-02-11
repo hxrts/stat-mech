@@ -1,6 +1,6 @@
 import Gibbs.MeanField.Choreography
 import Gibbs.MeanField.Rules
-import SessionTypes.GlobalType.Core
+import SessionTypes.GlobalType
 
 /-!
 # Mean-Field Choreography → Global Session Type
@@ -176,5 +176,20 @@ theorem MeanFieldChoreography.toGlobalType_wellFormed
       isProductiveBranches, Bool.and_true]
     exact chainComms_isProductive_empty tl (.var "step")
       (by simp [GlobalType.isProductive])
+
+/-- API-facing well-formedness certificate using Telltale's `GlobalType.wellFormed`. -/
+theorem MeanFieldChoreography.toGlobalType_wellFormed_api
+    {Q : Type*} [Fintype Q] (C : MeanFieldChoreography Q)
+    (ra : MeanFieldRoleAssignment Q)
+    (coupled : Gibbs.Role → Gibbs.Role → Bool)
+    (h_pairs : (coupledPairs ra.roles coupled).length > 0)
+    (h_nodup : ra.roles.Nodup) :
+    (C.toGlobalType ra coupled).wellFormed = true := by
+  have h :=
+    MeanFieldChoreography.toGlobalType_wellFormed
+      (C := C) ra coupled h_pairs h_nodup
+  dsimp at h
+  rcases h with ⟨hvars, hnonempty, hnoself, hprod⟩
+  simp [GlobalType.wellFormed, hvars, hnonempty, hnoself, hprod]
 
 end Gibbs.MeanField
