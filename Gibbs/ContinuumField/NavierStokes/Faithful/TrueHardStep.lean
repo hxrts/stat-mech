@@ -18,16 +18,16 @@ open scoped Classical
 abbrev HardStepGlobalClosureTheorem : Prop :=
   ∀ H : ClayBHypotheses,
     ∀ M : DecisiveFaithfulPeriodicModel H,
-      ∀ E : DecisiveCriticalAnalyticEngine H M,
-        ∀ _L : FaithfulMildLocalTheory H M.base E.analytic,
+      ∀ A : FaithfulAnalyticStack,
+        ∀ _L : FaithfulMildLocalTheory H M.base A,
           HardStepGlobalClosure
 
 /-- Direct theorem endpoint for hard-step global extension. -/
 abbrev HardStepGlobalExtensionTheorem : Prop :=
   ∀ H : ClayBHypotheses,
     ∀ M : DecisiveFaithfulPeriodicModel H,
-      ∀ E : DecisiveCriticalAnalyticEngine H M,
-        ∀ _L : FaithfulMildLocalTheory H M.base E.analytic,
+      ∀ A : FaithfulAnalyticStack,
+        ∀ _L : FaithfulMildLocalTheory H M.base A,
           ∃ sol : StrongSolution M.base.NS,
             sol.vel 0 = H.u0 ∧
             Condition10 sol.vel ∧
@@ -38,24 +38,31 @@ def hardStepGlobalClosure_from_contradiction_route
     (global_closure :
       ∀ H : ClayBHypotheses,
         ∀ M : DecisiveFaithfulPeriodicModel H,
-          ∀ E : DecisiveCriticalAnalyticEngine H M,
-            ∀ _L : FaithfulMildLocalTheory H M.base E.analytic,
+          ∀ A : FaithfulAnalyticStack,
+            ∀ _L : FaithfulMildLocalTheory H M.base A,
               HardStepGlobalClosure) :
     HardStepGlobalClosureTheorem := by
-  intro H M E L
-  exact global_closure H M E L
+  intro H M A L
+  exact global_closure H M A L
 
-/-- Canonical hard-step control route sourcing closure theorems from the analytic engine. -/
-def hardStepGlobalClosure_from_engine_route : HardStepGlobalClosureTheorem :=
+/-- Canonical hard-step control route sourcing closure theorems from analytic inputs. -/
+def hardStepGlobalClosure_from_analytic_route
+    (global_closure :
+      ∀ H : ClayBHypotheses,
+        ∀ M : DecisiveFaithfulPeriodicModel H,
+          ∀ A : FaithfulAnalyticStack,
+            ∀ _L : FaithfulMildLocalTheory H M.base A,
+              HardStepGlobalClosure) :
+    HardStepGlobalClosureTheorem :=
   hardStepGlobalClosure_from_contradiction_route
-    (fun _ _ E _ => decisive_hard_step_global_closure E)
+    global_closure
 
 /-- Periodicity propagation used by the hard-step global extension route. -/
 theorem hardStep_periodicity_propagation_from_localTheory
     {H : ClayBHypotheses}
     {M : DecisiveFaithfulPeriodicModel H}
-    {E : DecisiveCriticalAnalyticEngine H M}
-    (L : FaithfulMildLocalTheory H M.base E.analytic) :
+    {A : FaithfulAnalyticStack}
+    (L : FaithfulMildLocalTheory H M.base A) :
     Condition10 L.strong.vel :=
   faithful_periodicity_propagation L
 
@@ -63,8 +70,8 @@ theorem hardStep_periodicity_propagation_from_localTheory
 theorem hardStep_global_extension_from_continuation_route
     (global_closure : HardStepGlobalClosureTheorem) :
     HardStepGlobalExtensionTheorem := by
-  intro H M E L
-  have hclosure : HardStepGlobalClosure := global_closure H M E L
+  intro H M A L
+  have hclosure : HardStepGlobalClosure := global_closure H M A L
   exact baseAxiom_global_extension_from_continuation_direct hclosure L
 
 /-- Continuation/long-time control theorem interface from hard-step control package. -/

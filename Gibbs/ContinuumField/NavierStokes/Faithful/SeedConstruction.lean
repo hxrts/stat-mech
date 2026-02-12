@@ -13,13 +13,13 @@ open scoped Classical
 abbrev ConstructiveDecisiveSeedFamily : Type :=
   DecisiveCompletionSeedFamily
 
-/-- Concrete model/engine/local-theory triple exists for each hypothesis package. -/
+/-- Concrete model/analysis/local-theory triple exists for each hypothesis package. -/
 theorem decisiveSeed_concrete_triple_exists
     (build_seed : ConstructiveDecisiveSeedFamily) :
     ∀ H : ClayBHypotheses,
       ∃ M : DecisiveFaithfulPeriodicModel H,
-        ∃ E : DecisiveCriticalAnalyticEngine H M,
-          ∃ _L : FaithfulMildLocalTheory H M.base E.analytic, True := by
+        ∃ A : FaithfulAnalyticStack,
+          ∃ _L : FaithfulMildLocalTheory H M.base A, True := by
   intro H
   let seed := build_seed H
   exact ⟨seed.1, seed.2.1, seed.2.2, trivial⟩
@@ -29,9 +29,9 @@ theorem faithfulPipelineExists_from_constructive_seeds
     (global_closure :
       ∀ H : ClayBHypotheses,
         ∀ M : DecisiveFaithfulPeriodicModel H,
-          ∀ E : DecisiveCriticalAnalyticEngine H M,
-            ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-              ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True)
+          ∀ A : FaithfulAnalyticStack,
+            ∀ L : FaithfulMildLocalTheory H M.base A,
+              ∃ _Gd : FaithfulHardGlobalData H M.base A L, True)
     (S : ConstructiveDecisiveSeedFamily) :
     FaithfulPipelineExists := by
   exact faithfulPipelineExists_from_decisive_global_closure global_closure S
@@ -41,9 +41,9 @@ theorem clayBStatement_from_decisive_completion_no_nonempty
     (global_closure :
       ∀ H : ClayBHypotheses,
         ∀ M : DecisiveFaithfulPeriodicModel H,
-          ∀ E : DecisiveCriticalAnalyticEngine H M,
-            ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-              ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True)
+          ∀ A : FaithfulAnalyticStack,
+            ∀ L : FaithfulMildLocalTheory H M.base A,
+              ∃ _Gd : FaithfulHardGlobalData H M.base A L, True)
     (S : ConstructiveDecisiveSeedFamily) :
     ClayBStatement := by
   exact clayBStatement_of_faithful_pipeline
@@ -54,9 +54,9 @@ theorem clayBStatement_from_seed_construction
     (global_closure :
       ∀ H : ClayBHypotheses,
         ∀ M : DecisiveFaithfulPeriodicModel H,
-          ∀ E : DecisiveCriticalAnalyticEngine H M,
-            ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-              ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True)
+          ∀ A : FaithfulAnalyticStack,
+            ∀ L : FaithfulMildLocalTheory H M.base A,
+              ∃ _Gd : FaithfulHardGlobalData H M.base A L, True)
     (build_seed : ConstructiveDecisiveSeedFamily) :
     ClayBStatement := by
   exact clayBStatement_from_decisive_completion_no_nonempty global_closure build_seed

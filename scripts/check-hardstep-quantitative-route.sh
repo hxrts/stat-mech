@@ -8,12 +8,12 @@ GLOBAL_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveGlobal.lea
 echo "[check-hardstep-quantitative-route] checking hard-step quantitative route"
 
 for pattern in \
-  "QuantitativeProfileDecompositionTheorem" \
-  "QuantitativeMinimalElementExtraction" \
-  "QuantitativeLowerCascadeTheorem" \
-  "QuantitativeUpperTailTheorem" \
-  "QuantitativeHardStepContradiction" \
-  "hardStep_Astar_infinite"
+  "HardStepGlobalClosureTheorem" \
+  "HardStepGlobalExtensionTheorem" \
+  "hardStepGlobalClosure_from_contradiction_route" \
+  "hardStepGlobalClosure_from_analytic_route" \
+  "hardStep_global_extension_from_continuation_route" \
+  "hardStep_global_extension_theorem"
 do
   if ! rg -n "$pattern" "$HARDSTEP_FILE" >/dev/null; then
     echo "[check-hardstep-quantitative-route] FAIL: missing $pattern" >&2

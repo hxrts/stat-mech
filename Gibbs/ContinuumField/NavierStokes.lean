@@ -74,7 +74,6 @@ import Gibbs.ContinuumField.NavierStokes.Faithful.HardGlobal
 import Gibbs.ContinuumField.NavierStokes.Faithful.Final
 import Gibbs.ContinuumField.NavierStokes.Faithful.PDERealization
 import Gibbs.ContinuumField.NavierStokes.Faithful.SmoothnessFidelity
-import Gibbs.ContinuumField.NavierStokes.Faithful.CriticalEngine
 import Gibbs.ContinuumField.NavierStokes.Faithful.CriticalElement
 import Gibbs.ContinuumField.NavierStokes.Faithful.Rigidity
 import Gibbs.ContinuumField.NavierStokes.Faithful.TrueHardStep
@@ -95,7 +94,6 @@ import Gibbs.ContinuumField.NavierStokes.Faithful.FullProofExactCompactness
 import Gibbs.ContinuumField.NavierStokes.Faithful.FullProofExactRigidity
 import Gibbs.ContinuumField.NavierStokes.Faithful.FullProofExactGlobal
 import Gibbs.ContinuumField.NavierStokes.Faithful.FullProofClayFinalization
-import Gibbs.ContinuumField.NavierStokes.Faithful.DecisiveSpineSetting
 import Gibbs.ContinuumField.NavierStokes.Faithful.DecisiveSpineThreshold
 import Gibbs.ContinuumField.NavierStokes.Faithful.DecisiveSpineProfile
 import Gibbs.ContinuumField.NavierStokes.Faithful.DecisiveSpineMinimalElement

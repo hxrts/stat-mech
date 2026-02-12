@@ -18,12 +18,12 @@ abbrev BaseAxiomPrimitiveProfileData := ProfileDecompositionData
 /-- Primitive critical-threshold datum in the base-axiom compactness route. -/
 abbrev BaseAxiomPrimitiveThresholdData := CriticalThresholdData
 
-/-- Primitive minimizing-sequence witness shape at a fixed threshold. -/
+/-- Primitive minimizing-sequence shape at a fixed threshold. -/
 abbrev BaseAxiomPrimitiveMinimizingData
     (threshold : BaseAxiomPrimitiveThresholdData) :=
   MinimizingProfileSequence threshold
 
-/-- Primitive almost-periodicity modulus witness shape for a minimal element. -/
+/-- Primitive almost-periodicity modulus shape for a minimal element. -/
 abbrev BaseAxiomPrimitiveOrbitCompactnessModulus
     (minimal_element : HardStepMinimalElement) :=
   ∀ ε : ℝ, 0 < ε → ∃ K : Nat, 0 < K ∧ minimal_element.profile.nontrivial

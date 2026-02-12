@@ -1,4 +1,3 @@
-import Gibbs.ContinuumField.NavierStokes.Faithful.DecisiveSpineSetting
 import Gibbs.ContinuumField.NavierStokes.Faithful.BaseAxiomCompactness
 
 /-! # Decisive contradiction-spine threshold layer

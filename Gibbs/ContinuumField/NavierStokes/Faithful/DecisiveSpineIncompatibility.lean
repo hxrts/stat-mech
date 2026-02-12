@@ -51,7 +51,7 @@ theorem decisiveSpine_incompatibility_theorem
     lower_hypotheses
     upper_hypotheses
 
-/-- Witness-to-hypothesis bridge for incompatibility route. -/
+/-- Hypothesis alignment lemma for incompatibility route. -/
 theorem decisiveSpine_incompatibility_from_witness
     {m : HardStepMinimalElement}
     {U : VelocityTrajectory .torus3}

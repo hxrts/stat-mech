@@ -24,7 +24,7 @@ theorem baseAxiom_unconditional_global_control
     HardStepGlobalClosure := by
   exact baseAxiom_unconditional_global_control_direct hclosure
 
-/-- Direct continuation-derived global extension theorem from closure + witness. -/
+/-- Direct continuation-derived global extension theorem from closure inputs. -/
 theorem baseAxiom_global_extension_from_continuation_direct
     {H : ClayBHypotheses}
     {M : DecisiveFaithfulPeriodicModel H}

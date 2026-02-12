@@ -11,12 +11,12 @@ namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
 
-/-- Constructive decisive seed family: one concrete model/engine/local-theory triple per hypothesis. -/
+/-- Constructive decisive seed family: one concrete model/analysis/local-theory triple per hypothesis. -/
 abbrev DecisiveCompletionSeedFamily : Type :=
   ∀ H : ClayBHypotheses,
     Σ M : DecisiveFaithfulPeriodicModel H,
-      Σ E : DecisiveCriticalAnalyticEngine H M,
-        FaithfulMildLocalTheory H M.base E.analytic
+      Σ A : FaithfulAnalyticStack,
+        FaithfulMildLocalTheory H M.base A
 
 /-- Every decisive completion model is locked to the canonical periodic operators. -/
 theorem decisive_seed_uses_canonical_operators
@@ -30,27 +30,27 @@ theorem faithfulPipelineExists_from_decisive_global_closure
     (global_closure :
       ∀ H : ClayBHypotheses,
         ∀ M : DecisiveFaithfulPeriodicModel H,
-          ∀ E : DecisiveCriticalAnalyticEngine H M,
-            ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-              ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True)
+          ∀ A : FaithfulAnalyticStack,
+            ∀ L : FaithfulMildLocalTheory H M.base A,
+              ∃ _Gd : FaithfulHardGlobalData H M.base A L, True)
     (S : DecisiveCompletionSeedFamily) :
     FaithfulPipelineExists := by
   intro H
   let seed := S H
   let M := seed.1
-  let E := seed.2.1
+  let A := seed.2.1
   let L := seed.2.2
-  rcases global_closure H M E L with ⟨hardGlobalData, hGd⟩
-  exact ⟨M.base, E.analytic, L, hardGlobalData, hGd⟩
+  rcases global_closure H M A L with ⟨hardGlobalData, hGd⟩
+  exact ⟨M.base, A, L, hardGlobalData, hGd⟩
 
 /-- Decisive completion theorem for the faithful theorem schema. -/
 theorem faithfulClayBStatement_from_proved_pipeline_exists
     (_global_closure :
       ∀ H : ClayBHypotheses,
         ∀ M : DecisiveFaithfulPeriodicModel H,
-          ∀ E : DecisiveCriticalAnalyticEngine H M,
-            ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-              ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True)
+          ∀ A : FaithfulAnalyticStack,
+            ∀ L : FaithfulMildLocalTheory H M.base A,
+              ∃ _Gd : FaithfulHardGlobalData H M.base A L, True)
     (_S : DecisiveCompletionSeedFamily) :
     FaithfulClayBStatement := by
   exact faithful_clayBStatement_from_pipeline_inputs
@@ -66,9 +66,9 @@ theorem clayBStatement_from_decisive_completion
     (global_closure :
       ∀ H : ClayBHypotheses,
         ∀ M : DecisiveFaithfulPeriodicModel H,
-          ∀ E : DecisiveCriticalAnalyticEngine H M,
-            ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-              ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True)
+          ∀ A : FaithfulAnalyticStack,
+            ∀ L : FaithfulMildLocalTheory H M.base A,
+              ∃ _Gd : FaithfulHardGlobalData H M.base A L, True)
     (S : DecisiveCompletionSeedFamily) :
     ClayBStatement := by
   exact clayBStatement_of_faithful_pipeline

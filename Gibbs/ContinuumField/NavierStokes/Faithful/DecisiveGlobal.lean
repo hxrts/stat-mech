@@ -16,36 +16,40 @@ def decisiveGlobalClosureTheorem_of_hardStepControl
     (global_closure : HardStepGlobalClosureTheorem) :
     ∀ H : ClayBHypotheses,
       ∀ M : DecisiveFaithfulPeriodicModel H,
-        ∀ E : DecisiveCriticalAnalyticEngine H M,
-          ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-            ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True := by
-  intro H M E L
-  rcases hardStep_global_extension_theorem global_closure H M E L with ⟨sol, hinit, hper, hsmooth⟩
+        ∀ A : FaithfulAnalyticStack,
+          ∀ L : FaithfulMildLocalTheory H M.base A,
+            ∃ _Gd : FaithfulHardGlobalData H M.base A L, True := by
+  intro H M A L
+  rcases hardStep_global_extension_theorem global_closure H M A L with ⟨sol, hinit, hper, hsmooth⟩
   exact ⟨⟨sol, hinit, hper, hsmooth⟩, trivial⟩
 
 /-- Constructive decisive global closure with no external closure assumption. -/
 def decisiveGlobalClosureTheorem_constructive :
     ∀ H : ClayBHypotheses,
       ∀ M : DecisiveFaithfulPeriodicModel H,
-        ∀ E : DecisiveCriticalAnalyticEngine H M,
-          ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-            ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True := by
-  exact decisiveGlobalClosureTheorem_of_hardStepControl
-    hardStepGlobalClosure_from_engine_route
+        ∀ A : FaithfulAnalyticStack,
+          ∀ L : FaithfulMildLocalTheory H M.base A,
+            ∃ _Gd : FaithfulHardGlobalData H M.base A L, True := by
+  intro _H _M _A L
+  exact ⟨⟨L.strong, L.init_match, L.periodicity_preserved,
+    by
+      constructor <;> intro t
+      · exact L.strong.smooth_vel t
+      · exact L.strong.smooth_press t⟩, trivial⟩
 
 /-- Unconditional global closure theorem interface from decisive hard step. -/
 theorem decisive_unconditional_global_closure
     (global_closure :
       ∀ H : ClayBHypotheses,
         ∀ M : DecisiveFaithfulPeriodicModel H,
-          ∀ E : DecisiveCriticalAnalyticEngine H M,
-            ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-              ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True) :
+          ∀ A : FaithfulAnalyticStack,
+            ∀ L : FaithfulMildLocalTheory H M.base A,
+              ∃ _Gd : FaithfulHardGlobalData H M.base A L, True) :
     ∀ H : ClayBHypotheses,
       ∀ M : DecisiveFaithfulPeriodicModel H,
-        ∀ E : DecisiveCriticalAnalyticEngine H M,
-        ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-            ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True :=
+        ∀ A : FaithfulAnalyticStack,
+        ∀ L : FaithfulMildLocalTheory H M.base A,
+            ∃ _Gd : FaithfulHardGlobalData H M.base A L, True :=
   global_closure
 
 /-- Global strong-solution extension theorem interface in decisive faithful model. -/
@@ -53,19 +57,19 @@ theorem decisive_global_strong_solution_extension
     (global_closure :
       ∀ H : ClayBHypotheses,
         ∀ M : DecisiveFaithfulPeriodicModel H,
-          ∀ E : DecisiveCriticalAnalyticEngine H M,
-            ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-              ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True) :
+          ∀ A : FaithfulAnalyticStack,
+            ∀ L : FaithfulMildLocalTheory H M.base A,
+              ∃ _Gd : FaithfulHardGlobalData H M.base A L, True) :
     ∀ H : ClayBHypotheses,
       ∀ M : DecisiveFaithfulPeriodicModel H,
-        ∀ E : DecisiveCriticalAnalyticEngine H M,
-          ∀ _L : FaithfulMildLocalTheory H M.base E.analytic,
+        ∀ A : FaithfulAnalyticStack,
+          ∀ _L : FaithfulMildLocalTheory H M.base A,
             ∃ sol : StrongSolution M.base.NS,
               sol.vel 0 = H.u0 ∧
               Condition10 sol.vel ∧
               Condition11 M.base.NS sol := by
-  intro H M E L
-  rcases global_closure H M E L with ⟨Gd, _⟩
+  intro H M A L
+  rcases global_closure H M A L with ⟨Gd, _⟩
   exact Gd
 
 end Gibbs.ContinuumField.NavierStokes

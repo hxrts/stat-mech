@@ -9,57 +9,48 @@ namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
 
-/-- Exact periodic analytic package for the full-proof route. -/
-structure FullProofExactAnalysisData where
-  spaces : DefinitiveFunctionSpaceStack
-  complete : DefinitiveFunctionSpaceCompleteness spaces
-  norm_equiv : DefinitiveFunctionSpaceNormEquivalences spaces
-  interpolation : DefinitiveInterpolationInequalities spaces
-  embeddings : DefinitiveEmbeddingInequalities spaces
-  fourier : TrueTorusFourierOperators
-  fourier_norms : TrueTorusFourierNormTheorems spaces fourier
-  lp : TrueTorusLittlewoodPaley
-  bernstein : TrueTorusBernsteinInequalities spaces lp
-  convection : TrueTorusConvectionModel
-  constants : TrueTorusAnalyticConstantRegistry
-  nonlinear : TrueTorusNonlinearEstimateBundle spaces convection constants
-
 /-- Exact-space completeness theorem bundle for full-proof use. -/
 theorem fullProof_exact_space_completeness
-    (A : FullProofExactAnalysisData) :
-    A.complete.lp3_complete ∧
-      A.complete.sobolev_complete ∧
-      A.complete.besov_complete ∧
-      A.complete.hhalf_complete := by
-  exact trueTorus_functionSpace_completeness A.spaces A.complete
+    (spaces : DefinitiveFunctionSpaceStack)
+    (complete : DefinitiveFunctionSpaceCompleteness spaces) :
+    complete.lp3_complete ∧
+      complete.sobolev_complete ∧
+      complete.besov_complete ∧
+      complete.hhalf_complete := by
+  exact trueTorus_functionSpace_completeness spaces complete
 
 /-- Exact interpolation/embedding/nonlinear inequality bundle with constants. -/
 theorem fullProof_exact_inequality_bundle
-    (A : FullProofExactAnalysisData) :
+    (spaces : DefinitiveFunctionSpaceStack)
+    (interpolation : DefinitiveInterpolationInequalities spaces)
+    (embeddings : DefinitiveEmbeddingInequalities spaces)
+    (convection : TrueTorusConvectionModel)
+    (constants : TrueTorusAnalyticConstantRegistry)
+    (nonlinear : TrueTorusNonlinearEstimateBundle spaces convection constants) :
     (∃ C θ : ℝ, 0 ≤ C ∧ 0 ≤ θ ∧ θ ≤ 1 ∧
       ∀ u,
-        A.spaces.lp3.space.norm u ≤
-          C * A.spaces.sobolev.space.norm u * A.spaces.hhalf.space.norm u) ∧
+        spaces.lp3.space.norm u ≤
+          C * spaces.sobolev.space.norm u * spaces.hhalf.space.norm u) ∧
     (∃ C : ℝ, 0 ≤ C ∧ ∀ u,
-      A.spaces.lp3.space.norm u ≤ C * A.spaces.sobolev.space.norm u) ∧
+      spaces.lp3.space.norm u ≤ C * spaces.sobolev.space.norm u) ∧
     (∃ C : ℝ, 0 ≤ C ∧ ∀ u,
-      A.spaces.lp3.space.norm u ≤ C * A.spaces.besov.space.norm u) ∧
+      spaces.lp3.space.norm u ≤ C * spaces.besov.space.norm u) ∧
     (∀ u,
-      A.spaces.lp3.space.norm (A.convection.convection u) ≤
-        A.constants.Cbilinear * A.spaces.sobolev.space.norm u * A.spaces.hhalf.space.norm u) ∧
+      spaces.lp3.space.norm (convection.convection u) ≤
+        constants.Cbilinear * spaces.sobolev.space.norm u * spaces.hhalf.space.norm u) ∧
     (∀ u v,
-      A.spaces.besov.space.norm (trueTorusVectorAdd u v) ≤
-        A.constants.CcommKP * (A.spaces.besov.space.norm u + A.spaces.besov.space.norm v)) ∧
+      spaces.besov.space.norm (trueTorusVectorAdd u v) ≤
+        constants.CcommKP * (spaces.besov.space.norm u + spaces.besov.space.norm v)) ∧
     (∀ u v,
-      A.spaces.sobolev.space.norm (trueTorusVectorAdd u v) ≤
-        A.constants.CcommBony * (A.spaces.sobolev.space.norm u + A.spaces.sobolev.space.norm v)) := by
-  refine ⟨trueTorus_interpolation_inequalities A.spaces A.interpolation, ?_, ?_, ?_, ?_, ?_⟩
-  · exact (trueTorus_embedding_inequalities A.spaces A.embeddings).1
-  · exact (trueTorus_embedding_inequalities A.spaces A.embeddings).2
+      spaces.sobolev.space.norm (trueTorusVectorAdd u v) ≤
+        constants.CcommBony * (spaces.sobolev.space.norm u + spaces.sobolev.space.norm v)) := by
+  refine ⟨trueTorus_interpolation_inequalities spaces interpolation, ?_, ?_, ?_, ?_, ?_⟩
+  · exact (trueTorus_embedding_inequalities spaces embeddings).1
+  · exact (trueTorus_embedding_inequalities spaces embeddings).2
   · exact trueTorus_bilinear_convection_estimate
-      A.spaces A.convection A.constants A.nonlinear
-  · exact (trueTorus_commutator_estimates A.spaces A.convection A.constants A.nonlinear).1
-  · exact (trueTorus_commutator_estimates A.spaces A.convection A.constants A.nonlinear).2
+      spaces convection constants nonlinear
+  · exact (trueTorus_commutator_estimates spaces convection constants nonlinear).1
+  · exact (trueTorus_commutator_estimates spaces convection constants nonlinear).2
 
 /-- Policy marker for exact analysis replacement in the full-proof route. -/
 def FullProofExactAnalysisReplacementPolicy : Prop := True

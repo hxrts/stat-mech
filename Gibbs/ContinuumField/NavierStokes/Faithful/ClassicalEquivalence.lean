@@ -66,9 +66,9 @@ theorem clayBStatement_classical_equivalent_route
     (global_closure :
       ∀ H : ClayBHypotheses,
         ∀ M : DecisiveFaithfulPeriodicModel H,
-          ∀ E : DecisiveCriticalAnalyticEngine H M,
-            ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-              ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True)
+          ∀ A : FaithfulAnalyticStack,
+            ∀ L : FaithfulMildLocalTheory H M.base A,
+              ∃ _Gd : FaithfulHardGlobalData H M.base A L, True)
     (S : ConstructiveDecisiveSeedFamily) :
     ClayBStatement := by
   exact clayBStatement_from_decisive_completion_no_nonempty global_closure S

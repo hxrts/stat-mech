@@ -3,8 +3,8 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 TARGET_DIR="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful"
+THRESHOLD_FILE="$TARGET_DIR/DecisiveSpineThreshold.lean"
 FILES=(
-  "$TARGET_DIR/DecisiveSpineThreshold.lean"
   "$TARGET_DIR/DecisiveSpineProfile.lean"
   "$TARGET_DIR/DecisiveSpineMinimalElement.lean"
   "$TARGET_DIR/DecisiveSpineLocalEnergy.lean"
@@ -15,6 +15,15 @@ FILES=(
 )
 
 echo "[check-decisive-spine-frozen-setting-imports] checking decisive-spine imports"
+
+if [[ ! -f "$THRESHOLD_FILE" ]]; then
+  echo "[check-decisive-spine-frozen-setting-imports] FAIL: missing file $THRESHOLD_FILE" >&2
+  exit 1
+fi
+if ! rg -n '^import Gibbs\.ContinuumField\.NavierStokes\.Faithful\.BaseAxiomCompactness' "$THRESHOLD_FILE" >/dev/null; then
+  echo "[check-decisive-spine-frozen-setting-imports] FAIL: $THRESHOLD_FILE must import base-axiom compactness directly" >&2
+  exit 1
+fi
 
 for f in "${FILES[@]}"; do
   if [[ ! -f "$f" ]]; then
@@ -43,7 +52,7 @@ if rg -n --glob 'DecisiveSpine*.lean' '^import Gibbs\.ContinuumField\.NavierStok
   BAD="$(
     rg -n --glob 'DecisiveSpine*.lean' \
       '^import Gibbs\\.ContinuumField\\.NavierStokes\\.Faithful\\.(FullProofExactAnalysis|BaseAxiomAnalysis)$' \
-      "$TARGET_DIR" | rg -v 'DecisiveSpineSetting\\.lean' || true
+      "$TARGET_DIR" || true
   )"
   if [[ -n "$BAD" ]]; then
     echo "[check-decisive-spine-frozen-setting-imports] FAIL: downstream decisive-spine files import alternate analysis roots directly" >&2
