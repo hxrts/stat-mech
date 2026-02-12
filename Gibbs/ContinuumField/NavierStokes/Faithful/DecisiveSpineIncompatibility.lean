@@ -1,6 +1,4 @@
 import Gibbs.ContinuumField.NavierStokes.Faithful.DecisiveSpineUpperMechanism
-import Gibbs.ContinuumField.NavierStokes.Faithful.TrueHardStep
-import Gibbs.ContinuumField.NavierStokes.HardStep.ContradictionClosure
 
 /-! # Decisive contradiction-spine incompatibility theorem
 
@@ -13,66 +11,84 @@ open scoped Classical
 
 /-- Canonical lower-hypothesis shape for the decisive crux theorem. -/
 abbrev DecisiveSpineLowerHypotheses
-    (m : HardStepMinimalElement)
-    (U : VelocityTrajectory .torus3) : Prop :=
-  Nonempty (PersistentCascadeWitness m U)
+    (U : VelocityTrajectory .torus3)
+    (t0 : ℝ) : Prop :=
+  DecisiveSpineLowerFluxHypotheses U t0
 
 /-- Canonical upper-hypothesis shape for the decisive crux theorem. -/
 abbrev DecisiveSpineUpperHypotheses
-    (E : DefectEnvelope .torus3)
     (U : VelocityTrajectory .torus3)
     (t0 : ℝ) : Prop :=
-  Nonempty (TailVanishingWitness E U t0)
+  DecisiveSpineUpperFluxHypotheses U t0
 
 /-- Direct crux theorem: explicit lower/upper hypotheses imply contradiction. -/
 theorem decisiveSpine_crux_incompatibility
-    {m : HardStepMinimalElement}
     {U : VelocityTrajectory .torus3}
-    {E : DefectEnvelope .torus3}
-    (lower_hypotheses : PersistentCascadeWitness m U)
-    (upper_hypotheses : TailVanishingWitness E U lower_hypotheses.t0) :
+    {t0 : ℝ}
+    (lower_hypotheses : DecisiveSpineLowerHypotheses U t0)
+    (upper_hypotheses : DecisiveSpineUpperHypotheses U t0) :
     False := by
-  exact hardStep_flux_barrier_contradiction lower_hypotheses upper_hypotheses
+  rcases lower_hypotheses with ⟨η, hη_pos, N0, hpersistent⟩
+  have htwo_pos : 0 < (2 : ℝ) := by norm_num
+  have hhalf_pos : 0 < η / 2 := div_pos hη_pos htwo_pos
+  rcases upper_hypotheses (η / 2) hhalf_pos with ⟨N1, hN1⟩
+  let N : Nat := max N0 N1
+  have hlow : η ≤ |scaleFlux N t0 U| :=
+    hpersistent N (le_max_left _ _)
+  have hhigh : |scaleFlux N t0 U| ≤ η / 2 :=
+    hN1 N (le_max_right _ _)
+  have hη_half : η ≤ η / 2 := le_trans hlow hhigh
+  exact (not_le_of_gt (half_lt_self hη_pos)) hη_half
 
 /-- Decisive incompatibility theorem: lower + upper mechanisms imply contradiction. -/
 theorem decisiveSpine_incompatibility_theorem
+    {U : VelocityTrajectory .torus3}
+    {t0 : ℝ}
+    (lower_hypotheses : DecisiveSpineLowerHypotheses U t0)
+    (upper_hypotheses : DecisiveSpineUpperHypotheses U t0) :
+    False := by
+  exact decisiveSpine_crux_incompatibility
+    lower_hypotheses
+    upper_hypotheses
+
+/-- Witness-to-hypothesis bridge for incompatibility route. -/
+theorem decisiveSpine_incompatibility_from_witness
     {m : HardStepMinimalElement}
     {U : VelocityTrajectory .torus3}
     {E : DefectEnvelope .torus3}
     (lower_flux : PersistentCascadeWitness m U)
     (upper_tail : TailVanishingWitness E U lower_flux.t0) :
     False := by
-  exact decisiveSpine_crux_incompatibility
-    lower_flux
-    upper_tail
+  refine decisiveSpine_incompatibility_theorem
+    (U := U) (t0 := lower_flux.t0) ?_ ?_
+  · exact decisiveSpine_lower_mechanism_persistence lower_flux
+  · exact (decisiveSpine_upper_mechanism_quantitative upper_tail).1
 
 /-- Corollary excluding minimal blow-up elements in decisive spine route. -/
 theorem decisiveSpine_excludes_all_minimal_elements
-    {m : HardStepMinimalElement}
     {U : VelocityTrajectory .torus3}
-    {E : DefectEnvelope .torus3}
-    (lower_flux : PersistentCascadeWitness m U)
-    (upper_tail : TailVanishingWitness E U lower_flux.t0) :
+    {t0 : ℝ}
+    (lower_hypotheses : DecisiveSpineLowerHypotheses U t0)
+    (upper_hypotheses : DecisiveSpineUpperHypotheses U t0) :
     ∀ _ : HardStepMinimalElement, False := by
   intro _m
-  exact False.elim (decisiveSpine_incompatibility_theorem lower_flux upper_tail)
+  exact False.elim (decisiveSpine_incompatibility_theorem lower_hypotheses upper_hypotheses)
 
 /-- Threshold-unbounded proxy statement for decisive spine route. -/
 def DecisiveSpineAstarInfinite
-    (C : BaseAxiomPrimitiveCompactness) : Prop :=
-  ∀ B : ℝ, 0 ≤ B → B ≤ C.threshold.Astar
+    (threshold : BaseAxiomPrimitiveThresholdData) : Prop :=
+  ∀ B : ℝ, 0 ≤ B → B ≤ baseAxiomAstar threshold
 
 /-- Corollary threshold-unbounded theorem from decisive incompatibility route. -/
 theorem decisiveSpine_Astar_infinite
-    (C : BaseAxiomPrimitiveCompactness)
-    {m : HardStepMinimalElement}
+    (threshold : BaseAxiomPrimitiveThresholdData)
     {U : VelocityTrajectory .torus3}
-    {E : DefectEnvelope .torus3}
-    (lower_flux : PersistentCascadeWitness m U)
-    (upper_tail : TailVanishingWitness E U lower_flux.t0) :
-    DecisiveSpineAstarInfinite C := by
+    {t0 : ℝ}
+    (lower_hypotheses : DecisiveSpineLowerHypotheses U t0)
+    (upper_hypotheses : DecisiveSpineUpperHypotheses U t0) :
+    DecisiveSpineAstarInfinite threshold := by
   intro B hB
-  exact False.elim (decisiveSpine_incompatibility_theorem lower_flux upper_tail)
+  exact False.elim (decisiveSpine_incompatibility_theorem lower_hypotheses upper_hypotheses)
 
 /-- Incompatibility-layer policy marker for decisive spine. -/
 def DecisiveSpineIncompatibilityPolicy : Prop := True

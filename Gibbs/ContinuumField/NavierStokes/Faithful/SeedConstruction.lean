@@ -31,7 +31,7 @@ theorem faithfulPipelineExists_from_constructive_seeds
         ∀ M : DecisiveFaithfulPeriodicModel H,
           ∀ E : DecisiveCriticalAnalyticEngine H M,
             ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-              ∃ _G : FaithfulHardGlobalClosure H M.base E.analytic L, True)
+              ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True)
     (S : ConstructiveDecisiveSeedFamily) :
     FaithfulPipelineExists := by
   exact faithfulPipelineExists_from_decisive_global_closure global_closure S
@@ -43,7 +43,7 @@ theorem clayBStatement_from_decisive_completion_no_nonempty
         ∀ M : DecisiveFaithfulPeriodicModel H,
           ∀ E : DecisiveCriticalAnalyticEngine H M,
             ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-              ∃ _G : FaithfulHardGlobalClosure H M.base E.analytic L, True)
+              ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True)
     (S : ConstructiveDecisiveSeedFamily) :
     ClayBStatement := by
   exact clayBStatement_of_faithful_pipeline
@@ -56,7 +56,7 @@ theorem clayBStatement_from_seed_construction
         ∀ M : DecisiveFaithfulPeriodicModel H,
           ∀ E : DecisiveCriticalAnalyticEngine H M,
             ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-              ∃ _G : FaithfulHardGlobalClosure H M.base E.analytic L, True)
+              ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True)
     (build_seed : ConstructiveDecisiveSeedFamily) :
     ClayBStatement := by
   exact clayBStatement_from_decisive_completion_no_nonempty global_closure build_seed

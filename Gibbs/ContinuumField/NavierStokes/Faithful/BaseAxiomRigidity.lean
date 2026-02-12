@@ -113,28 +113,69 @@ theorem baseAxiom_flux_barrier_contradiction_direct
     False := by
   exact hardStep_flux_barrier_contradiction lower_flux upper_tail
 
+/-- Direct lower-flux hypothesis shape used in base-axiom rigidity closure. -/
+abbrev BaseAxiomLowerFluxHypotheses
+    (U : VelocityTrajectory .torus3)
+    (t0 : ℝ) : Prop :=
+  ∃ η > (0 : ℝ), ∃ N0 : Nat,
+    ∀ N, N0 ≤ N → η ≤ |scaleFlux N t0 U|
+
+/-- Direct upper-flux hypothesis shape used in base-axiom rigidity closure. -/
+abbrev BaseAxiomUpperFluxHypotheses
+    (U : VelocityTrajectory .torus3)
+    (t0 : ℝ) : Prop :=
+  TendsToZeroNat (fun N => scaleFlux N t0 U)
+
+/-- Combined direct lower/upper flux hypotheses for a fixed trajectory. -/
+abbrev BaseAxiomLowerUpperFluxHypotheses
+    (U : VelocityTrajectory .torus3) : Prop :=
+  ∃ t0 : ℝ,
+    BaseAxiomLowerFluxHypotheses U t0 ∧
+    BaseAxiomUpperFluxHypotheses U t0
+
+/-- Direct quantitative contradiction from lower-vs-upper flux hypotheses. -/
+theorem baseAxiom_flux_barrier_contradiction_from_hypotheses
+    {U : VelocityTrajectory .torus3}
+    {t0 : ℝ}
+    (lower_hypotheses : BaseAxiomLowerFluxHypotheses U t0)
+    (upper_hypotheses : BaseAxiomUpperFluxHypotheses U t0) :
+    False := by
+  rcases lower_hypotheses with ⟨η, hη_pos, N0, hpersistent⟩
+  have htwo_pos : 0 < (2 : ℝ) := by norm_num
+  have hhalf_pos : 0 < η / 2 := div_pos hη_pos htwo_pos
+  rcases upper_hypotheses (η / 2) hhalf_pos with ⟨N1, hN1⟩
+  let N : Nat := max N0 N1
+  have hlow : η ≤ |scaleFlux N t0 U| :=
+    hpersistent N (le_max_left _ _)
+  have hhigh : |scaleFlux N t0 U| ≤ η / 2 :=
+    hN1 N (le_max_right _ _)
+  have hη_half : η ≤ η / 2 := le_trans hlow hhigh
+  exact (not_le_of_gt (half_lt_self hη_pos)) hη_half
+
 /-- Primitive all-minimal exclusion consequence used by global-control derivation. -/
 theorem baseAxiom_excludes_all_minimal_elements
-    (flux_package : HardStepFluxContradictionPackage) :
+    (trajectoryOf : HardStepMinimalElement → VelocityTrajectory .torus3)
+    (flux_hypotheses : ∀ m : HardStepMinimalElement,
+      BaseAxiomLowerUpperFluxHypotheses (trajectoryOf m)) :
     ∀ _m : HardStepMinimalElement, False := by
-  exact hardStep_global_closure_of_flux_barrier flux_package
+  intro m
+  rcases flux_hypotheses m with ⟨t0, hLower, hUpper⟩
+  exact baseAxiom_flux_barrier_contradiction_from_hypotheses hLower hUpper
 
 /-- Primitive all-minimal exclusion in direct theorem-argument form. -/
 theorem baseAxiom_excludes_all_minimal_elements_direct
-    (flux_package : HardStepFluxContradictionPackage) :
+    (trajectoryOf : HardStepMinimalElement → VelocityTrajectory .torus3)
+    (flux_hypotheses : ∀ m : HardStepMinimalElement,
+      BaseAxiomLowerUpperFluxHypotheses (trajectoryOf m)) :
     ∀ _m : HardStepMinimalElement, False := by
-  exact hardStep_global_closure_of_flux_barrier flux_package
+  exact baseAxiom_excludes_all_minimal_elements trajectoryOf flux_hypotheses
 
 /-- Primitive global-closure consequence from the base-axiom rigidity data. -/
 theorem baseAxiom_global_closure_from_primitive_rigidity
-    (flux_package : HardStepFluxContradictionPackage) :
+    (trajectoryOf : HardStepMinimalElement → VelocityTrajectory .torus3)
+    (flux_hypotheses : ∀ m : HardStepMinimalElement,
+      BaseAxiomLowerUpperFluxHypotheses (trajectoryOf m)) :
     HardStepGlobalClosure := by
-  exact hardStep_global_closure_of_flux_barrier flux_package
-
-/-- Primitive global-closure consequence in direct theorem-argument form. -/
-theorem baseAxiom_global_closure_from_flux_package
-    (flux_package : HardStepFluxContradictionPackage) :
-    HardStepGlobalClosure := by
-  exact hardStep_global_closure_of_flux_barrier flux_package
+  exact baseAxiom_excludes_all_minimal_elements trajectoryOf flux_hypotheses
 
 end Gibbs.ContinuumField.NavierStokes

@@ -40,7 +40,7 @@ structure DecisiveCriticalAnalyticEngine
   limsup_exchange_holds : limsup_exchange
   integral_exchange_holds : integral_exchange
   series_exchange_holds : series_exchange
-  flux_contradiction_package : HardStepFluxContradictionPackage
+  hard_step_global_closure : HardStepGlobalClosure
 
 /-- Decisive nonlinear estimate theorem interface. -/
 theorem decisive_nonlinear_estimates
@@ -84,12 +84,12 @@ theorem decisive_limit_interchange_lemmas
     E.limsup_exchange ∧ E.integral_exchange ∧ E.series_exchange := by
   exact ⟨E.limsup_exchange_holds, E.integral_exchange_holds, E.series_exchange_holds⟩
 
-/-- Decisive hard-step contradiction package exported by the analytic engine. -/
-def decisive_flux_contradiction_package
+/-- Decisive hard-step global-closure theorem exported by the analytic engine. -/
+def decisive_hard_step_global_closure
     {H : ClayBHypotheses}
     {M : DecisiveFaithfulPeriodicModel H}
     (E : DecisiveCriticalAnalyticEngine H M) :
-    HardStepFluxContradictionPackage :=
-  E.flux_contradiction_package
+    HardStepGlobalClosure :=
+  E.hard_step_global_closure
 
 end Gibbs.ContinuumField.NavierStokes

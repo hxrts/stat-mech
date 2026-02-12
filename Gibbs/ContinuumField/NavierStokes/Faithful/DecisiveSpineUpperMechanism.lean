@@ -9,30 +9,32 @@ namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
 
+/-- Direct upper-flux hypothesis shape for the decisive crux step. -/
+abbrev DecisiveSpineUpperFluxHypotheses
+    (U : VelocityTrajectory .torus3)
+    (t0 : ℝ) : Prop :=
+  TendsToZeroNat (fun N => scaleFlux N t0 U)
+
 /-- Quantitative upper mechanism theorem for decisive spine. -/
 theorem decisiveSpine_upper_mechanism_quantitative_direct
-    {m : HardStepMinimalElement}
     {U : VelocityTrajectory .torus3}
     {E : DefectEnvelope .torus3}
-    (lower_flux : PersistentCascadeWitness m U)
-    (upper_tail : TailVanishingWitness E U lower_flux.t0) :
-    TendsToZeroNat
-      (fun N => scaleFlux N lower_flux.t0 U) ∧
+    {t0 : ℝ}
+    (upper_tail : TailVanishingWitness E U t0) :
+    DecisiveSpineUpperFluxHypotheses U t0 ∧
     TendsToZeroNat upper_tail.integratedDefect := by
   exact baseAxiom_upper_tail_vanishing_direct upper_tail
 
 /-- Quantitative upper mechanism theorem for decisive spine. -/
 theorem decisiveSpine_upper_mechanism_quantitative
-    {m : HardStepMinimalElement}
     {U : VelocityTrajectory .torus3}
     {E : DefectEnvelope .torus3}
-    (lower_flux : PersistentCascadeWitness m U)
-    (upper_tail : TailVanishingWitness E U lower_flux.t0) :
-    TendsToZeroNat
-      (fun N => scaleFlux N lower_flux.t0 U) ∧
+    {t0 : ℝ}
+    (upper_tail : TailVanishingWitness E U t0) :
+    DecisiveSpineUpperFluxHypotheses U t0 ∧
     TendsToZeroNat upper_tail.integratedDefect := by
   exact decisiveSpine_upper_mechanism_quantitative_direct
-    lower_flux upper_tail
+    upper_tail
 
 /-- Theorem interface for required upper-route limit exchanges. -/
 theorem decisiveSpine_upper_limit_exchanges

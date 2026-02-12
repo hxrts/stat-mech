@@ -9,6 +9,13 @@ namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
 
+/-- Direct lower-flux hypothesis shape for the decisive crux step. -/
+abbrev DecisiveSpineLowerFluxHypotheses
+    (U : VelocityTrajectory .torus3)
+    (t0 : ℝ) : Prop :=
+  ∃ η > (0 : ℝ), ∃ N0 : Nat,
+    ∀ N, N0 ≤ N → η ≤ |scaleFlux N t0 U|
+
 /-- Quantitative lower mechanism theorem for decisive spine. -/
 theorem decisiveSpine_lower_mechanism_quantitative_direct
     {m : HardStepMinimalElement}
@@ -32,9 +39,7 @@ theorem decisiveSpine_lower_mechanism_persistence_direct
     {m : HardStepMinimalElement}
     {U : VelocityTrajectory .torus3}
     (lower_flux : PersistentCascadeWitness m U) :
-    ∃ η > (0 : ℝ), ∃ N0 : Nat,
-      ∀ N, N0 ≤ N →
-        η ≤ |scaleFlux N lower_flux.t0 U| := by
+    DecisiveSpineLowerFluxHypotheses U lower_flux.t0 := by
   refine ⟨lower_flux.η, lower_flux.η_pos, lower_flux.N0, ?_⟩
   intro N hNN
   exact lower_flux.persistent_flux N hNN
@@ -44,9 +49,7 @@ theorem decisiveSpine_lower_mechanism_persistence
     {m : HardStepMinimalElement}
     {U : VelocityTrajectory .torus3}
     (lower_flux : PersistentCascadeWitness m U) :
-    ∃ η > (0 : ℝ), ∃ N0 : Nat,
-      ∀ N, N0 ≤ N →
-        η ≤ |scaleFlux N lower_flux.t0 U| := by
+    DecisiveSpineLowerFluxHypotheses U lower_flux.t0 := by
   exact decisiveSpine_lower_mechanism_persistence_direct lower_flux
 
 /-- Lower-mechanism policy marker for decisive spine. -/

@@ -32,7 +32,7 @@ theorem faithfulPipelineExists_from_decisive_global_closure
         ∀ M : DecisiveFaithfulPeriodicModel H,
           ∀ E : DecisiveCriticalAnalyticEngine H M,
             ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-              ∃ _G : FaithfulHardGlobalClosure H M.base E.analytic L, True)
+              ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True)
     (S : DecisiveCompletionSeedFamily) :
     FaithfulPipelineExists := by
   intro H
@@ -40,8 +40,8 @@ theorem faithfulPipelineExists_from_decisive_global_closure
   let M := seed.1
   let E := seed.2.1
   let L := seed.2.2
-  rcases global_closure H M E L with ⟨hardGlobal, hG⟩
-  exact ⟨M.base, E.analytic, L, hardGlobal, hG⟩
+  rcases global_closure H M E L with ⟨hardGlobalData, hGd⟩
+  exact ⟨M.base, E.analytic, L, hardGlobalData, hGd⟩
 
 /-- Decisive completion theorem for the faithful theorem schema. -/
 theorem faithfulClayBStatement_from_proved_pipeline_exists
@@ -50,7 +50,7 @@ theorem faithfulClayBStatement_from_proved_pipeline_exists
         ∀ M : DecisiveFaithfulPeriodicModel H,
           ∀ E : DecisiveCriticalAnalyticEngine H M,
             ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-              ∃ _G : FaithfulHardGlobalClosure H M.base E.analytic L, True)
+              ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True)
     (_S : DecisiveCompletionSeedFamily) :
     FaithfulClayBStatement := by
   exact faithful_clayBStatement_from_pipeline_inputs
@@ -68,7 +68,7 @@ theorem clayBStatement_from_decisive_completion
         ∀ M : DecisiveFaithfulPeriodicModel H,
           ∀ E : DecisiveCriticalAnalyticEngine H M,
             ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-              ∃ _G : FaithfulHardGlobalClosure H M.base E.analytic L, True)
+              ∃ _Gd : FaithfulHardGlobalData H M.base E.analytic L, True)
     (S : DecisiveCompletionSeedFamily) :
     ClayBStatement := by
   exact clayBStatement_of_faithful_pipeline
