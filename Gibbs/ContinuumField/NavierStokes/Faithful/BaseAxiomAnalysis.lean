@@ -55,7 +55,7 @@ theorem baseAxiom_continuation_blowup_alternative
         spaces.lp3.space.norm (strong_solution.vel t) ≤ B) ∧
     ((∀ T, 0 ≤ T → T < blowup_alternative.Tmax → ∃ K : ℝ, 0 ≤ K ∧
       ∀ t, 0 ≤ t → t ≤ T → spaces.lp3.space.norm (strong_solution.vel t) ≤ K) ∨
-      (∀ K : ℝ, 0 ≤ K → ∃ t, 0 ≤ t ∧ t < A.blowup_alternative.Tmax ∧
+      (∀ K : ℝ, 0 ≤ K → ∃ t, 0 ≤ t ∧ t < blowup_alternative.Tmax ∧
         K < spaces.lp3.space.norm (strong_solution.vel t))) := by
   refine ⟨trueTorus_continuation_theorem spaces strong_solution continuation, ?_⟩
   exact trueTorus_blowup_alternative spaces strong_solution blowup_alternative
