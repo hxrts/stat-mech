@@ -13,38 +13,45 @@ namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
 
-/-- Primitive rigidity data in the base-axiom route. -/
-structure BaseAxiomPrimitiveLocalEnergy where
-  localEnergy : ℝ → TrueTorusVectorField → ℝ
-  local_energy_nonneg : ∀ t u, 0 ≤ localEnergy t u
-  epsilon : ℝ
-  epsilon_pos : 0 < epsilon
-  epsilon_regularity : VelocityField .torus3 → Prop
-  epsilon_regularity_holds :
-    ∀ u : VelocityField .torus3, hardStepNormL3 u ≤ epsilon →
-      epsilon_regularity u
+/-- Primitive local-energy functional shape for the base-axiom route. -/
+abbrev BaseAxiomPrimitiveLocalEnergyField := ℝ → TrueTorusVectorField → ℝ
+
+/-- Primitive epsilon-regularity predicate shape for the base-axiom route. -/
+abbrev BaseAxiomPrimitiveEpsilonRegularity := VelocityField .torus3 → Prop
 
 /-- Primitive local-energy and epsilon-regularity theorem bundle. -/
 theorem baseAxiom_local_energy_epsilon_regularity
-    (local_energy : BaseAxiomPrimitiveLocalEnergy) :
-    (∀ t u, 0 ≤ local_energy.localEnergy t u) ∧
+    (localEnergy : BaseAxiomPrimitiveLocalEnergyField)
+    (epsilon : ℝ)
+    (epsilon_regularity : BaseAxiomPrimitiveEpsilonRegularity)
+    (local_energy_nonneg : ∀ t u, 0 ≤ localEnergy t u)
+    (epsilon_regularity_holds :
+      ∀ u : VelocityField .torus3, hardStepNormL3 u ≤ epsilon →
+        epsilon_regularity u) :
+    (∀ t u, 0 ≤ localEnergy t u) ∧
     (∀ u : VelocityField .torus3,
-      hardStepNormL3 u ≤ local_energy.epsilon →
-        local_energy.epsilon_regularity u) := by
-  refine ⟨local_energy.local_energy_nonneg, ?_⟩
+      hardStepNormL3 u ≤ epsilon →
+        epsilon_regularity u) := by
+  refine ⟨local_energy_nonneg, ?_⟩
   intro u hu
-  exact local_energy.epsilon_regularity_holds u hu
+  exact epsilon_regularity_holds u hu
 
 /-- Primitive local-energy and epsilon-regularity theorem in direct form. -/
 theorem baseAxiom_local_energy_epsilon_regularity_direct
-    (local_energy : BaseAxiomPrimitiveLocalEnergy) :
-    (∀ t u, 0 ≤ local_energy.localEnergy t u) ∧
+    (localEnergy : BaseAxiomPrimitiveLocalEnergyField)
+    (epsilon : ℝ)
+    (epsilon_regularity : BaseAxiomPrimitiveEpsilonRegularity)
+    (local_energy_nonneg : ∀ t u, 0 ≤ localEnergy t u)
+    (epsilon_regularity_holds :
+      ∀ u : VelocityField .torus3, hardStepNormL3 u ≤ epsilon →
+        epsilon_regularity u) :
+    (∀ t u, 0 ≤ localEnergy t u) ∧
     (∀ u : VelocityField .torus3,
-      hardStepNormL3 u ≤ local_energy.epsilon →
-        local_energy.epsilon_regularity u) := by
-  refine ⟨local_energy.local_energy_nonneg, ?_⟩
+      hardStepNormL3 u ≤ epsilon →
+        epsilon_regularity u) := by
+  refine ⟨local_energy_nonneg, ?_⟩
   intro u hu
-  exact local_energy.epsilon_regularity_holds u hu
+  exact epsilon_regularity_holds u hu
 
 /-- Primitive lower-cascade theorem from minimality/nontriviality data. -/
 theorem baseAxiom_lower_cascade_from_minimality

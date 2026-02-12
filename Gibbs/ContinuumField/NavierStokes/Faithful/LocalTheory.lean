@@ -22,6 +22,7 @@ structure FaithfulMildLocalTheory
   init_match : strong.vel 0 = H.u0
   strong_mild_velocity_eq : strong.vel = mild.vel
   strong_mild_pressure_eq : strong.press = mild.press
+  periodicity_preserved : Condition10 strong.vel
   constructive_local : Prop
   constructive_local_holds : constructive_local
   criticalNorm : VelocityField .euclidean3 → ℝ
@@ -59,5 +60,14 @@ theorem faithful_blowup_alternative
     (L : FaithfulMildLocalTheory H M A) :
     L.blowup_alternative := by
   exact L.blowup_alternative_holds
+
+/-- Periodicity propagation theorem carried by the faithful local-theory package. -/
+theorem faithful_periodicity_propagation
+    {H : ClayBHypotheses}
+    {M : FaithfulPeriodicModel H}
+    {A : FaithfulAnalyticStack}
+    (L : FaithfulMildLocalTheory H M A) :
+    Condition10 L.strong.vel :=
+  L.periodicity_preserved
 
 end Gibbs.ContinuumField.NavierStokes

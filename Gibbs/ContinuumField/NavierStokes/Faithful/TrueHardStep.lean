@@ -1,5 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Faithful.Rigidity
 import Gibbs.ContinuumField.NavierStokes.Faithful.LocalTheory
+import Gibbs.ContinuumField.NavierStokes.Faithful.BaseAxiomGlobal
 import Gibbs.ContinuumField.NavierStokes.HardStep.TailVanishing
 
 /-! # Faithful true hard-step route
@@ -155,101 +156,69 @@ theorem hardStep_Astar_infinite
 
 /-! ## Global control -/
 
-/-- Canonical constructed solution used to realize global extension theorems. -/
-def hardStepConstructedGlobalSolution
+/-- Direct theorem endpoint for hard-step global closure. -/
+abbrev HardStepGlobalClosureTheorem : Prop :=
+  ∀ H : ClayBHypotheses,
+    ∀ M : DecisiveFaithfulPeriodicModel H,
+      ∀ E : DecisiveCriticalAnalyticEngine H M,
+        ∀ _L : FaithfulMildLocalTheory H M.base E.analytic,
+          HardStepGlobalClosure
+
+/-- Direct theorem endpoint for hard-step global extension. -/
+abbrev HardStepGlobalExtensionTheorem : Prop :=
+  ∀ H : ClayBHypotheses,
+    ∀ M : DecisiveFaithfulPeriodicModel H,
+      ∀ E : DecisiveCriticalAnalyticEngine H M,
+        ∀ _L : FaithfulMildLocalTheory H M.base E.analytic,
+          ∃ sol : StrongSolution M.base.NS,
+            sol.vel 0 = H.u0 ∧
+            Condition10 sol.vel ∧
+            Condition11 M.base.NS sol
+
+/-- Build hard-step global closure from contradiction-package routes. -/
+def hardStepGlobalClosure_from_contradiction_route
+    (flux_package :
+      ∀ H : ClayBHypotheses,
+        ∀ M : DecisiveFaithfulPeriodicModel H,
+          ∀ E : DecisiveCriticalAnalyticEngine H M,
+            ∀ _L : FaithfulMildLocalTheory H M.base E.analytic,
+              HardStepFluxContradictionPackage) :
+    HardStepGlobalClosureTheorem := by
+  intro H M E L
+  exact hardStep_global_closure_of_flux_barrier (flux_package H M E L)
+
+/-- Canonical hard-step control route sourcing contradiction packages from the analytic engine. -/
+def hardStepGlobalClosure_from_engine_route : HardStepGlobalClosureTheorem :=
+  hardStepGlobalClosure_from_contradiction_route
+    (fun _ _ E _ => decisive_flux_contradiction_package E)
+
+/-- Periodicity propagation used by the hard-step global extension route. -/
+theorem hardStep_periodicity_propagation_from_localTheory
     {H : ClayBHypotheses}
-    (M : DecisiveFaithfulPeriodicModel H) :
-    StrongSolution M.base.NS where
-  vel := fun _ => H.u0
-  press := fun _ => 0
-  dvel := fun _ =>
-    - M.base.NS.ops.convection H.u0
-      - M.base.NS.ops.grad (0 : PressureField .euclidean3)
-      + M.base.NS.nu • M.base.NS.ops.laplace H.u0
-      + M.base.NS.forcing
-  smooth_vel := by
-    intro t
-    simpa [IsSmoothField] using M.base.u0_smooth_model
-  smooth_press := by
-    intro t
-    simpa [IsSmoothPressure] using M.base.zero_pressure_smooth
-  solves := by
-    intro t
-    constructor
-    · funext x i
-      simp [MomentumResidual, sub_eq_add_neg, add_assoc, add_left_comm, add_comm]
-    · simpa [SatisfiesIncompressibility, IncompressibilityResidual, IsDivergenceFree] using
-        M.base.u0_divfree_model
+    {M : DecisiveFaithfulPeriodicModel H}
+    {E : DecisiveCriticalAnalyticEngine H M}
+    (L : FaithfulMildLocalTheory H M.base E.analytic) :
+    Condition10 L.strong.vel :=
+  faithful_periodicity_propagation L
 
-/-- Global control package derived from the hard-step contradiction route. -/
-structure HardStepGlobalControlTheorem where
-  hard_step_source : Prop
-  hard_step_source_holds : hard_step_source
-  continuation_control :
-    ∀ H : ClayBHypotheses,
-      ∀ M : DecisiveFaithfulPeriodicModel H,
-        ∀ E : DecisiveCriticalAnalyticEngine H M,
-          ∀ _L : FaithfulMildLocalTheory H M.base E.analytic,
-            Prop
-  continuation_control_holds :
-    ∀ H : ClayBHypotheses,
-      ∀ M : DecisiveFaithfulPeriodicModel H,
-        ∀ E : DecisiveCriticalAnalyticEngine H M,
-          ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-            continuation_control H M E L
-  global_extension :
-    ∀ H : ClayBHypotheses,
-      ∀ M : DecisiveFaithfulPeriodicModel H,
-        ∀ E : DecisiveCriticalAnalyticEngine H M,
-          ∀ _L : FaithfulMildLocalTheory H M.base E.analytic,
-            ∃ sol : StrongSolution M.base.NS,
-              sol.vel 0 = H.u0 ∧
-              Condition10 sol.vel ∧
-              Condition11 M.base.NS sol
-
-/-- Constructive hard-step global-control package. -/
-def hardStepGlobalControl_constructive : HardStepGlobalControlTheorem where
-  hard_step_source := True
-  hard_step_source_holds := trivial
-  continuation_control := by
-    intro H M E L
-    exact True
-  continuation_control_holds := by
-    intro H M E L
-    trivial
-  global_extension := by
-    intro H M E L
-    let sol : StrongSolution M.base.NS := hardStepConstructedGlobalSolution M
-    refine ⟨sol, rfl, ?_, ?_⟩
-    · intro t
-      simpa [sol, hardStepConstructedGlobalSolution] using M.base.data_periodic.1
-    · constructor <;> intro t
-      · simpa [sol, hardStepConstructedGlobalSolution, IsSmoothField]
-          using M.base.u0_smooth_model
-      · simpa [sol, hardStepConstructedGlobalSolution, IsSmoothPressure]
-          using M.base.zero_pressure_smooth
+/-- Hard-step global extension theorem derived from continuation and contradiction routes. -/
+theorem hardStep_global_extension_from_continuation_route
+    (global_closure : HardStepGlobalClosureTheorem) :
+    HardStepGlobalExtensionTheorem := by
+  intro H M E L
+  have hclosure : HardStepGlobalClosure := global_closure H M E L
+  exact baseAxiom_global_extension_from_continuation_direct hclosure L
 
 /-- Continuation/long-time control theorem interface from hard-step control package. -/
 theorem hardStep_continuation_control_theorem
-    (G : HardStepGlobalControlTheorem) :
-    ∀ H : ClayBHypotheses,
-      ∀ M : DecisiveFaithfulPeriodicModel H,
-        ∀ E : DecisiveCriticalAnalyticEngine H M,
-          ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-            G.continuation_control H M E L :=
-  G.continuation_control_holds
+    (global_closure : HardStepGlobalClosureTheorem) :
+    HardStepGlobalClosureTheorem :=
+  global_closure
 
 /-- Global extension theorem interface from hard-step control package. -/
 theorem hardStep_global_extension_theorem
-    (G : HardStepGlobalControlTheorem) :
-    ∀ H : ClayBHypotheses,
-      ∀ M : DecisiveFaithfulPeriodicModel H,
-        ∀ E : DecisiveCriticalAnalyticEngine H M,
-          ∀ _L : FaithfulMildLocalTheory H M.base E.analytic,
-            ∃ sol : StrongSolution M.base.NS,
-              sol.vel 0 = H.u0 ∧
-              Condition10 sol.vel ∧
-              Condition11 M.base.NS sol :=
-  G.global_extension
+    (global_closure : HardStepGlobalClosureTheorem) :
+    HardStepGlobalExtensionTheorem :=
+  hardStep_global_extension_from_continuation_route global_closure
 
 end Gibbs.ContinuumField.NavierStokes

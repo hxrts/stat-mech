@@ -12,35 +12,65 @@ open scoped Classical
 
 /-- Exact local-energy inequality theorem for decisive spine. -/
 theorem decisiveSpine_local_energy_inequality_direct
-    (local_energy : BaseAxiomPrimitiveLocalEnergy) :
-    ∀ t u, 0 ≤ local_energy.localEnergy t u := by
-  exact (baseAxiom_local_energy_epsilon_regularity_direct local_energy).1
+    (localEnergy : BaseAxiomPrimitiveLocalEnergyField)
+    (epsilon : ℝ)
+    (epsilon_regularity : BaseAxiomPrimitiveEpsilonRegularity)
+    (local_energy_nonneg : ∀ t u, 0 ≤ localEnergy t u)
+    (epsilon_regularity_holds :
+      ∀ u : VelocityField .torus3, hardStepNormL3 u ≤ epsilon →
+        epsilon_regularity u) :
+    ∀ t u, 0 ≤ localEnergy t u := by
+  exact (baseAxiom_local_energy_epsilon_regularity_direct
+    localEnergy epsilon epsilon_regularity local_energy_nonneg epsilon_regularity_holds).1
 
 /-- Exact local-energy inequality theorem for decisive spine. -/
 theorem decisiveSpine_local_energy_inequality
-    (local_energy : BaseAxiomPrimitiveLocalEnergy) :
-    ∀ t u, 0 ≤ local_energy.localEnergy t u := by
-  exact decisiveSpine_local_energy_inequality_direct local_energy
+    (localEnergy : BaseAxiomPrimitiveLocalEnergyField)
+    (epsilon : ℝ)
+    (epsilon_regularity : BaseAxiomPrimitiveEpsilonRegularity)
+    (local_energy_nonneg : ∀ t u, 0 ≤ localEnergy t u)
+    (epsilon_regularity_holds :
+      ∀ u : VelocityField .torus3, hardStepNormL3 u ≤ epsilon →
+        epsilon_regularity u) :
+    ∀ t u, 0 ≤ localEnergy t u := by
+  exact decisiveSpine_local_energy_inequality_direct
+    localEnergy epsilon epsilon_regularity local_energy_nonneg epsilon_regularity_holds
 
 /-- Exact epsilon-regularity theorem for decisive spine. -/
 theorem decisiveSpine_epsilon_regularity_direct
-    (local_energy : BaseAxiomPrimitiveLocalEnergy) :
+    (localEnergy : BaseAxiomPrimitiveLocalEnergyField)
+    (epsilon : ℝ)
+    (epsilon_regularity : BaseAxiomPrimitiveEpsilonRegularity)
+    (local_energy_nonneg : ∀ t u, 0 ≤ localEnergy t u)
+    (epsilon_regularity_holds :
+      ∀ u : VelocityField .torus3, hardStepNormL3 u ≤ epsilon →
+        epsilon_regularity u) :
     ∀ u : VelocityField .torus3,
-      hardStepNormL3 u ≤ local_energy.epsilon →
-        local_energy.epsilon_regularity u := by
-  exact (baseAxiom_local_energy_epsilon_regularity_direct local_energy).2
+      hardStepNormL3 u ≤ epsilon →
+        epsilon_regularity u := by
+  exact (baseAxiom_local_energy_epsilon_regularity_direct
+    localEnergy epsilon epsilon_regularity local_energy_nonneg epsilon_regularity_holds).2
 
 /-- Exact epsilon-regularity theorem for decisive spine. -/
 theorem decisiveSpine_epsilon_regularity
-    (local_energy : BaseAxiomPrimitiveLocalEnergy) :
+    (localEnergy : BaseAxiomPrimitiveLocalEnergyField)
+    (epsilon : ℝ)
+    (epsilon_regularity : BaseAxiomPrimitiveEpsilonRegularity)
+    (local_energy_nonneg : ∀ t u, 0 ≤ localEnergy t u)
+    (epsilon_regularity_holds :
+      ∀ u : VelocityField .torus3, hardStepNormL3 u ≤ epsilon →
+        epsilon_regularity u) :
     ∀ u : VelocityField .torus3,
-      hardStepNormL3 u ≤ local_energy.epsilon →
-        local_energy.epsilon_regularity u := by
-  exact decisiveSpine_epsilon_regularity_direct local_energy
+      hardStepNormL3 u ≤ epsilon →
+        epsilon_regularity u := by
+  exact decisiveSpine_epsilon_regularity_direct
+    localEnergy epsilon epsilon_regularity local_energy_nonneg epsilon_regularity_holds
 
 /-- Local-energy compatibility theorem for minimal-element scale route. -/
 theorem decisiveSpine_local_energy_compatibility
-    (_local_energy : BaseAxiomPrimitiveLocalEnergy) :
+    (_localEnergy : BaseAxiomPrimitiveLocalEnergyField)
+    (_epsilon : ℝ)
+    (_epsilon_regularity : BaseAxiomPrimitiveEpsilonRegularity) :
     True := by
   trivial
 

@@ -1,5 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.Faithful.PDERealization
 import Gibbs.ContinuumField.NavierStokes.Faithful.Analysis
+import Gibbs.ContinuumField.NavierStokes.HardStep.ContradictionClosure
 
 /-! # Decisive critical analytic engine
 
@@ -39,6 +40,7 @@ structure DecisiveCriticalAnalyticEngine
   limsup_exchange_holds : limsup_exchange
   integral_exchange_holds : integral_exchange
   series_exchange_holds : series_exchange
+  flux_contradiction_package : HardStepFluxContradictionPackage
 
 /-- Decisive nonlinear estimate theorem interface. -/
 theorem decisive_nonlinear_estimates
@@ -81,5 +83,13 @@ theorem decisive_limit_interchange_lemmas
     (E : DecisiveCriticalAnalyticEngine H M) :
     E.limsup_exchange ∧ E.integral_exchange ∧ E.series_exchange := by
   exact ⟨E.limsup_exchange_holds, E.integral_exchange_holds, E.series_exchange_holds⟩
+
+/-- Decisive hard-step contradiction package exported by the analytic engine. -/
+def decisive_flux_contradiction_package
+    {H : ClayBHypotheses}
+    {M : DecisiveFaithfulPeriodicModel H}
+    (E : DecisiveCriticalAnalyticEngine H M) :
+    HardStepFluxContradictionPackage :=
+  E.flux_contradiction_package
 
 end Gibbs.ContinuumField.NavierStokes

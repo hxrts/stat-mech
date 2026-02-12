@@ -13,17 +13,17 @@ open scoped Classical
 
 /-- Build decisive global closure from a hard-step global-control theorem. -/
 def decisiveGlobalClosureTheorem_of_hardStepControl
-    (Gctrl : HardStepGlobalControlTheorem) :
+    (global_closure : HardStepGlobalClosureTheorem) :
     ∀ H : ClayBHypotheses,
       ∀ M : DecisiveFaithfulPeriodicModel H,
         ∀ E : DecisiveCriticalAnalyticEngine H M,
           ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
             ∃ _G : FaithfulHardGlobalClosure H M.base E.analytic L, True := by
   intro H M E L
-  rcases Gctrl.global_extension H M E L with ⟨sol, hinit, hper, hsmooth⟩
+  rcases hardStep_global_extension_theorem global_closure H M E L with ⟨sol, hinit, hper, hsmooth⟩
   refine ⟨{
-    hard_step_closed := Gctrl.continuation_control H M E L
-    hard_step_closed_holds := Gctrl.continuation_control_holds H M E L
+    hard_step_closed := HardStepGlobalClosure
+    hard_step_closed_holds := global_closure H M E L
     global_solution := sol
     global_init_match := hinit
     global_periodicity := hper
@@ -36,8 +36,9 @@ def decisiveGlobalClosureTheorem_constructive :
       ∀ M : DecisiveFaithfulPeriodicModel H,
         ∀ E : DecisiveCriticalAnalyticEngine H M,
           ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
-            ∃ _G : FaithfulHardGlobalClosure H M.base E.analytic L, True :=
-  decisiveGlobalClosureTheorem_of_hardStepControl hardStepGlobalControl_constructive
+            ∃ _G : FaithfulHardGlobalClosure H M.base E.analytic L, True := by
+  exact decisiveGlobalClosureTheorem_of_hardStepControl
+    hardStepGlobalClosure_from_engine_route
 
 /-- Unconditional global closure theorem interface from decisive hard step. -/
 theorem decisive_unconditional_global_closure

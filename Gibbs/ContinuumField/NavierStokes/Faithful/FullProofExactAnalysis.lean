@@ -61,45 +61,6 @@ theorem fullProof_exact_inequality_bundle
   · exact (trueTorus_commutator_estimates A.spaces A.convection A.constants A.nonlinear).1
   · exact (trueTorus_commutator_estimates A.spaces A.convection A.constants A.nonlinear).2
 
-/-- Full-proof exact analysis data yields the base-axiom primitive analysis object. -/
-def fullProof_to_baseAxiomPrimitiveAnalysis_direct
-    (exactData : FullProofExactAnalysisData)
-    (semigroup : TrueTorusDefinitiveStokesSemigroup)
-    (semigroup_estimates : TrueTorusSemigroupEstimates exactData.spaces semigroup)
-    (contraction :
-      TrueTorusContractionPackage
-        exactData.spaces semigroup exactData.convection baseAxiomZeroTorusVector)
-    (strong_solution : TrueTorusStrongPeriodicSolution)
-    (continuation : TrueTorusContinuationCriterion exactData.spaces strong_solution)
-    (blowup_alternative : TrueTorusBlowupAlternative exactData.spaces strong_solution) :
-    BaseAxiomPrimitiveAnalysis where
-  spaces := exactData.spaces
-  convection := exactData.convection
-  constants := exactData.constants
-  nonlinear := exactData.nonlinear
-  semigroup := semigroup
-  semigroup_estimates := semigroup_estimates
-  contraction := contraction
-  strong_solution := strong_solution
-  continuation := continuation
-  blowup_alternative := blowup_alternative
-
-/-- Full-proof exact analysis data yields the base-axiom primitive analysis object. -/
-def fullProof_to_baseAxiomPrimitiveAnalysis
-    (exactData : FullProofExactAnalysisData)
-    (semigroup : TrueTorusDefinitiveStokesSemigroup)
-    (semigroup_estimates : TrueTorusSemigroupEstimates exactData.spaces semigroup)
-    (contraction :
-      TrueTorusContractionPackage
-        exactData.spaces semigroup exactData.convection baseAxiomZeroTorusVector)
-    (strong_solution : TrueTorusStrongPeriodicSolution)
-    (continuation : TrueTorusContinuationCriterion exactData.spaces strong_solution)
-    (blowup_alternative : TrueTorusBlowupAlternative exactData.spaces strong_solution) :
-    BaseAxiomPrimitiveAnalysis :=
-  fullProof_to_baseAxiomPrimitiveAnalysis_direct
-    exactData semigroup semigroup_estimates contraction
-    strong_solution continuation blowup_alternative
-
 /-- Policy marker for exact analysis replacement in the full-proof route. -/
 def FullProofExactAnalysisReplacementPolicy : Prop := True
 

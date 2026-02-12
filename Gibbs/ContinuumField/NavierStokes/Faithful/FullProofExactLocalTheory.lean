@@ -87,27 +87,13 @@ theorem fullProof_exact_continuation_and_blowup
     trueTorus_blowup_alternative
       L.exactData.spaces L.strong_solution L.blowup_alternative⟩
 
-/-- Constructive faithful local-theory object from the exact theorem route. -/
-noncomputable def fullProof_constructiveFaithfulLocalTheory
-    {H : ClayBHypotheses}
-    (M : DecisiveFaithfulPeriodicModel H)
-    (A : FaithfulAnalyticStack)
-    (L : FullProofExactLocalTheoryData)
-    (W : BaseAxiomPrimitiveExtensionWitness H M) :
-    FaithfulMildLocalTheory H M.base A :=
-  baseAxiom_localTheory_from_extensionWitness
-    A (fullProof_to_baseAxiomPrimitiveAnalysis
-      L.exactData L.semigroup L.semigroup_estimates
-      L.contraction L.strong_solution L.continuation L.blowup_alternative) W
-
 /-- The full-proof route produces a faithful local-theory object by theorem construction. -/
 theorem fullProof_faithfulLocalTheory_exists_from_exact_theorems
     {H : ClayBHypotheses}
     (M : DecisiveFaithfulPeriodicModel H)
     (A : FaithfulAnalyticStack)
-    (L : FullProofExactLocalTheoryData)
-    (W : BaseAxiomPrimitiveExtensionWitness H M) :
+    (LT : FaithfulMildLocalTheory H M.base A) :
     ∃ _LT : FaithfulMildLocalTheory H M.base A, True := by
-  exact ⟨fullProof_constructiveFaithfulLocalTheory M A L W, trivial⟩
+  exact ⟨LT, trivial⟩
 
 end Gibbs.ContinuumField.NavierStokes

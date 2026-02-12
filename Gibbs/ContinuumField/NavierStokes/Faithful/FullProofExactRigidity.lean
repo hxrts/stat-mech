@@ -12,21 +12,35 @@ open scoped Classical
 
 /-- Exact local-energy and epsilon-regularity theorem package. -/
 theorem fullProof_exact_localEnergy_epsilonRegularity_direct
-    (local_energy : BaseAxiomPrimitiveLocalEnergy) :
-    (∀ t u, 0 ≤ local_energy.localEnergy t u) ∧
+    (localEnergy : BaseAxiomPrimitiveLocalEnergyField)
+    (epsilon : ℝ)
+    (epsilon_regularity : BaseAxiomPrimitiveEpsilonRegularity)
+    (local_energy_nonneg : ∀ t u, 0 ≤ localEnergy t u)
+    (epsilon_regularity_holds :
+      ∀ u : VelocityField .torus3, hardStepNormL3 u ≤ epsilon →
+        epsilon_regularity u) :
+    (∀ t u, 0 ≤ localEnergy t u) ∧
     (∀ u : VelocityField .torus3,
-      hardStepNormL3 u ≤ local_energy.epsilon →
-        local_energy.epsilon_regularity u) := by
-  exact baseAxiom_local_energy_epsilon_regularity_direct local_energy
+      hardStepNormL3 u ≤ epsilon →
+        epsilon_regularity u) := by
+  exact baseAxiom_local_energy_epsilon_regularity_direct
+    localEnergy epsilon epsilon_regularity local_energy_nonneg epsilon_regularity_holds
 
 /-- Exact local-energy and epsilon-regularity theorem package. -/
 theorem fullProof_exact_localEnergy_epsilonRegularity
-    (local_energy : BaseAxiomPrimitiveLocalEnergy) :
-    (∀ t u, 0 ≤ local_energy.localEnergy t u) ∧
+    (localEnergy : BaseAxiomPrimitiveLocalEnergyField)
+    (epsilon : ℝ)
+    (epsilon_regularity : BaseAxiomPrimitiveEpsilonRegularity)
+    (local_energy_nonneg : ∀ t u, 0 ≤ localEnergy t u)
+    (epsilon_regularity_holds :
+      ∀ u : VelocityField .torus3, hardStepNormL3 u ≤ epsilon →
+        epsilon_regularity u) :
+    (∀ t u, 0 ≤ localEnergy t u) ∧
     (∀ u : VelocityField .torus3,
-      hardStepNormL3 u ≤ local_energy.epsilon →
-        local_energy.epsilon_regularity u) := by
-  exact fullProof_exact_localEnergy_epsilonRegularity_direct local_energy
+      hardStepNormL3 u ≤ epsilon →
+        epsilon_regularity u) := by
+  exact fullProof_exact_localEnergy_epsilonRegularity_direct
+    localEnergy epsilon epsilon_regularity local_energy_nonneg epsilon_regularity_holds
 
 /-- Exact lower/upper quantitative theorem package. -/
 theorem fullProof_exact_lower_upper_quantitative_direct

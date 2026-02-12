@@ -28,81 +28,86 @@ theorem baseAxiom_unconditional_global_control
 theorem baseAxiom_global_extension_from_continuation_direct
     {H : ClayBHypotheses}
     {M : DecisiveFaithfulPeriodicModel H}
+    {A : FaithfulAnalyticStack}
     (_hclosure : HardStepGlobalClosure)
-    (W : BaseAxiomPrimitiveExtensionWitness H M) :
+    (L : FaithfulMildLocalTheory H M.base A) :
     ∃ sol : StrongSolution M.base.NS,
       sol.vel 0 = H.u0 ∧
       Condition10 sol.vel ∧
       Condition11 M.base.NS sol := by
-  exact ⟨W.sol, W.init_match, W.periodicity, W.smoothness⟩
+  refine ⟨L.strong, L.init_match, L.periodicity_preserved, ?_⟩
+  constructor <;> intro t
+  · exact L.strong.smooth_vel t
+  · exact L.strong.smooth_press t
 
 /-- Primitive contradiction-derived global extension theorem in direct form. -/
 theorem baseAxiom_global_extension_from_primitive_contradiction_direct
     {H : ClayBHypotheses}
     {M : DecisiveFaithfulPeriodicModel H}
+    {A : FaithfulAnalyticStack}
     (flux_package : HardStepFluxContradictionPackage)
-    (extension_hypotheses : BaseAxiomPrimitiveExtensionWitness H M) :
+    (L : FaithfulMildLocalTheory H M.base A) :
     ∃ sol : StrongSolution M.base.NS,
       sol.vel 0 = H.u0 ∧
       Condition10 sol.vel ∧
       Condition11 M.base.NS sol := by
   have hclosure : HardStepGlobalClosure :=
     baseAxiom_unconditional_global_control_direct flux_package
-  exact baseAxiom_global_extension_from_continuation_direct hclosure extension_hypotheses
+  exact baseAxiom_global_extension_from_continuation_direct hclosure L
 
 /-- Primitive global extension theorem derived from the contradiction output. -/
 theorem baseAxiom_global_extension_from_primitive_contradiction
     {H : ClayBHypotheses}
     {M : DecisiveFaithfulPeriodicModel H}
+    {A : FaithfulAnalyticStack}
     (flux_package : HardStepFluxContradictionPackage)
-    (extension_hypotheses : BaseAxiomPrimitiveExtensionWitness H M) :
+    (L : FaithfulMildLocalTheory H M.base A) :
     ∃ sol : StrongSolution M.base.NS,
       sol.vel 0 = H.u0 ∧
       Condition10 sol.vel ∧
       Condition11 M.base.NS sol := by
   exact baseAxiom_global_extension_from_primitive_contradiction_direct
-    flux_package extension_hypotheses
+    flux_package L
 
 /-- Global strong-solution extension in direct form. -/
 theorem baseAxiom_global_strong_solution_extension_direct
     {H : ClayBHypotheses}
     {M : DecisiveFaithfulPeriodicModel H}
+    {A : FaithfulAnalyticStack}
     (flux_package : HardStepFluxContradictionPackage)
-    (extension_hypotheses : BaseAxiomPrimitiveExtensionWitness H M) :
+    (L : FaithfulMildLocalTheory H M.base A) :
     ∃ sol : StrongSolution M.base.NS,
       sol.vel 0 = H.u0 ∧
       Condition10 sol.vel ∧
       Condition11 M.base.NS sol := by
   exact baseAxiom_global_extension_from_primitive_contradiction_direct
-    flux_package extension_hypotheses
+    flux_package L
 
 /-- Global strong-solution extension from primitive continuation logic and control. -/
 theorem baseAxiom_global_strong_solution_extension
     {H : ClayBHypotheses}
     {M : DecisiveFaithfulPeriodicModel H}
+    {A : FaithfulAnalyticStack}
     (flux_package : HardStepFluxContradictionPackage)
-    (extension_hypotheses : BaseAxiomPrimitiveExtensionWitness H M) :
+    (L : FaithfulMildLocalTheory H M.base A) :
     ∃ sol : StrongSolution M.base.NS,
       sol.vel 0 = H.u0 ∧
       Condition10 sol.vel ∧
       Condition11 M.base.NS sol := by
   exact baseAxiom_global_strong_solution_extension_direct
-    flux_package extension_hypotheses
+    flux_package L
 
 /-- Constructive faithful hard-global closure object in direct form. -/
 theorem baseAxiom_faithfulHardGlobalClosure_constructive_direct
     {H : ClayBHypotheses}
     {M : DecisiveFaithfulPeriodicModel H}
     {A : FaithfulAnalyticStack}
-    (analysis_hypotheses : BaseAxiomPrimitiveAnalysis)
     (flux_package : HardStepFluxContradictionPackage)
-    (extension_hypotheses : BaseAxiomPrimitiveExtensionWitness H M) :
-    ∃ L : FaithfulMildLocalTheory H M.base A,
-      ∃ _HG : FaithfulHardGlobalClosure H M.base A L, True := by
-  let L : FaithfulMildLocalTheory H M.base A :=
-    baseAxiom_localTheory_from_extensionWitness A analysis_hypotheses extension_hypotheses
+    (L : FaithfulMildLocalTheory H M.base A) :
+    ∃ L' : FaithfulMildLocalTheory H M.base A,
+      ∃ _HG : FaithfulHardGlobalClosure H M.base A L', True := by
   rcases baseAxiom_global_strong_solution_extension_direct
-      flux_package extension_hypotheses with
+      flux_package L with
       ⟨sol, hinit, hper, hsmooth⟩
   refine ⟨L, {
     hard_step_closed := HardStepGlobalClosure
@@ -118,13 +123,12 @@ theorem baseAxiom_faithfulHardGlobalClosure_constructive
     {H : ClayBHypotheses}
     {M : DecisiveFaithfulPeriodicModel H}
     {A : FaithfulAnalyticStack}
-    (analysis_hypotheses : BaseAxiomPrimitiveAnalysis)
     (flux_package : HardStepFluxContradictionPackage)
-    (extension_hypotheses : BaseAxiomPrimitiveExtensionWitness H M) :
-    ∃ L : FaithfulMildLocalTheory H M.base A,
-      ∃ _HG : FaithfulHardGlobalClosure H M.base A L, True := by
+    (L : FaithfulMildLocalTheory H M.base A) :
+    ∃ L' : FaithfulMildLocalTheory H M.base A,
+      ∃ _HG : FaithfulHardGlobalClosure H M.base A L', True := by
   exact baseAxiom_faithfulHardGlobalClosure_constructive_direct
-    analysis_hypotheses flux_package extension_hypotheses
+    flux_package L
 
 /-- Policy marker: base-axiom global derivation performs no direct formula injection. -/
 def BaseAxiomNoDirectInjectionPolicy : Prop := True

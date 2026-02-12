@@ -35,58 +35,6 @@ theorem baseAxiom_local_blowup_alternative
       K < A.spaces.lp3.space.norm (A.strong_solution.vel t)) := by
   exact trueTorus_blowup_alternative A.spaces A.strong_solution A.blowup_alternative
 
-/-- Primitive continuation-derived global extension witness (no formula injection). -/
-structure BaseAxiomPrimitiveExtensionWitness
-    (H : ClayBHypotheses)
-    (M : DecisiveFaithfulPeriodicModel H) where
-  sol : StrongSolution M.base.NS
-  init_match : sol.vel 0 = H.u0
-  periodicity : Condition10 sol.vel
-  smoothness : Condition11 M.base.NS sol
-
-/-- Any faithful local-theory object yields a continuation-derived extension witness. -/
-def baseAxiom_extension_witness_from_localTheory
-    {H : ClayBHypotheses}
-    {M : DecisiveFaithfulPeriodicModel H}
-    {Astack : FaithfulAnalyticStack}
-    (L : FaithfulMildLocalTheory H M.base Astack)
-    (hper : Condition10 L.strong.vel) :
-    BaseAxiomPrimitiveExtensionWitness H M where
-  sol := L.strong
-  init_match := L.init_match
-  periodicity := hper
-  smoothness := by
-    constructor <;> intro t
-    · exact L.strong.smooth_vel t
-    · exact L.strong.smooth_press t
-
-/-- Construct a faithful local-theory object directly from an extension witness. -/
-noncomputable def baseAxiom_localTheory_from_extensionWitness
-    {H : ClayBHypotheses}
-    {M : DecisiveFaithfulPeriodicModel H}
-    (Astack : FaithfulAnalyticStack)
-    (Aprim : BaseAxiomPrimitiveAnalysis)
-    (W : BaseAxiomPrimitiveExtensionWitness H M) :
-    FaithfulMildLocalTheory H M.base Astack where
-  T := Classical.choose (baseAxiom_local_time_exists Aprim)
-  T_pos := Classical.choose_spec (baseAxiom_local_time_exists Aprim)
-  strong := W.sol
-  mild := W.sol.toMild
-  init_match := W.init_match
-  strong_mild_velocity_eq := rfl
-  strong_mild_pressure_eq := rfl
-  constructive_local := True
-  constructive_local_holds := trivial
-  criticalNorm := fun _ => 0
-  criticalNorm_nonneg := by
-    intro u
-    norm_num
-  continuation_criterion := by
-    intro B t ht0 htT hbound
-    exact True
-  blowup_alternative := True
-  blowup_alternative_holds := trivial
-
 /-- Base-axiom local theory dependency marker. -/
 def BaseAxiomLocalTheoryDependencyPolicy : Prop := True
 
