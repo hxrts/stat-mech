@@ -189,7 +189,7 @@ structure HardStepGlobalControlTheorem where
     ∀ H : ClayBHypotheses,
       ∀ M : DecisiveFaithfulPeriodicModel H,
         ∀ E : DecisiveCriticalAnalyticEngine H M,
-          ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
+          ∀ _L : FaithfulMildLocalTheory H M.base E.analytic,
             Prop
   continuation_control_holds :
     ∀ H : ClayBHypotheses,
@@ -201,7 +201,7 @@ structure HardStepGlobalControlTheorem where
     ∀ H : ClayBHypotheses,
       ∀ M : DecisiveFaithfulPeriodicModel H,
         ∀ E : DecisiveCriticalAnalyticEngine H M,
-          ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
+          ∀ _L : FaithfulMildLocalTheory H M.base E.analytic,
             ∃ sol : StrongSolution M.base.NS,
               sol.vel 0 = H.u0 ∧
               Condition10 sol.vel ∧
@@ -245,7 +245,7 @@ theorem hardStep_global_extension_theorem
     ∀ H : ClayBHypotheses,
       ∀ M : DecisiveFaithfulPeriodicModel H,
         ∀ E : DecisiveCriticalAnalyticEngine H M,
-          ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
+          ∀ _L : FaithfulMildLocalTheory H M.base E.analytic,
             ∃ sol : StrongSolution M.base.NS,
               sol.vel 0 = H.u0 ∧
               Condition10 sol.vel ∧

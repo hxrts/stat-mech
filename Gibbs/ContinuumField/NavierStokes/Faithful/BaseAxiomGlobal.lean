@@ -20,10 +20,9 @@ theorem baseAxiom_unconditional_global_control_direct
 
 /-- Unconditional global control from primitive rigidity contradiction output. -/
 theorem baseAxiom_unconditional_global_control
-    {C : BaseAxiomPrimitiveCompactness}
-    (rigidity_hypotheses : BaseAxiomPrimitiveRigidity C) :
+    (flux_package : HardStepFluxContradictionPackage) :
     HardStepGlobalClosure := by
-  exact baseAxiom_unconditional_global_control_direct rigidity_hypotheses.flux_package
+  exact baseAxiom_unconditional_global_control_direct flux_package
 
 /-- Direct continuation-derived global extension theorem from closure + witness. -/
 theorem baseAxiom_global_extension_from_continuation_direct
@@ -55,15 +54,14 @@ theorem baseAxiom_global_extension_from_primitive_contradiction_direct
 theorem baseAxiom_global_extension_from_primitive_contradiction
     {H : ClayBHypotheses}
     {M : DecisiveFaithfulPeriodicModel H}
-    {C : BaseAxiomPrimitiveCompactness}
-    (rigidity_hypotheses : BaseAxiomPrimitiveRigidity C)
+    (flux_package : HardStepFluxContradictionPackage)
     (extension_hypotheses : BaseAxiomPrimitiveExtensionWitness H M) :
     ∃ sol : StrongSolution M.base.NS,
       sol.vel 0 = H.u0 ∧
       Condition10 sol.vel ∧
       Condition11 M.base.NS sol := by
   exact baseAxiom_global_extension_from_primitive_contradiction_direct
-    rigidity_hypotheses.flux_package extension_hypotheses
+    flux_package extension_hypotheses
 
 /-- Global strong-solution extension in direct form. -/
 theorem baseAxiom_global_strong_solution_extension_direct
@@ -82,15 +80,14 @@ theorem baseAxiom_global_strong_solution_extension_direct
 theorem baseAxiom_global_strong_solution_extension
     {H : ClayBHypotheses}
     {M : DecisiveFaithfulPeriodicModel H}
-    {C : BaseAxiomPrimitiveCompactness}
-    (rigidity_hypotheses : BaseAxiomPrimitiveRigidity C)
+    (flux_package : HardStepFluxContradictionPackage)
     (extension_hypotheses : BaseAxiomPrimitiveExtensionWitness H M) :
     ∃ sol : StrongSolution M.base.NS,
       sol.vel 0 = H.u0 ∧
       Condition10 sol.vel ∧
       Condition11 M.base.NS sol := by
   exact baseAxiom_global_strong_solution_extension_direct
-    rigidity_hypotheses.flux_package extension_hypotheses
+    flux_package extension_hypotheses
 
 /-- Constructive faithful hard-global closure object in direct form. -/
 theorem baseAxiom_faithfulHardGlobalClosure_constructive_direct
@@ -121,14 +118,13 @@ theorem baseAxiom_faithfulHardGlobalClosure_constructive
     {H : ClayBHypotheses}
     {M : DecisiveFaithfulPeriodicModel H}
     {A : FaithfulAnalyticStack}
-    {C : BaseAxiomPrimitiveCompactness}
     (analysis_hypotheses : BaseAxiomPrimitiveAnalysis)
-    (rigidity_hypotheses : BaseAxiomPrimitiveRigidity C)
+    (flux_package : HardStepFluxContradictionPackage)
     (extension_hypotheses : BaseAxiomPrimitiveExtensionWitness H M) :
     ∃ L : FaithfulMildLocalTheory H M.base A,
       ∃ _HG : FaithfulHardGlobalClosure H M.base A L, True := by
   exact baseAxiom_faithfulHardGlobalClosure_constructive_direct
-    analysis_hypotheses rigidity_hypotheses.flux_package extension_hypotheses
+    analysis_hypotheses flux_package extension_hypotheses
 
 /-- Policy marker: base-axiom global derivation performs no direct formula injection. -/
 def BaseAxiomNoDirectInjectionPolicy : Prop := True

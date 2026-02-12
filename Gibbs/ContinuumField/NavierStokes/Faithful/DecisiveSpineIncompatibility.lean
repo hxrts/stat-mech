@@ -11,10 +11,6 @@ namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
 
-/-- Incompatibility route data for decisive contradiction spine. -/
-structure DecisiveSpineIncompatibilityRoute where
-  rigidityData : FullProofExactRigidityData
-
 /-- Canonical lower-hypothesis shape for the decisive crux theorem. -/
 abbrev DecisiveSpineLowerHypotheses
     (m : HardStepMinimalElement)
@@ -40,18 +36,26 @@ theorem decisiveSpine_crux_incompatibility
 
 /-- Decisive incompatibility theorem: lower + upper mechanisms imply contradiction. -/
 theorem decisiveSpine_incompatibility_theorem
-    (R : DecisiveSpineIncompatibilityRoute) :
+    {m : HardStepMinimalElement}
+    {U : VelocityTrajectory .torus3}
+    {E : DefectEnvelope .torus3}
+    (lower_flux : PersistentCascadeWitness m U)
+    (upper_tail : TailVanishingWitness E U lower_flux.t0) :
     False := by
   exact decisiveSpine_crux_incompatibility
-    R.rigidityData.rigidity.lower_flux
-    R.rigidityData.rigidity.upper_tail
+    lower_flux
+    upper_tail
 
 /-- Corollary excluding minimal blow-up elements in decisive spine route. -/
 theorem decisiveSpine_excludes_all_minimal_elements
-    (R : DecisiveSpineIncompatibilityRoute) :
+    {m : HardStepMinimalElement}
+    {U : VelocityTrajectory .torus3}
+    {E : DefectEnvelope .torus3}
+    (lower_flux : PersistentCascadeWitness m U)
+    (upper_tail : TailVanishingWitness E U lower_flux.t0) :
     ∀ _ : HardStepMinimalElement, False := by
   intro _m
-  exact False.elim (decisiveSpine_incompatibility_theorem R)
+  exact False.elim (decisiveSpine_incompatibility_theorem lower_flux upper_tail)
 
 /-- Threshold-unbounded proxy statement for decisive spine route. -/
 def DecisiveSpineAstarInfinite
@@ -60,10 +64,15 @@ def DecisiveSpineAstarInfinite
 
 /-- Corollary threshold-unbounded theorem from decisive incompatibility route. -/
 theorem decisiveSpine_Astar_infinite
-    (R : DecisiveSpineIncompatibilityRoute) :
-    DecisiveSpineAstarInfinite R.rigidityData.compactness.compactness := by
+    (C : BaseAxiomPrimitiveCompactness)
+    {m : HardStepMinimalElement}
+    {U : VelocityTrajectory .torus3}
+    {E : DefectEnvelope .torus3}
+    (lower_flux : PersistentCascadeWitness m U)
+    (upper_tail : TailVanishingWitness E U lower_flux.t0) :
+    DecisiveSpineAstarInfinite C := by
   intro B hB
-  exact False.elim (decisiveSpine_incompatibility_theorem R)
+  exact False.elim (decisiveSpine_incompatibility_theorem lower_flux upper_tail)
 
 /-- Incompatibility-layer policy marker for decisive spine. -/
 def DecisiveSpineIncompatibilityPolicy : Prop := True

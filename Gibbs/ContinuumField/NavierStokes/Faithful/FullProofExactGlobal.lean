@@ -18,10 +18,9 @@ theorem fullProof_noMinimal_implies_globalControl_direct
 
 /-- No-minimal exclusion implies global control in the exact route. -/
 theorem fullProof_noMinimal_implies_globalControl
-    {C : BaseAxiomPrimitiveCompactness}
-    (rigidity_hypotheses : BaseAxiomPrimitiveRigidity C) :
+    (flux_package : HardStepFluxContradictionPackage) :
     HardStepGlobalClosure := by
-  exact fullProof_noMinimal_implies_globalControl_direct rigidity_hypotheses.flux_package
+  exact fullProof_noMinimal_implies_globalControl_direct flux_package
 
 /-- Long-time continuation/global extension in direct form. -/
 theorem fullProof_longTime_continuation_globalExtension_direct
@@ -40,15 +39,14 @@ theorem fullProof_longTime_continuation_globalExtension_direct
 theorem fullProof_longTime_continuation_globalExtension
     {H : ClayBHypotheses}
     {M : DecisiveFaithfulPeriodicModel H}
-    {C : BaseAxiomPrimitiveCompactness}
-    (rigidity_hypotheses : BaseAxiomPrimitiveRigidity C)
+    (flux_package : HardStepFluxContradictionPackage)
     (extension_hypotheses : BaseAxiomPrimitiveExtensionWitness H M) :
     ∃ sol : StrongSolution M.base.NS,
       sol.vel 0 = H.u0 ∧
       Condition10 sol.vel ∧
       Condition11 M.base.NS sol := by
   exact fullProof_longTime_continuation_globalExtension_direct
-    rigidity_hypotheses.flux_package extension_hypotheses
+    flux_package extension_hypotheses
 
 /-- Smoothness persistence in direct form. -/
 theorem fullProof_smoothness_persistence_direct
@@ -68,14 +66,13 @@ theorem fullProof_smoothness_persistence_direct
 theorem fullProof_smoothness_persistence
     {H : ClayBHypotheses}
     {M : DecisiveFaithfulPeriodicModel H}
-    {C : BaseAxiomPrimitiveCompactness}
-    (rigidity_hypotheses : BaseAxiomPrimitiveRigidity C)
+    (flux_package : HardStepFluxContradictionPackage)
     (extension_hypotheses : BaseAxiomPrimitiveExtensionWitness H M) :
     ∃ sol : StrongSolution M.base.NS,
       (∀ t, IsSmoothField M.base.NS (sol.vel t)) ∧
       (∀ t, IsSmoothPressure M.base.NS (sol.press t)) := by
   exact fullProof_smoothness_persistence_direct
-    rigidity_hypotheses.flux_package extension_hypotheses
+    flux_package extension_hypotheses
 
 /-- Constructive faithful hard-global closure in direct form. -/
 theorem fullProof_exact_faithfulHardGlobalClosure_direct
@@ -95,14 +92,13 @@ theorem fullProof_exact_faithfulHardGlobalClosure
     {H : ClayBHypotheses}
     {M : DecisiveFaithfulPeriodicModel H}
     {A : FaithfulAnalyticStack}
-    {C : BaseAxiomPrimitiveCompactness}
     (analysis_hypotheses : BaseAxiomPrimitiveAnalysis)
-    (rigidity_hypotheses : BaseAxiomPrimitiveRigidity C)
+    (flux_package : HardStepFluxContradictionPackage)
     (extension_hypotheses : BaseAxiomPrimitiveExtensionWitness H M) :
     ∃ L : FaithfulMildLocalTheory H M.base A,
       ∃ _HG : FaithfulHardGlobalClosure H M.base A L, True := by
   exact fullProof_exact_faithfulHardGlobalClosure_direct
-    (A := A) analysis_hypotheses rigidity_hypotheses.flux_package extension_hypotheses
+    (A := A) analysis_hypotheses flux_package extension_hypotheses
 
 /-- Policy marker for the exact global route. -/
 def FullProofExactGlobalRoutePolicy : Prop := True

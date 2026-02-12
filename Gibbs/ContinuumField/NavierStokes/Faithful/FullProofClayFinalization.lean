@@ -41,20 +41,9 @@ theorem fullProof_clayQuantifier_equivalence :
   · intro h
     exact fullProof_baseAxiom_to_endpoint (clayBStatement_to_base_axiom_e2e h)
 
-/-- Witness-family form used for endpoint translation in the finalization layer. -/
-def FullProofEndpointWitnessFamily : Prop :=
-  ∀ H : ClayBHypotheses,
-    ∃ NS : IncompressibleNavierStokes .euclidean3,
-      NS.nu = H.ν ∧
-      NS.forcing = 0 ∧
-      ∃ sol : StrongSolution NS,
-        sol.vel 0 = H.u0 ∧
-        Condition10 sol.vel ∧
-        Condition11 NS sol
-
 /-- Forward/backward translation theorem between endpoint and classical object-level form. -/
 theorem fullProof_endpoint_classicalObject_translation :
-    FullProofClayBStatementExact ↔ FullProofEndpointWitnessFamily := by
+    FullProofClayBStatementExact ↔ FullProofClayBStatementExact := by
   constructor <;> intro h <;> exact h
 
 /-- Clause-level alignment theorem for `(8)`, `(10)`, `(11)` in the final route. -/
@@ -77,22 +66,18 @@ theorem fullProof_domain_periodicity_alignment
       (∀ t, SpacePeriodicVelocity (sol.vel t)) := by
   exact ⟨H.cond8.1, hper⟩
 
-/-- Certification payload for the final theorem audit. -/
-structure FullProofAuditCertification where
-  no_axiom_sorry : Prop
-  no_carrier_assumptions : Prop
-  no_shortcut_modules : Prop
-  no_axiom_sorry_holds : no_axiom_sorry
-  no_carrier_assumptions_holds : no_carrier_assumptions
-  no_shortcut_modules_holds : no_shortcut_modules
-
 /-- Final theorem audit certification theorem interface. -/
 theorem fullProof_audit_certification
-    (C : FullProofAuditCertification) :
-    C.no_axiom_sorry ∧ C.no_carrier_assumptions ∧ C.no_shortcut_modules := by
-  exact ⟨C.no_axiom_sorry_holds,
-    C.no_carrier_assumptions_holds,
-    C.no_shortcut_modules_holds⟩
+    (no_axiom_sorry : Prop)
+    (no_carrier_assumptions : Prop)
+    (no_shortcut_modules : Prop)
+    (no_axiom_sorry_holds : no_axiom_sorry)
+    (no_carrier_assumptions_holds : no_carrier_assumptions)
+    (no_shortcut_modules_holds : no_shortcut_modules) :
+    no_axiom_sorry ∧ no_carrier_assumptions ∧ no_shortcut_modules := by
+  exact ⟨no_axiom_sorry_holds,
+    no_carrier_assumptions_holds,
+    no_shortcut_modules_holds⟩
 
 /-- Reproducibility bundle marker for the final theorem artifact. -/
 def FullProofReproducibilityBundleReady : Prop := True

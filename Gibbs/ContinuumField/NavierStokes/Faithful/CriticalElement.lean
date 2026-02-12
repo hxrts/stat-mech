@@ -42,7 +42,7 @@ theorem decisive_threshold_minimizing_sequence
     {E : DecisiveCriticalAnalyticEngine H M}
     (C : DecisiveCriticalElementChain H M E) :
     ∃ T : CriticalThresholdData,
-      ∃ S : MinimizingSequenceAtThreshold T, True := by
+      ∃ _S : MinimizingSequenceAtThreshold T, True := by
   exact ⟨C.threshold, C.minimizing_sequence, trivial⟩
 
 /-- Decisive minimal-element construction theorem interface. -/

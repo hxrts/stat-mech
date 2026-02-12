@@ -11,36 +11,46 @@ namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
 
-/-- Concrete seed data needed to instantiate the decisive global-closure theorem. -/
-structure DecisiveCompletionSeed (H : ClayBHypotheses) where
-  model : DecisiveFaithfulPeriodicModel H
-  engine : DecisiveCriticalAnalyticEngine H model
-  localTheory : FaithfulMildLocalTheory H model.base engine.analytic
+/-- Constructive decisive seed family: one concrete model/engine/local-theory triple per hypothesis. -/
+abbrev DecisiveCompletionSeedFamily : Type :=
+  ∀ H : ClayBHypotheses,
+    Σ M : DecisiveFaithfulPeriodicModel H,
+      Σ E : DecisiveCriticalAnalyticEngine H M,
+        FaithfulMildLocalTheory H M.base E.analytic
 
-/-- Availability of one decisive seed package for each hypothesis instance. -/
-def DecisiveCompletionSeedFamily : Prop :=
-  ∀ H : ClayBHypotheses, Nonempty (DecisiveCompletionSeed H)
-
-/-- Every decisive completion seed is locked to the canonical periodic operators. -/
+/-- Every decisive completion model is locked to the canonical periodic operators. -/
 theorem decisive_seed_uses_canonical_operators
     {H : ClayBHypotheses}
-    (seed : DecisiveCompletionSeed H) :
-    seed.model.base.NS.ops = canonicalPeriodicOps :=
-  seed.model.ops_fixed
+    (M : DecisiveFaithfulPeriodicModel H) :
+    M.base.NS.ops = canonicalPeriodicOps :=
+  M.ops_fixed
 
 /-- Pipeline existence derived from decisive global closure plus decisive seed data. -/
 theorem faithfulPipelineExists_from_decisive_global_closure
-    (D : DecisiveGlobalClosureTheorem)
+    (global_closure :
+      ∀ H : ClayBHypotheses,
+        ∀ M : DecisiveFaithfulPeriodicModel H,
+          ∀ E : DecisiveCriticalAnalyticEngine H M,
+            ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
+              ∃ _G : FaithfulHardGlobalClosure H M.base E.analytic L, True)
     (S : DecisiveCompletionSeedFamily) :
     FaithfulPipelineExists := by
   intro H
-  rcases S H with ⟨seed⟩
-  rcases D.global_closure H seed.model seed.engine seed.localTheory with ⟨hardGlobal, hG⟩
-  exact ⟨seed.model.base, seed.engine.analytic, seed.localTheory, hardGlobal, hG⟩
+  let seed := S H
+  let M := seed.1
+  let E := seed.2.1
+  let L := seed.2.2
+  rcases global_closure H M E L with ⟨hardGlobal, hG⟩
+  exact ⟨M.base, E.analytic, L, hardGlobal, hG⟩
 
 /-- Decisive completion theorem for the faithful theorem schema. -/
 theorem faithfulClayBStatement_from_proved_pipeline_exists
-    (_D : DecisiveGlobalClosureTheorem)
+    (_global_closure :
+      ∀ H : ClayBHypotheses,
+        ∀ M : DecisiveFaithfulPeriodicModel H,
+          ∀ E : DecisiveCriticalAnalyticEngine H M,
+            ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
+              ∃ _G : FaithfulHardGlobalClosure H M.base E.analytic L, True)
     (_S : DecisiveCompletionSeedFamily) :
     FaithfulClayBStatement := by
   exact faithful_clayBStatement_from_pipeline_inputs
@@ -53,11 +63,16 @@ theorem faithfulClayBStatement_of_faithfulPipelineExists
 
 /-- Decisive completion theorem for classical Clay `(B)` statement. -/
 theorem clayBStatement_from_decisive_completion
-    (D : DecisiveGlobalClosureTheorem)
+    (global_closure :
+      ∀ H : ClayBHypotheses,
+        ∀ M : DecisiveFaithfulPeriodicModel H,
+          ∀ E : DecisiveCriticalAnalyticEngine H M,
+            ∀ L : FaithfulMildLocalTheory H M.base E.analytic,
+              ∃ _G : FaithfulHardGlobalClosure H M.base E.analytic L, True)
     (S : DecisiveCompletionSeedFamily) :
     ClayBStatement := by
   exact clayBStatement_of_faithful_pipeline
-    (faithfulPipelineExists_from_decisive_global_closure D S)
+    (faithfulPipelineExists_from_decisive_global_closure global_closure S)
 
 /-- Constructive completion route that removes external global-closure inputs. -/
 theorem clayBStatement_from_decisive_completion_constructive

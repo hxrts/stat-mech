@@ -14,12 +14,12 @@ open scoped Classical
 /-- Direct definitive contradiction package combining lower and upper bounds. -/
 structure DefinitiveFluxBarrierContradiction where
   excludes_minimal :
-    ∀ m : HardStepMinimalElement, False
+    ∀ _m : HardStepMinimalElement, False
 
 /-- Definitive exclusion theorem for minimal blow-up elements. -/
 theorem definitive_excludes_all_minimal_elements
     (C : DefinitiveFluxBarrierContradiction) :
-    ∀ m : HardStepMinimalElement, False :=
+    ∀ _m : HardStepMinimalElement, False :=
   C.excludes_minimal
 
 /-- Definitive unconditional global closure corollary. -/

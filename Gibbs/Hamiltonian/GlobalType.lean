@@ -189,10 +189,6 @@ private def exampleGT : GlobalType :=
               ("A", "B", "force"), ("B", "A", "force")] (.var "step")
   |> GlobalType.mu "step"
 
-#eval! toString (repr exampleGT)
-#eval! toString (repr (trans exampleGT "A"))
-#eval! toString (repr (trans exampleGT "B"))
-
 end ProjectionTest
 
 end Gibbs.Hamiltonian

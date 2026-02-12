@@ -21,9 +21,9 @@ structure DefinitiveCriticalThreshold where
   Astar_nonneg : 0 ≤ Astar
   closure_below :
     ∀ A : ℝ, 0 ≤ A → A < Astar →
-      ∀ NS : IncompressibleNavierStokes .torus3, Prop
+      ∀ _NS : IncompressibleNavierStokes .torus3, Prop
   failure_at :
-    ∀ NS : IncompressibleNavierStokes .torus3, Prop
+    ∀ _NS : IncompressibleNavierStokes .torus3, Prop
 
 /-- Definitive minimizing sequence approaching `A*`. -/
 structure DefinitiveMinimizingSequence

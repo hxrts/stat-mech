@@ -24,54 +24,77 @@ structure BaseAxiomPrimitiveLocalEnergy where
     ∀ u : VelocityField .torus3, hardStepNormL3 u ≤ epsilon →
       epsilon_regularity u
 
- /-- Primitive rigidity data in the base-axiom route. -/
-structure BaseAxiomPrimitiveRigidity
-    (C : BaseAxiomPrimitiveCompactness) where
-  local_energy : BaseAxiomPrimitiveLocalEnergy
-  trajectory : VelocityTrajectory .torus3
-  envelope : DefectEnvelope .torus3
-  lower_flux :
-    PersistentCascadeWitness C.minimal_element trajectory
-  upper_tail :
-    TailVanishingWitness envelope trajectory lower_flux.t0
-  flux_package : HardStepFluxContradictionPackage
-
 /-- Primitive local-energy and epsilon-regularity theorem bundle. -/
 theorem baseAxiom_local_energy_epsilon_regularity
-    {C : BaseAxiomPrimitiveCompactness}
-    (R : BaseAxiomPrimitiveRigidity C) :
-    (∀ t u, 0 ≤ R.local_energy.localEnergy t u) ∧
+    (local_energy : BaseAxiomPrimitiveLocalEnergy) :
+    (∀ t u, 0 ≤ local_energy.localEnergy t u) ∧
     (∀ u : VelocityField .torus3,
-      hardStepNormL3 u ≤ R.local_energy.epsilon →
-        R.local_energy.epsilon_regularity u) := by
-  refine ⟨R.local_energy.local_energy_nonneg, ?_⟩
+      hardStepNormL3 u ≤ local_energy.epsilon →
+        local_energy.epsilon_regularity u) := by
+  refine ⟨local_energy.local_energy_nonneg, ?_⟩
   intro u hu
-  exact R.local_energy.epsilon_regularity_holds u hu
+  exact local_energy.epsilon_regularity_holds u hu
+
+/-- Primitive local-energy and epsilon-regularity theorem in direct form. -/
+theorem baseAxiom_local_energy_epsilon_regularity_direct
+    (local_energy : BaseAxiomPrimitiveLocalEnergy) :
+    (∀ t u, 0 ≤ local_energy.localEnergy t u) ∧
+    (∀ u : VelocityField .torus3,
+      hardStepNormL3 u ≤ local_energy.epsilon →
+        local_energy.epsilon_regularity u) := by
+  refine ⟨local_energy.local_energy_nonneg, ?_⟩
+  intro u hu
+  exact local_energy.epsilon_regularity_holds u hu
 
 /-- Primitive lower-cascade theorem from minimality/nontriviality data. -/
 theorem baseAxiom_lower_cascade_from_minimality
-    {C : BaseAxiomPrimitiveCompactness}
-    (R : BaseAxiomPrimitiveRigidity C) :
+    {m : HardStepMinimalElement}
+    {U : VelocityTrajectory .torus3}
+    (lower_flux : PersistentCascadeWitness m U) :
     ∃ η > (0 : ℝ), ∃ N0 : Nat, ∃ t0 : ℝ,
-      ∀ N, N0 ≤ N → η ≤ |scaleFlux N t0 R.trajectory| := by
-  exact minimal_element_forces_persistent_cascade
-    C.minimal_element R.trajectory R.lower_flux
+      ∀ N, N0 ≤ N → η ≤ |scaleFlux N t0 U| := by
+  exact minimal_element_forces_persistent_cascade m U lower_flux
+
+/-- Primitive lower-cascade theorem in direct theorem-argument form. -/
+theorem baseAxiom_lower_cascade_from_minimality_direct
+    {m : HardStepMinimalElement}
+    {U : VelocityTrajectory .torus3}
+    (lower_flux : PersistentCascadeWitness m U) :
+    ∃ η > (0 : ℝ), ∃ N0 : Nat, ∃ t0 : ℝ,
+      ∀ N, N0 ≤ N → η ≤ |scaleFlux N t0 U| := by
+  exact minimal_element_forces_persistent_cascade m U lower_flux
 
 /-- Primitive upper-tail vanishing theorem from flux/dissipation identities. -/
 theorem baseAxiom_upper_tail_vanishing
-    {C : BaseAxiomPrimitiveCompactness}
-    (R : BaseAxiomPrimitiveRigidity C) :
-    TendsToZeroNat (fun N => scaleFlux N R.lower_flux.t0 R.trajectory) ∧
-    TendsToZeroNat R.upper_tail.integratedDefect := by
-  exact ⟨scaleFlux_tail_vanishes R.upper_tail,
-    integratedDefect_tail_vanishes R.upper_tail⟩
+    {E : DefectEnvelope .torus3}
+    {U : VelocityTrajectory .torus3}
+    {t0 : ℝ}
+    (upper_tail : TailVanishingWitness E U t0) :
+    TendsToZeroNat (fun N => scaleFlux N t0 U) ∧
+    TendsToZeroNat upper_tail.integratedDefect := by
+  exact ⟨scaleFlux_tail_vanishes upper_tail,
+    integratedDefect_tail_vanishes upper_tail⟩
+
+/-- Primitive upper-tail vanishing theorem in direct theorem-argument form. -/
+theorem baseAxiom_upper_tail_vanishing_direct
+    {E : DefectEnvelope .torus3}
+    {U : VelocityTrajectory .torus3}
+    {t0 : ℝ}
+    (upper_tail : TailVanishingWitness E U t0) :
+    TendsToZeroNat (fun N => scaleFlux N t0 U) ∧
+    TendsToZeroNat upper_tail.integratedDefect := by
+  exact ⟨scaleFlux_tail_vanishes upper_tail,
+    integratedDefect_tail_vanishes upper_tail⟩
 
 /-- Primitive contradiction theorem from lower-cascade and upper-tail estimates. -/
 theorem baseAxiom_flux_barrier_contradiction
-    {C : BaseAxiomPrimitiveCompactness}
-    (R : BaseAxiomPrimitiveRigidity C) :
+    {m : HardStepMinimalElement}
+    {U : VelocityTrajectory .torus3}
+    {E : DefectEnvelope .torus3}
+    (lower_flux : PersistentCascadeWitness m U)
+    (upper_tail : TailVanishingWitness E U lower_flux.t0) :
     False := by
-  exact hardStep_flux_barrier_contradiction R.lower_flux R.upper_tail
+  exact hardStep_flux_barrier_contradiction lower_flux upper_tail
 
 /-- Primitive contradiction theorem in direct theorem-argument form. -/
 theorem baseAxiom_flux_barrier_contradiction_direct
@@ -85,17 +108,21 @@ theorem baseAxiom_flux_barrier_contradiction_direct
 
 /-- Primitive all-minimal exclusion consequence used by global-control derivation. -/
 theorem baseAxiom_excludes_all_minimal_elements
-    {C : BaseAxiomPrimitiveCompactness}
-    (R : BaseAxiomPrimitiveRigidity C) :
+    (flux_package : HardStepFluxContradictionPackage) :
     ∀ _m : HardStepMinimalElement, False := by
-  exact hardStep_global_closure_of_flux_barrier R.flux_package
+  exact hardStep_global_closure_of_flux_barrier flux_package
+
+/-- Primitive all-minimal exclusion in direct theorem-argument form. -/
+theorem baseAxiom_excludes_all_minimal_elements_direct
+    (flux_package : HardStepFluxContradictionPackage) :
+    ∀ _m : HardStepMinimalElement, False := by
+  exact hardStep_global_closure_of_flux_barrier flux_package
 
 /-- Primitive global-closure consequence from the base-axiom rigidity data. -/
 theorem baseAxiom_global_closure_from_primitive_rigidity
-    {C : BaseAxiomPrimitiveCompactness}
-    (R : BaseAxiomPrimitiveRigidity C) :
+    (flux_package : HardStepFluxContradictionPackage) :
     HardStepGlobalClosure := by
-  exact hardStep_global_closure_of_flux_barrier R.flux_package
+  exact hardStep_global_closure_of_flux_barrier flux_package
 
 /-- Primitive global-closure consequence in direct theorem-argument form. -/
 theorem baseAxiom_global_closure_from_flux_package

@@ -9,10 +9,6 @@ namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
 
-/-- Minimal-element package for decisive contradiction spine. -/
-structure DecisiveSpineMinimalElementPackage where
-  profileRoute : DecisiveSpineProfileRoute
-
 /-- Minimal blow-up element existence theorem in direct form. -/
 theorem decisiveSpine_minimal_element_exists_direct
     (X : FullProofExactCompactnessData) :
@@ -23,11 +19,11 @@ theorem decisiveSpine_minimal_element_exists_direct
 
 /-- Minimal blow-up element existence theorem for decisive spine. -/
 theorem decisiveSpine_minimal_element_exists
-    (P : DecisiveSpineMinimalElementPackage) :
+    (X : FullProofExactCompactnessData) :
     ∃ m : HardStepMinimalElement,
       m.profile.nontrivial ∧
       AlmostPeriodicModuloSymmetry m.profile := by
-  exact decisiveSpine_minimal_element_exists_direct P.profileRoute.exactCompactness
+  exact decisiveSpine_minimal_element_exists_direct X
 
 /-- Minimal-element nontriviality theorem in direct form. -/
 theorem decisiveSpine_minimal_element_nontrivial_direct
@@ -38,10 +34,10 @@ theorem decisiveSpine_minimal_element_nontrivial_direct
 
 /-- Minimal-element nontriviality theorem for decisive spine. -/
 theorem decisiveSpine_minimal_element_nontrivial
-    (P : DecisiveSpineMinimalElementPackage) :
+    (X : FullProofExactCompactnessData) :
     ∃ x i,
-      P.profileRoute.exactCompactness.compactness.minimal_element.profile.limitingVelocity x i ≠ 0 := by
-  exact decisiveSpine_minimal_element_nontrivial_direct P.profileRoute.exactCompactness
+      X.compactness.minimal_element.profile.limitingVelocity x i ≠ 0 := by
+  exact decisiveSpine_minimal_element_nontrivial_direct X
 
 /-- Almost-periodicity modulus theorem in direct form. -/
 theorem decisiveSpine_minimal_element_almostPeriodic_modulus_direct
@@ -53,11 +49,11 @@ theorem decisiveSpine_minimal_element_almostPeriodic_modulus_direct
 
 /-- Almost-periodicity modulus theorem for decisive spine. -/
 theorem decisiveSpine_minimal_element_almostPeriodic_modulus
-    (P : DecisiveSpineMinimalElementPackage) :
+    (X : FullProofExactCompactnessData) :
     ∃ Φ : ℝ → Nat, ∀ ε : ℝ, 0 < ε →
       0 < Φ ε ∧
-      P.profileRoute.exactCompactness.compactness.minimal_element.profile.nontrivial := by
-  exact decisiveSpine_minimal_element_almostPeriodic_modulus_direct P.profileRoute.exactCompactness
+      X.compactness.minimal_element.profile.nontrivial := by
+  exact decisiveSpine_minimal_element_almostPeriodic_modulus_direct X
 
 /-- Minimal-element layer policy marker for decisive spine. -/
 def DecisiveSpineMinimalElementPolicy : Prop := True

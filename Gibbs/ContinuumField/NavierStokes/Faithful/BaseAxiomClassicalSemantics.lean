@@ -31,13 +31,13 @@ theorem baseAxiom_model_ops_component_semantics
     (∀ u x i, M.base.NS.ops.convection u x i = canonicalPeriodicConvection u x i) := by
   refine ⟨?_, ?_, ?_, ?_⟩
   · intro p x i
-    simpa [M.ops_fixed, canonicalPeriodicOps]
+    simp [M.ops_fixed, canonicalPeriodicOps]
   · intro u x
-    simpa [M.ops_fixed, canonicalPeriodicOps]
+    simp [M.ops_fixed, canonicalPeriodicOps]
   · intro u x i
-    simpa [M.ops_fixed, canonicalPeriodicOps]
+    simp [M.ops_fixed, canonicalPeriodicOps]
   · intro u x i
-    simpa [M.ops_fixed, canonicalPeriodicOps]
+    simp [M.ops_fixed, canonicalPeriodicOps]
 
 /-- Base-axiom model is theorem-level equivalent to canonical periodic NSE data. -/
 theorem baseAxiom_model_equiv_standard_periodic_form
@@ -48,14 +48,10 @@ theorem baseAxiom_model_equiv_standard_periodic_form
       M.base.NS.forcing = 0 := by
   exact ⟨M.ops_fixed, M.base.nu_match, M.base.forcing_zero⟩
 
-/-- Object-level proposition used for endpoint translation theorems. -/
-def BaseAxiomClassicalObjectFamily : Prop :=
-  ∀ H : ClayBHypotheses, ∃ B : BaseAxiomClassicalObject H, True
-
 /-- Forward translation from endpoint statement to object-level classical form. -/
 theorem baseAxiom_endpoint_to_classicalObject
     (h : ClayBStatement_base_axiom_e2e) :
-    BaseAxiomClassicalObjectFamily := by
+    ∀ H : ClayBHypotheses, ∃ _B : BaseAxiomClassicalObject H, True := by
   intro H
   rcases h H with ⟨NS, hnu, hforce, sol, hinit, hper, hsmooth⟩
   refine ⟨{
@@ -70,7 +66,7 @@ theorem baseAxiom_endpoint_to_classicalObject
 
 /-- Backward translation from object-level classical form to endpoint statement. -/
 theorem baseAxiom_classicalObject_to_endpoint
-    (T : BaseAxiomClassicalObjectFamily) :
+    (T : ∀ H : ClayBHypotheses, ∃ _B : BaseAxiomClassicalObject H, True) :
     ClayBStatement_base_axiom_e2e := by
   intro H
   rcases T H with ⟨B, _⟩
@@ -80,7 +76,7 @@ theorem baseAxiom_classicalObject_to_endpoint
 /-- Endpoint statement is equivalent to the object-level classical form. -/
 theorem baseAxiom_endpoint_classicalObject_iff :
     ClayBStatement_base_axiom_e2e ↔
-      BaseAxiomClassicalObjectFamily := by
+      (∀ H : ClayBHypotheses, ∃ _B : BaseAxiomClassicalObject H, True) := by
   constructor
   · intro h
     exact baseAxiom_endpoint_to_classicalObject h

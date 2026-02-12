@@ -318,7 +318,7 @@ theorem klDivergence_eq_crossEntropy_sub {α : Type*} [Fintype α]
           simp [shannonEntropy]
 
 /-- Binary entropy equals Shannon entropy of a Bool distribution. -/
-theorem binaryEntropy_eq_shannonEntropy_bool (ε : ℝ) (hε₀ : 0 ≤ ε) (hε₁ : ε ≤ 1) :
+theorem binaryEntropy_eq_shannonEntropy_bool (ε : ℝ) (_hε₀ : 0 ≤ ε) (hε₁ : ε ≤ 1) :
     binaryEntropy ε =
       shannonEntropy (fun b : Bool => if b then ε else 1 - ε) := by
   unfold binaryEntropy shannonEntropy
@@ -881,7 +881,7 @@ private theorem log_sum_inequality {β : Type*} [Fintype β]
   · have ha0 : ∀ y, a y = 0 := fun y => le_antisymm
       (le_trans (Finset.single_le_sum (fun y _ => ha_nn y) (Finset.mem_univ y))
         (le_of_eq hSa)) (ha_nn y)
-    simp [hSa, ha0]
+    simp [ha0]
   · exact log_sum_ineq_pos a b ha_nn hb_nn habs hSb hSa
 
 /-! ### KL Decrease Under Marginalization -/
@@ -989,7 +989,7 @@ private theorem dpiRef_margFst {α β γ : Type*} [Fintype α] [Fintype β] [Fin
 
 /-- K cancels in KL if-then-else: (if a·k=0 then 0 else a·k·log(a·k/(b·k)))
     = k · (if a=0 then 0 else a·log(a/b)). -/
-private theorem kl_ite_mul_cancel {a b k : ℝ} (hk : 0 ≤ k) :
+private theorem kl_ite_mul_cancel {a b k : ℝ} (_hk : 0 ≤ k) :
     (if a * k = 0 then (0 : ℝ) else a * k * Real.log (a * k / (b * k))) =
     k * (if a = 0 then 0 else a * Real.log (a / b)) := by
   by_cases ha : a = 0
@@ -1001,7 +1001,7 @@ private theorem kl_ite_mul_cancel {a b k : ℝ} (hk : 0 ≤ k) :
 
 /-- KL of dpiJoint vs dpiRef equals KL of pXY vs pX⊗pY (K cancels). -/
 private theorem dpi_kl_eq {α β γ : Type*} [Fintype α] [Fintype β] [Fintype γ]
-    (pXY : α × β → ℝ) (K : MarkovKernel β γ) (h_nn : ∀ ab, 0 ≤ pXY ab) :
+    (pXY : α × β → ℝ) (K : MarkovKernel β γ) (_h_nn : ∀ ab, 0 ≤ pXY ab) :
     klDivergence (dpiJoint pXY K) (dpiRef pXY K) =
       klDivergence pXY (fun ab => marginalFst pXY ab.1 * marginalSnd pXY ab.2) := by
   -- RHS as double sum
@@ -1028,7 +1028,7 @@ private theorem dpi_kl_eq {α β γ : Type*} [Fintype α] [Fintype β] [Fintype 
     KL(pXZ ‖ pX⊗pZ) = I(X;Z) ≤ KL(pXYZ ‖ qXYZ) by kl_marginalize_le. -/
 theorem data_processing_inequality {α β γ : Type*} [Fintype α] [Fintype β] [Fintype γ]
     (pXY : α × β → ℝ) (K : MarkovKernel β γ)
-    (h_nn : ∀ ab, 0 ≤ pXY ab) (h_sum : ∑ ab, pXY ab = 1) :
+    (h_nn : ∀ ab, 0 ≤ pXY ab) (_h_sum : ∑ ab, pXY ab = 1) :
     mutualInfo (pushforward pXY K) ≤ mutualInfo pXY := by
   rw [mutualInfo_eq_klDivergence _ (pushforward_nonneg pXY K h_nn),
       mutualInfo_eq_klDivergence pXY h_nn]

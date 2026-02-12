@@ -14,7 +14,7 @@ open scoped Classical
 structure DefinitiveGlobalClosurePackage where
   chain : DefinitiveCriticalElementChain
   /-- Exclusion principle for every candidate minimal element. -/
-  excludes_all_minimal : ∀ m : HardStepMinimalElement, False
+  excludes_all_minimal : ∀ _m : HardStepMinimalElement, False
 
 /-- The definitive package yields hard-step global closure. -/
 theorem definitiveHardStepGlobalClosure

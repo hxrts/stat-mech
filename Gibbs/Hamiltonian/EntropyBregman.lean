@@ -463,13 +463,13 @@ private lemma softmax_value (n : ℕ) [NeZero n] (θ : Config n) :
     ne_of_gt (show 0 < ∑ i : Fin n, Real.exp (fromConfig θ i) from
       Finset.sum_pos (fun _ _ => Real.exp_pos _)
         ⟨⟨0, NeZero.pos n⟩, Finset.mem_univ _⟩)]
-  ring
+  ring_nf
   simp +decide [Real.log_mul,
     ne_of_gt (Finset.sum_pos (fun i _ => Real.exp_pos (θ i))
       Finset.univ_nonempty)]
   simp +decide [Finset.sum_add_distrib, mul_add, mul_comm,
     ]
-  ring!
+  ring_nf!
   have hinner :
       ⟪θ, WithLp.toLp 2 fun i => Real.exp (θ.ofLp i) * (∑ x, Real.exp (θ.ofLp x))⁻¹⟫_ℝ =
         ∑ x, (∑ x, Real.exp (θ.ofLp x))⁻¹ * θ.ofLp x * Real.exp (θ.ofLp x) := by

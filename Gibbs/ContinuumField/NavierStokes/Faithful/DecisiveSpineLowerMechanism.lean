@@ -9,28 +9,45 @@ namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
 
-/-- Lower-mechanism route data for decisive contradiction spine. -/
-structure DecisiveSpineLowerMechanismRoute where
-  rigidityData : FullProofExactRigidityData
+/-- Quantitative lower mechanism theorem for decisive spine. -/
+theorem decisiveSpine_lower_mechanism_quantitative_direct
+    {m : HardStepMinimalElement}
+    {U : VelocityTrajectory .torus3}
+    (lower_flux : PersistentCascadeWitness m U) :
+    ∃ η > (0 : ℝ), ∃ N0 : Nat, ∃ t0 : ℝ,
+      ∀ N, N0 ≤ N → η ≤ |scaleFlux N t0 U| := by
+  exact minimal_element_forces_persistent_cascade m U lower_flux
 
 /-- Quantitative lower mechanism theorem for decisive spine. -/
 theorem decisiveSpine_lower_mechanism_quantitative
-    (R : DecisiveSpineLowerMechanismRoute) :
+    {m : HardStepMinimalElement}
+    {U : VelocityTrajectory .torus3}
+    (lower_flux : PersistentCascadeWitness m U) :
     ∃ η > (0 : ℝ), ∃ N0 : Nat, ∃ t0 : ℝ,
-      ∀ N, N0 ≤ N → η ≤ |scaleFlux N t0 R.rigidityData.rigidity.trajectory| := by
-  exact (fullProof_exact_lower_upper_quantitative R.rigidityData).1
+      ∀ N, N0 ≤ N → η ≤ |scaleFlux N t0 U| := by
+  exact decisiveSpine_lower_mechanism_quantitative_direct lower_flux
+
+/-- Lower-mechanism persistence theorem across extracted scale route. -/
+theorem decisiveSpine_lower_mechanism_persistence_direct
+    {m : HardStepMinimalElement}
+    {U : VelocityTrajectory .torus3}
+    (lower_flux : PersistentCascadeWitness m U) :
+    ∃ η > (0 : ℝ), ∃ N0 : Nat,
+      ∀ N, N0 ≤ N →
+        η ≤ |scaleFlux N lower_flux.t0 U| := by
+  refine ⟨lower_flux.η, lower_flux.η_pos, lower_flux.N0, ?_⟩
+  intro N hNN
+  exact lower_flux.persistent_flux N hNN
 
 /-- Lower-mechanism persistence theorem across extracted scale route. -/
 theorem decisiveSpine_lower_mechanism_persistence
-    (R : DecisiveSpineLowerMechanismRoute) :
+    {m : HardStepMinimalElement}
+    {U : VelocityTrajectory .torus3}
+    (lower_flux : PersistentCascadeWitness m U) :
     ∃ η > (0 : ℝ), ∃ N0 : Nat,
       ∀ N, N0 ≤ N →
-        η ≤ |scaleFlux N R.rigidityData.rigidity.lower_flux.t0 R.rigidityData.rigidity.trajectory| := by
-  refine ⟨R.rigidityData.rigidity.lower_flux.η,
-    R.rigidityData.rigidity.lower_flux.η_pos,
-    R.rigidityData.rigidity.lower_flux.N0, ?_⟩
-  intro N hNN
-  exact R.rigidityData.rigidity.lower_flux.persistent_flux N hNN
+        η ≤ |scaleFlux N lower_flux.t0 U| := by
+  exact decisiveSpine_lower_mechanism_persistence_direct lower_flux
 
 /-- Lower-mechanism policy marker for decisive spine. -/
 def DecisiveSpineLowerMechanismPolicy : Prop := True

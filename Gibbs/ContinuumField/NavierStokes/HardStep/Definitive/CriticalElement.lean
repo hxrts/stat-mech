@@ -25,7 +25,7 @@ structure DefinitiveCriticalElementChain where
   upperWitness :
     TailVanishingWitness
       (mkPeriodicDefectEnvelope 0 0 (by norm_num) (by norm_num)
-        (fun _ => 0) (fun _ => 0) (by intro t; norm_num) (by intro t; norm_num))
+        (fun _ => 0) (fun _ => 0) (by intro _t; norm_num) (by intro _t; norm_num))
       (fun _ => fun _ => 0)
       lowerWitness.t0
 

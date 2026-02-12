@@ -10,27 +10,37 @@ namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
 
-/-- Local-energy route data for decisive contradiction spine. -/
-structure DecisiveSpineLocalEnergyRoute where
-  rigidityData : FullProofExactRigidityData
+/-- Exact local-energy inequality theorem for decisive spine. -/
+theorem decisiveSpine_local_energy_inequality_direct
+    (local_energy : BaseAxiomPrimitiveLocalEnergy) :
+    ∀ t u, 0 ≤ local_energy.localEnergy t u := by
+  exact (baseAxiom_local_energy_epsilon_regularity_direct local_energy).1
 
 /-- Exact local-energy inequality theorem for decisive spine. -/
 theorem decisiveSpine_local_energy_inequality
-    (R : DecisiveSpineLocalEnergyRoute) :
-    ∀ t u, 0 ≤ R.rigidityData.rigidity.local_energy.localEnergy t u := by
-  exact (fullProof_exact_localEnergy_epsilonRegularity R.rigidityData).1
+    (local_energy : BaseAxiomPrimitiveLocalEnergy) :
+    ∀ t u, 0 ≤ local_energy.localEnergy t u := by
+  exact decisiveSpine_local_energy_inequality_direct local_energy
+
+/-- Exact epsilon-regularity theorem for decisive spine. -/
+theorem decisiveSpine_epsilon_regularity_direct
+    (local_energy : BaseAxiomPrimitiveLocalEnergy) :
+    ∀ u : VelocityField .torus3,
+      hardStepNormL3 u ≤ local_energy.epsilon →
+        local_energy.epsilon_regularity u := by
+  exact (baseAxiom_local_energy_epsilon_regularity_direct local_energy).2
 
 /-- Exact epsilon-regularity theorem for decisive spine. -/
 theorem decisiveSpine_epsilon_regularity
-    (R : DecisiveSpineLocalEnergyRoute) :
+    (local_energy : BaseAxiomPrimitiveLocalEnergy) :
     ∀ u : VelocityField .torus3,
-      hardStepNormL3 u ≤ R.rigidityData.rigidity.local_energy.epsilon →
-        R.rigidityData.rigidity.local_energy.epsilon_regularity u := by
-  exact (fullProof_exact_localEnergy_epsilonRegularity R.rigidityData).2
+      hardStepNormL3 u ≤ local_energy.epsilon →
+        local_energy.epsilon_regularity u := by
+  exact decisiveSpine_epsilon_regularity_direct local_energy
 
 /-- Local-energy compatibility theorem for minimal-element scale route. -/
 theorem decisiveSpine_local_energy_compatibility
-    (R : DecisiveSpineLocalEnergyRoute) :
+    (_local_energy : BaseAxiomPrimitiveLocalEnergy) :
     True := by
   trivial
 
