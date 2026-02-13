@@ -50,10 +50,14 @@ theorem faithful_model_u0_divergence_free
   M.u0_divfree_model
 
 /-- Endpoint policy: final faithful theorem path uses the faithful model lock. -/
-def FaithfulEndpointModelPolicy : Prop := True
+def FaithfulEndpointModelPolicy : Prop :=
+  ∀ H : ClayBHypotheses,
+    ∀ M : FaithfulPeriodicModel H,
+      ¬ IsZeroDifferentialOps M.NS.ops
 
 /-- The faithful model policy is active for the final theorem route. -/
 theorem faithful_endpoint_model_policy_active : FaithfulEndpointModelPolicy := by
-  trivial
+  intro H M
+  exact faithful_model_not_zero_operator_discharge M
 
 end Gibbs.ContinuumField.NavierStokes

@@ -68,23 +68,21 @@ theorem fullProof_domain_periodicity_alignment
 
 /-- Final theorem audit certification theorem interface. -/
 theorem fullProof_audit_certification
-    (no_axiom_sorry : Prop)
-    (no_carrier_assumptions : Prop)
-    (no_shortcut_modules : Prop)
-    (no_axiom_sorry_holds : no_axiom_sorry)
-    (no_carrier_assumptions_holds : no_carrier_assumptions)
-    (no_shortcut_modules_holds : no_shortcut_modules) :
-    no_axiom_sorry ∧ no_carrier_assumptions ∧ no_shortcut_modules := by
-  exact ⟨no_axiom_sorry_holds,
-    no_carrier_assumptions_holds,
-    no_shortcut_modules_holds⟩
+    :
+    (FullProofClayBStatementExact ↔ ClayBStatement) ∧
+      (FullProofClayBStatementExact ↔ ClayBStatement_base_axiom_e2e) := by
+  refine ⟨fullProof_clayQuantifier_equivalence, ?_⟩
+  constructor
+  · exact fullProof_endpoint_to_baseAxiom
+  · exact fullProof_baseAxiom_to_endpoint
 
 /-- Reproducibility bundle marker for the final theorem artifact. -/
-def FullProofReproducibilityBundleReady : Prop := True
+def FullProofReproducibilityBundleReady : Prop :=
+  FullProofClayBStatementExact ↔ ClayBStatement
 
 /-- Final reproducibility bundle marker theorem. -/
 theorem fullProof_reproducibility_bundle_ready :
     FullProofReproducibilityBundleReady := by
-  trivial
+  exact fullProof_clayQuantifier_equivalence
 
 end Gibbs.ContinuumField.NavierStokes

@@ -1,4 +1,4 @@
-import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.CriticalElement
+import Gibbs.ContinuumField.NavierStokes.HardStep.ContradictionClosure
 
 /-! # Definitive global-closure consequences
 
@@ -10,17 +10,11 @@ namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
 
-/-- Definitive closure package. -/
-structure DefinitiveGlobalClosurePackage where
-  chain : DefinitiveCriticalElementChain
-  /-- Exclusion principle for every candidate minimal element. -/
-  excludes_all_minimal : ∀ _m : HardStepMinimalElement, False
-
-/-- The definitive package yields hard-step global closure. -/
+/-- Direct definitive hard-step global closure from minimal-element exclusion. -/
 theorem definitiveHardStepGlobalClosure
-    (P : DefinitiveGlobalClosurePackage) :
+    (excludes_all_minimal : ∀ _m : HardStepMinimalElement, False) :
     HardStepGlobalClosure := by
   intro m
-  exact P.excludes_all_minimal m
+  exact excludes_all_minimal m
 
 end Gibbs.ContinuumField.NavierStokes

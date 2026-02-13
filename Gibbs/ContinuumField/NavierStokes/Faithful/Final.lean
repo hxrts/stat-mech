@@ -1,4 +1,5 @@
 import Gibbs.ContinuumField.NavierStokes.Faithful.HardGlobal
+import Gibbs.ContinuumField.NavierStokes.Faithful.BaseAxiomCompletion
 
 /-! # Faithful Clay `(B)` final theorem path
 
@@ -42,7 +43,21 @@ def FaithfulPipelineExists : Prop :=
           ∃ _Gd : FaithfulHardGlobalData H M A L, True
 
 /-- The classical `ClayBStatement` follows from faithful pipeline existence. -/
-theorem clayBStatement_of_faithful_pipeline
+theorem clayBStatement_of_faithful_pipeline :
+    FaithfulPipelineExists →
+    ClayBStatement := by
+  intro P H
+  rcases P H with ⟨M, A, L, Gd, _⟩
+  exact faithful_clayBStatement_from_pipeline_inputs H M A L Gd
+
+/-- Compatibility wrapper preserving the previous pipeline-parameterized endpoint surface. -/
+theorem clayBStatement_of_faithful_pipeline_of_exists
+    (_P : FaithfulPipelineExists) :
+    ClayBStatement := by
+  exact clayBStatement_of_faithful_pipeline _P
+
+/-- Compatibility theorem exposing pipeline-input route (non-endpoint wrapper). -/
+theorem clayBStatement_of_faithful_pipeline_inputs
     (P : FaithfulPipelineExists) :
     ClayBStatement := by
   intro H

@@ -60,12 +60,26 @@ theorem baseAxiom_continuation_blowup_alternative
   refine ⟨trueTorus_continuation_theorem spaces strong_solution continuation, ?_⟩
   exact trueTorus_blowup_alternative spaces strong_solution blowup_alternative
 
-/-- Primitive-analysis dependency policy marker for base-axiom route. -/
-def BaseAxiomPrimitiveAnalysisDependencyPolicy : Prop := True
+/-- Primitive-analysis dependency policy for the base-axiom route. -/
+def BaseAxiomPrimitiveAnalysisDependencyPolicy : Prop :=
+  ∀ (spaces : DefinitiveFunctionSpaceStack)
+    (strong_solution : TrueTorusStrongPeriodicSolution)
+    (continuation : TrueTorusContinuationCriterion spaces strong_solution)
+    (blowup_alternative : TrueTorusBlowupAlternative spaces strong_solution),
+      (∃ B : ℝ,
+        0 ≤ B ∧
+        ∀ t, 0 ≤ t → t ≤ continuation.continuation_time →
+          spaces.lp3.space.norm (strong_solution.vel t) ≤ B) ∧
+      ((∀ T, 0 ≤ T → T < blowup_alternative.Tmax → ∃ K : ℝ, 0 ≤ K ∧
+          ∀ t, 0 ≤ t → t ≤ T → spaces.lp3.space.norm (strong_solution.vel t) ≤ K) ∨
+        (∀ K : ℝ, 0 ≤ K → ∃ t, 0 ≤ t ∧ t < blowup_alternative.Tmax ∧
+          K < spaces.lp3.space.norm (strong_solution.vel t)))
 
-/-- Base-axiom primitive analysis uses primitive modules only. -/
+/-- Base-axiom primitive analysis policy theorem. -/
 theorem baseAxiom_primitive_analysis_dependency_policy :
     BaseAxiomPrimitiveAnalysisDependencyPolicy := by
-  trivial
+  intro spaces strong_solution continuation blowup_alternative
+  exact baseAxiom_continuation_blowup_alternative
+    spaces strong_solution continuation blowup_alternative
 
 end Gibbs.ContinuumField.NavierStokes

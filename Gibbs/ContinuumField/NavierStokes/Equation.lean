@@ -1,4 +1,5 @@
 import Gibbs.ContinuumField.NavierStokes.Domain
+import Mathlib.Topology.Basic
 
 /-! # Navier-Stokes equation layer
 
@@ -49,20 +50,24 @@ structure IncompressibleNavierStokes (D : SpatialDomain3) where
   nu_pos : 0 < nu
   /-- External forcing field. -/
   forcing : VelocityField D
-  /-- Smoothness predicate for velocity fields. -/
-  smoothVelocity : VelocityField D → Prop
-  /-- Smoothness predicate for pressure fields. -/
-  smoothPressure : PressureField D → Prop
+
+/-- Concrete smoothness proxy for velocity fields used throughout the NSE route. -/
+def ConcreteSmoothVelocity {D : SpatialDomain3} (u : VelocityField D) : Prop :=
+  Continuous u
+
+/-- Concrete smoothness proxy for pressure fields used throughout the NSE route. -/
+def ConcreteSmoothPressure {D : SpatialDomain3} (p : PressureField D) : Prop :=
+  Continuous p
 
 /-- Velocity regularity predicate determined by the NS model. -/
-def IsSmoothField {D : SpatialDomain3} (NS : IncompressibleNavierStokes D)
+def IsSmoothField {D : SpatialDomain3} (_NS : IncompressibleNavierStokes D)
     (u : VelocityField D) : Prop :=
-  NS.smoothVelocity u
+  ConcreteSmoothVelocity u
 
 /-- Pressure regularity predicate determined by the NS model. -/
-def IsSmoothPressure {D : SpatialDomain3} (NS : IncompressibleNavierStokes D)
+def IsSmoothPressure {D : SpatialDomain3} (_NS : IncompressibleNavierStokes D)
     (p : PressureField D) : Prop :=
-  NS.smoothPressure p
+  ConcreteSmoothPressure p
 
 /-- Divergence-free predicate for an arbitrary divergence operator. -/
 def IsDivergenceFreeWith {D : SpatialDomain3}

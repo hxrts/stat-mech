@@ -53,11 +53,18 @@ theorem fullProof_exact_inequality_bundle
   · exact (trueTorus_commutator_estimates spaces convection constants nonlinear).2
 
 /-- Policy marker for exact analysis replacement in the full-proof route. -/
-def FullProofExactAnalysisReplacementPolicy : Prop := True
+def FullProofExactAnalysisReplacementPolicy : Prop :=
+  ∀ (spaces : DefinitiveFunctionSpaceStack)
+    (complete : DefinitiveFunctionSpaceCompleteness spaces),
+      complete.lp3_complete ∧
+      complete.sobolev_complete ∧
+      complete.besov_complete ∧
+      complete.hhalf_complete
 
 /-- Full-proof exact analysis replacement policy is active. -/
 theorem fullProof_exactAnalysis_replacement_policy :
     FullProofExactAnalysisReplacementPolicy := by
-  trivial
+  intro spaces complete
+  exact fullProof_exact_space_completeness spaces complete
 
 end Gibbs.ContinuumField.NavierStokes

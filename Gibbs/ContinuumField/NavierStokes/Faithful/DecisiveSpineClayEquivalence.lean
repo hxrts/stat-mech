@@ -64,19 +64,21 @@ theorem decisiveSpine_domain_alignment
   exact fullProof_domain_periodicity_alignment hper
 
 /-- Strict final dependency audit marker for decisive spine endpoint route. -/
-def DecisiveSpineStrictAuditPolicy : Prop := True
+def DecisiveSpineStrictAuditPolicy : Prop :=
+  DecisiveSpineClayBEndpoint ↔ ClayBStatement
 
 /-- Strict final dependency audit theorem for decisive spine endpoint route. -/
 theorem decisiveSpine_strict_audit_policy :
     DecisiveSpineStrictAuditPolicy := by
-  trivial
+  exact decisiveSpine_clayB_equivalence
 
 /-- Final reproducibility marker for decisive spine endpoint route. -/
-def DecisiveSpineReproducibilityReady : Prop := True
+def DecisiveSpineReproducibilityReady : Prop :=
+  DecisiveSpineStrictAuditPolicy
 
 /-- Final reproducibility theorem for decisive spine endpoint route. -/
 theorem decisiveSpine_reproducibility_ready :
     DecisiveSpineReproducibilityReady := by
-  trivial
+  exact decisiveSpine_strict_audit_policy
 
 end Gibbs.ContinuumField.NavierStokes

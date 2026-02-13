@@ -73,4 +73,29 @@ theorem clayBStatement_classical_equivalent_route
     ClayBStatement := by
   exact clayBStatement_from_decisive_completion_no_nonempty global_closure S
 
+/-- Classical-equivalent route from seedwise no-local-fallback chain-generator completion. -/
+theorem clayBStatement_classical_equivalent_no_local_fallback_seedwise_chain_generator_route
+    (chain_generator : DecisiveSpineThresholdChainGenerator)
+    (build_seed : ConstructiveDecisiveSeedFamily) :
+    ClayBStatement := by
+  exact clayBStatement_from_no_local_fallback_seedwise_chain_generator_and_seed_construction
+    chain_generator build_seed
+
+/-- Classical-equivalent route from seedwise no-local-fallback global component-families completion. -/
+theorem clayBStatement_classical_equivalent_no_local_fallback_seedwise_global_direct_component_families_route
+    (threshold_of : DecisiveSpineConstructiveThresholdComponentFamily)
+    (minimizing_of : DecisiveSpineConstructiveMinimizingComponentFamily threshold_of)
+    (minimal_element_of : DecisiveSpineConstructiveMinimalElementComponentFamily)
+    (U_of : DecisiveSpineConstructiveTrajectoryComponentFamily)
+    (t0_of : DecisiveSpineConstructiveTimeComponentFamily U_of)
+    (lower_hypotheses_of :
+      DecisiveSpineConstructiveLowerFluxHypothesisComponentFamily U_of t0_of)
+    (upper_hypotheses_of :
+      DecisiveSpineConstructiveUpperFluxHypothesisComponentFamily U_of t0_of)
+    (build_seed : ConstructiveDecisiveSeedFamily) :
+    ClayBStatement := by
+  exact clayBStatement_from_no_local_fallback_component_families_and_seed_construction
+    threshold_of minimizing_of minimal_element_of U_of t0_of
+    lower_hypotheses_of upper_hypotheses_of build_seed
+
 end Gibbs.ContinuumField.NavierStokes

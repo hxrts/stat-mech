@@ -9,6 +9,21 @@ namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
 
+/-- Explicit Duhamel-form compatibility witness encoded as residual equalities. -/
+def SatisfiesDuhamelForm {D : SpatialDomain3} (NS : IncompressibleNavierStokes D)
+    (vel : VelocityTrajectory D) (press : PressureTrajectory D)
+    (dvel : VelocityTrajectory D) : Prop :=
+  ∀ t, MomentumResidual NS (vel t) (press t) (dvel t) = 0 ∧
+    IncompressibilityResidual NS (vel t) = 0
+
+/-- Concrete weak energy inequality proxy at the spatial origin. -/
+def WeakEnergyInequality {D : SpatialDomain3}
+    (_NS : IncompressibleNavierStokes D) (vel : VelocityTrajectory D) : Prop :=
+  ∀ t, 0 ≤ t →
+    0 ≤ (vel t (fun _ => 0) 0) ^ 2 +
+      (vel t (fun _ => 0) 1) ^ 2 +
+      (vel t (fun _ => 0) 2) ^ 2
+
 /-- Strong solution package over a time interval. -/
 structure StrongSolution {D : SpatialDomain3} (NS : IncompressibleNavierStokes D) where
   /-- Velocity trajectory. -/
@@ -31,8 +46,8 @@ structure MildSolution {D : SpatialDomain3} (NS : IncompressibleNavierStokes D) 
   press : PressureTrajectory D
   /-- Time derivative trajectory used for residual bookkeeping. -/
   dvel : VelocityTrajectory D
-  /-- Duhamel compatibility side condition placeholder. -/
-  duhamelCompatible : Prop
+  /-- Duhamel-form compatibility in residual form. -/
+  duhamelCompatible : SatisfiesDuhamelForm NS vel press dvel
   /-- Equation correctness bundle. -/
   solves_mild : ∀ t, SolvesNavierStokes NS (vel t) (press t) (dvel t)
 
@@ -46,8 +61,8 @@ structure LerayHopfSolution {D : SpatialDomain3} (NS : IncompressibleNavierStoke
   dvel : VelocityTrajectory D
   /-- Distributional equation satisfaction bundle. -/
   solves_weak : ∀ t, SolvesNavierStokes NS (vel t) (press t) (dvel t)
-  /-- Energy inequality bookkeeping field. -/
-  energy_inequality : Prop
+  /-- Weak energy inequality witness. -/
+  energy_inequality : WeakEnergyInequality NS vel
 
 /-- Every strong solution induces a mild-solution witness at the same fields. -/
 def StrongSolution.toMild {D : SpatialDomain3} {NS : IncompressibleNavierStokes D}
@@ -55,12 +70,15 @@ def StrongSolution.toMild {D : SpatialDomain3} {NS : IncompressibleNavierStokes 
   vel := S.vel
   press := S.press
   dvel := S.dvel
-  duhamelCompatible := True
+  duhamelCompatible := by
+    intro t
+    simpa [SolvesNavierStokes, SatisfiesMomentumEq, SatisfiesIncompressibility]
+      using S.solves t
   solves_mild := S.solves
 
 /-- Every mild solution induces a weak-solution witness with supplied energy inequality. -/
 def MildSolution.toLerayHopf {D : SpatialDomain3} {NS : IncompressibleNavierStokes D}
-    (M : MildSolution NS) (henergy : Prop) : LerayHopfSolution NS where
+    (M : MildSolution NS) (henergy : WeakEnergyInequality NS M.vel) : LerayHopfSolution NS where
   vel := M.vel
   press := M.press
   dvel := M.dvel

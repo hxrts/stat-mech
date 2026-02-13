@@ -58,6 +58,14 @@ def SpacePeriodicVelocity {D : SpatialDomain3} (u : VelocityField D) : Prop :=
 def SpacePeriodicPressure {D : SpatialDomain3} (p : PressureField D) : Prop :=
   ∀ j x, p (shiftByUnit x j) = p x
 
+/-- Concrete smoothness class for initial velocity data. -/
+def InitialDataSmooth {D : SpatialDomain3} (u0 : VelocityField D) : Prop :=
+  ConcreteSmoothVelocity u0
+
+/-- Concrete divergence-free class for initial velocity data. -/
+def InitialDataDivergenceFree {D : SpatialDomain3} (u0 : VelocityField D) : Prop :=
+  ∀ x, u0 x 0 + u0 x 1 + u0 x 2 = 0
+
 /-! ## Fefferman condition predicates -/
 
 /-- Differential operators used to express decay conditions (4),(5),(9). -/
@@ -149,8 +157,8 @@ structure ClayAHypotheses where
   derivOps : ClayDerivativeOps
   energy : EnergyFunctional .euclidean3
   u0 : VelocityField .euclidean3
-  u0_smooth : Prop
-  u0_divfree : Prop
+  u0_smooth : InitialDataSmooth u0
+  u0_divfree : InitialDataDivergenceFree u0
   cond4 : Condition4 derivOps u0
 
 /-- Hypothesis package for Clay statement (B). -/
@@ -158,8 +166,8 @@ structure ClayBHypotheses where
   ν : ℝ
   ν_pos : 0 < ν
   u0 : VelocityField .euclidean3
-  u0_smooth : Prop
-  u0_divfree : Prop
+  u0_smooth : InitialDataSmooth u0
+  u0_divfree : InitialDataDivergenceFree u0
   f : ExternalForceField .euclidean3
   f_zero : ForceIsZero f
   cond8 : Condition8 u0 f
@@ -172,8 +180,8 @@ structure ClayCHypotheses where
   energy : EnergyFunctional .euclidean3
   u0 : VelocityField .euclidean3
   f : ExternalForceField .euclidean3
-  u0_smooth : Prop
-  u0_divfree : Prop
+  u0_smooth : InitialDataSmooth u0
+  u0_divfree : InitialDataDivergenceFree u0
   cond4 : Condition4 derivOps u0
   cond5 : Condition5 derivOps f
 
@@ -184,8 +192,8 @@ structure ClayDHypotheses where
   derivOps : ClayDerivativeOps
   u0 : VelocityField .euclidean3
   f : ExternalForceField .euclidean3
-  u0_smooth : Prop
-  u0_divfree : Prop
+  u0_smooth : InitialDataSmooth u0
+  u0_divfree : InitialDataDivergenceFree u0
   cond8 : Condition8 u0 f
   cond9 : Condition9 derivOps f
 
@@ -242,8 +250,8 @@ structure WorkingPeriodicAssumptions where
   ν : ℝ
   ν_pos : 0 < ν
   u0 : VelocityField .torus3
-  u0_smooth : Prop
-  u0_divfree : Prop
+  u0_smooth : InitialDataSmooth u0
+  u0_divfree : InitialDataDivergenceFree u0
   u0_periodic : SpacePeriodicVelocity u0
 
 /-- If `u₀` is periodic, condition (8) holds with zero forcing. -/

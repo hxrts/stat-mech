@@ -34,7 +34,6 @@ import Gibbs.ContinuumField.NavierStokes.HardStep.ContradictionClosure
 import Gibbs.ContinuumField.NavierStokes.HardStep.Discharge
 import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.AnalyticLayer
 import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.DerivedTheorems
-import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.CriticalElement
 import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.GlobalClosure
 import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.ClayB
 import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.TrueTorusLongTimePerturbation
@@ -44,7 +43,6 @@ import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.TrueTorusLocalEnerg
 import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.TrueTorusLowerFluxRigidity
 import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.TrueTorusUpperTailVanishing
 import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.TrueTorusFluxBarrier
-import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.TrueTorusClayBUnconditional
 import Gibbs.ContinuumField.NavierStokes.Erasure.Operators
 import Gibbs.ContinuumField.NavierStokes.Erasure.ExactIdentities
 import Gibbs.ContinuumField.NavierStokes.Erasure.EnergyFlux

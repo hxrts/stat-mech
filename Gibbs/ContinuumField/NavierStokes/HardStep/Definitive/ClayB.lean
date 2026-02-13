@@ -1,5 +1,6 @@
 import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.GlobalClosure
 import Gibbs.ContinuumField.NavierStokes.HardStep.Discharge
+import Gibbs.ContinuumField.NavierStokes.Faithful.BaseAxiomCompletion
 
 /-! # Definitive Clay `(B)` discharge
 
@@ -11,36 +12,43 @@ namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
 
-/-- Definitive bridge from hard-step closure to all-data Clay `(B)` regularity data. -/
-structure DefinitiveClosureToClayBBridge where
-  regularity_of_closure :
-    HardStepGlobalClosure → (∀ H : ClayBHypotheses, ClayBRegularityData H)
-
 /-- Definitive core closure lemma (all-data Clay `(B)` regularity data). -/
 def DefinitiveCoreClosureLemma : Type :=
   ∀ H : ClayBHypotheses, ClayBRegularityData H
 
 /-- The definitive bridge discharges the core unresolved lemma. -/
 def definitiveCoreLemma_of_globalClosure
-    (P : DefinitiveGlobalClosurePackage)
-    (B : DefinitiveClosureToClayBBridge) :
+    (excludes_all_minimal : ∀ _m : HardStepMinimalElement, False)
+    (regularity_of_closure :
+      HardStepGlobalClosure → (∀ H : ClayBHypotheses, ClayBRegularityData H)) :
     DefinitiveCoreClosureLemma :=
-  B.regularity_of_closure (definitiveHardStepGlobalClosure P)
+  regularity_of_closure (definitiveHardStepGlobalClosure excludes_all_minimal)
 
 /-- The previous unresolved lemma is now replaced by the definitive core lemma. -/
 def unresolvedLemma_replaced_by_definitiveCore
-    (P : DefinitiveGlobalClosurePackage)
-    (B : DefinitiveClosureToClayBBridge) :
+    (excludes_all_minimal : ∀ _m : HardStepMinimalElement, False)
+    (regularity_of_closure :
+      HardStepGlobalClosure → (∀ H : ClayBHypotheses, ClayBRegularityData H)) :
     UnresolvedClayBGlobalClosureLemma :=
-  definitiveCoreLemma_of_globalClosure P B
+  definitiveCoreLemma_of_globalClosure excludes_all_minimal regularity_of_closure
 
 /-- Full Clay `(B)` statement for all admissible data from definitive closure discharge. -/
-theorem definitiveClayBStatement
-    (P : DefinitiveGlobalClosurePackage)
-    (B : DefinitiveClosureToClayBBridge) :
+theorem definitiveClayBStatement :
+    (excludes_all_minimal : ∀ _m : HardStepMinimalElement, False) →
+    (regularity_of_closure :
+      HardStepGlobalClosure → (∀ H : ClayBHypotheses, ClayBRegularityData H)) →
     ClayBStatement := by
+  intro excludes_all_minimal regularity_of_closure
   exact clayBStatement_of_unresolvedLemma
-    (unresolvedLemma_replaced_by_definitiveCore P B)
+    (unresolvedLemma_replaced_by_definitiveCore excludes_all_minimal regularity_of_closure)
+
+/-- Compatibility theorem preserving the previous closure-parameterized definitive endpoint. -/
+theorem definitiveClayBStatement_of_globalClosure
+    (excludes_all_minimal : ∀ _m : HardStepMinimalElement, False)
+    (regularity_of_closure :
+      HardStepGlobalClosure → (∀ H : ClayBHypotheses, ClayBRegularityData H)) :
+    ClayBStatement := by
+  exact definitiveClayBStatement excludes_all_minimal regularity_of_closure
 
 /-- Definitive dependency graph marking the closure branch as discharged. -/
 def definitiveClayBDependencyGraph : DependencyGraph where

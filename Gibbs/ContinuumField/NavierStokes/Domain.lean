@@ -1,4 +1,4 @@
-import Mathlib.Data.Real.Basic
+import Mathlib
 
 /-! # Navier-Stokes domain setup
 
@@ -21,6 +21,10 @@ abbrev Coord3 := Fin 3 → ℝ
 
 /-- Spatial carrier associated with the chosen 3D domain. -/
 abbrev SpatialCarrier (_D : SpatialDomain3) : Type := Coord3
+
+instance (D : SpatialDomain3) : TopologicalSpace (SpatialCarrier D) := by
+  delta SpatialCarrier Coord3
+  infer_instance
 
 /-- Initial-velocity package for the 3D incompressible problem. -/
 structure InitialVelocityField (D : SpatialDomain3) where

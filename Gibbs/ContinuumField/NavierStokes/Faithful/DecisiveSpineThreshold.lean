@@ -9,54 +9,53 @@ namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
 
+/-- Decisive-native profile data alias. -/
+abbrev DecisiveProfileData := BaseAxiomPrimitiveProfileData
+
+/-- Decisive-native threshold data alias. -/
+abbrev DecisiveThresholdData := BaseAxiomPrimitiveThresholdData
+
+/-- Decisive-native minimizing-data alias at a fixed threshold. -/
+abbrev DecisiveMinimizingData (threshold : DecisiveThresholdData) :=
+  BaseAxiomPrimitiveMinimizingData threshold
+
+/-- Decisive-native orbit-compactness modulus alias for a fixed minimal element. -/
+abbrev DecisiveOrbitCompactnessModulus (minimal_element : HardStepMinimalElement) :=
+  BaseAxiomPrimitiveOrbitCompactnessModulus minimal_element
+
 /-- Definition-first continuation-failure predicate in frozen setting. -/
 def DecisiveContinuationFailurePredicate
-    (threshold : BaseAxiomPrimitiveThresholdData) : ℝ → Prop :=
+    (threshold : DecisiveThresholdData) : ℝ → Prop :=
   fun A => ¬ baseAxiomContinuationPredicate threshold A
-
-/-- Direct `A*` handle from primitive continuation-failure definitions. -/
-def decisiveAstarFromFailure_direct
-    (threshold : BaseAxiomPrimitiveThresholdData) : ℝ :=
-  baseAxiomAstar threshold
 
 /-- `A*` from continuation-failure route (definition-first handle). -/
 def DecisiveAstarFromFailure
-    (threshold : BaseAxiomPrimitiveThresholdData) : ℝ :=
-  decisiveAstarFromFailure_direct threshold
-
-/-- Direct foundational threshold theorem from primitive definitions. -/
-theorem decisiveDefinitionFirst_threshold_foundations_direct
-    (threshold : BaseAxiomPrimitiveThresholdData) :
-    0 ≤ decisiveAstarFromFailure_direct threshold ∧
-      (∀ A : ℝ,
-        baseAxiomContinuationPredicate threshold A →
-          A ≤ decisiveAstarFromFailure_direct threshold) ∧
-      (DecisiveContinuationFailurePredicate threshold
-        (decisiveAstarFromFailure_direct threshold) ∨ True) := by
-  refine ⟨baseAxiomAstar_foundations threshold, ?_, ?_⟩
-  · intro A hA
-    rcases hA with ⟨_h0, hlt, _hclosure⟩
-    exact le_of_lt hlt
-  · exact Or.inr trivial
+    (threshold : DecisiveThresholdData) : ℝ :=
+  baseAxiomAstar threshold
 
 /-- Foundational threshold theorems from definition-first route. -/
 theorem decisiveDefinitionFirst_threshold_foundations
-    (threshold : BaseAxiomPrimitiveThresholdData) :
+    (threshold : DecisiveThresholdData) :
     0 ≤ DecisiveAstarFromFailure threshold ∧
       (∀ A : ℝ,
         baseAxiomContinuationPredicate threshold A →
           A ≤ DecisiveAstarFromFailure threshold) ∧
       (DecisiveContinuationFailurePredicate threshold
         (DecisiveAstarFromFailure threshold) ∨ True) := by
-  simpa [DecisiveAstarFromFailure, decisiveAstarFromFailure_direct] using
-    decisiveDefinitionFirst_threshold_foundations_direct threshold
+  refine ⟨by simpa [DecisiveAstarFromFailure] using baseAxiomAstar_foundations threshold, ?_, ?_⟩
+  · intro A hA
+    rcases hA with ⟨_h0, hlt, _hclosure⟩
+    exact le_of_lt hlt
+  · exact Or.inr trivial
 
 /-- Threshold route policy: no packaged threshold assumptions. -/
-def DecisiveThresholdDefinitionFirstPolicy : Prop := True
+def DecisiveThresholdDefinitionFirstPolicy : Prop :=
+  ∀ threshold : DecisiveThresholdData, 0 ≤ DecisiveAstarFromFailure threshold
 
 /-- Definition-first threshold policy theorem. -/
 theorem decisive_threshold_definition_first_policy :
     DecisiveThresholdDefinitionFirstPolicy := by
-  trivial
+  intro threshold
+  exact (decisiveDefinitionFirst_threshold_foundations threshold).1
 
 end Gibbs.ContinuumField.NavierStokes

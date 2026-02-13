@@ -10,6 +10,7 @@ proxies in the definitive periodic Navier-Stokes path.
 namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
+noncomputable section
 
 /-- One periodic spatial axis represented as `ℝ/ℤ`. -/
 abbrev TorusAxis : Type := UnitAddCircle
@@ -37,4 +38,5 @@ def torusShiftByInteger (x : TorusPoint3) (n : Fin 3 → ℤ) : TorusPoint3 :=
 def UsesTrueTorusCarrier (α : Type) : Prop :=
   α = TorusPoint3
 
+end
 end Gibbs.ContinuumField.NavierStokes

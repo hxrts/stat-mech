@@ -16,16 +16,6 @@ abbrev DecisiveSpineUpperFluxHypotheses
   TendsToZeroNat (fun N => scaleFlux N t0 U)
 
 /-- Quantitative upper mechanism theorem for decisive spine. -/
-theorem decisiveSpine_upper_mechanism_quantitative_direct
-    {U : VelocityTrajectory .torus3}
-    {E : DefectEnvelope .torus3}
-    {t0 : ℝ}
-    (upper_tail : TailVanishingWitness E U t0) :
-    DecisiveSpineUpperFluxHypotheses U t0 ∧
-    TendsToZeroNat upper_tail.integratedDefect := by
-  exact baseAxiom_upper_tail_vanishing_direct upper_tail
-
-/-- Quantitative upper mechanism theorem for decisive spine. -/
 theorem decisiveSpine_upper_mechanism_quantitative
     {U : VelocityTrajectory .torus3}
     {E : DefectEnvelope .torus3}
@@ -33,8 +23,7 @@ theorem decisiveSpine_upper_mechanism_quantitative
     (upper_tail : TailVanishingWitness E U t0) :
     DecisiveSpineUpperFluxHypotheses U t0 ∧
     TendsToZeroNat upper_tail.integratedDefect := by
-  exact decisiveSpine_upper_mechanism_quantitative_direct
-    upper_tail
+  exact baseAxiom_upper_tail_vanishing upper_tail
 
 /-- Theorem interface for required upper-route limit exchanges. -/
 theorem decisiveSpine_upper_limit_exchanges
@@ -48,11 +37,17 @@ theorem decisiveSpine_upper_limit_exchanges
   exact ⟨limsup_exchange_holds, integral_exchange_holds, series_exchange_holds⟩
 
 /-- Upper-mechanism policy marker for decisive spine. -/
-def DecisiveSpineUpperMechanismPolicy : Prop := True
+def DecisiveSpineUpperMechanismPolicy : Prop :=
+  ∀ {U : VelocityTrajectory .torus3}
+    {E : DefectEnvelope .torus3}
+    {t0 : ℝ},
+      (upper_tail : TailVanishingWitness E U t0) →
+        DecisiveSpineUpperFluxHypotheses U t0
 
 /-- Upper-mechanism policy theorem for decisive spine. -/
 theorem decisiveSpine_upper_mechanism_policy :
     DecisiveSpineUpperMechanismPolicy := by
-  trivial
+  intro U E t0 upper_tail
+  exact (decisiveSpine_upper_mechanism_quantitative upper_tail).1
 
 end Gibbs.ContinuumField.NavierStokes

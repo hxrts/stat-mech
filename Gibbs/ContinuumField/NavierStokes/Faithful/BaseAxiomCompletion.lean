@@ -2,8 +2,8 @@ import Gibbs.ContinuumField.NavierStokes.Faithful.BaseAxiomGlobal
 
 /-! # Faithful base-axiom end-to-end completion
 
-Endpoint theorem path for Clay `(B)` using only base-axiom primitive analysis,
-compactness, rigidity, and continuation outputs.
+Endpoint theorem path for Clay `(B)` from explicit faithful pipeline data.
+This file intentionally avoids synthetic NSE model constructors.
 -/
 
 namespace Gibbs.ContinuumField.NavierStokes
@@ -21,30 +21,37 @@ def ClayBStatement_base_axiom_e2e : Prop :=
         Condition10 sol.vel ∧
         Condition11 NS sol
 
-/-- End-to-end Clay `(B)` derivation in direct theorem-hypothesis form. -/
-theorem clayBStatement_base_axiom_e2e_direct
-    (Fmodel : ∀ H : ClayBHypotheses, DecisiveFaithfulPeriodicModel H)
-    (Fsolution : ∀ H : ClayBHypotheses,
-      ∃ sol : StrongSolution (Fmodel H).base.NS,
-        sol.vel 0 = H.u0 ∧
-        Condition10 sol.vel ∧
-        Condition11 (Fmodel H).base.NS sol) :
+/-- Explicit faithful pipeline existence package for endpoint discharge. -/
+def BaseAxiomPipelineExists : Prop :=
+  ∀ H : ClayBHypotheses,
+    ∃ M : DecisiveFaithfulPeriodicModel H,
+      ∃ A : FaithfulAnalyticStack,
+        ∃ L : FaithfulMildLocalTheory H M.base A,
+          FaithfulHardGlobalData H M.base A L
+
+/-- End-to-end Clay `(B)` derivation from explicit faithful pipeline data. -/
+theorem clayBStatement_base_axiom_e2e
+    (pipeline_exists : BaseAxiomPipelineExists) :
     ClayBStatement_base_axiom_e2e := by
   intro H
-  rcases Fsolution H with ⟨sol, hinit, hper, hsmooth⟩
-  exact ⟨(Fmodel H).base.NS, (Fmodel H).base.nu_match, (Fmodel H).base.forcing_zero,
+  rcases pipeline_exists H with ⟨M, A, L, Gd⟩
+  rcases Gd with ⟨sol, hinit, hper, hsmooth⟩
+  exact ⟨M.base.NS, M.base.nu_match, M.base.forcing_zero,
     ⟨sol, hinit, hper, hsmooth⟩⟩
 
-/-- End-to-end Clay `(B)` derivation from base-axiom primitive inputs only. -/
-theorem clayBStatement_base_axiom_e2e
-    (Fmodel : ∀ H : ClayBHypotheses, DecisiveFaithfulPeriodicModel H)
-    (Fsolution : ∀ H : ClayBHypotheses,
-      ∃ sol : StrongSolution (Fmodel H).base.NS,
-        sol.vel 0 = H.u0 ∧
-        Condition10 sol.vel ∧
-        Condition11 (Fmodel H).base.NS sol) :
+/-- Endpoint theorem from a direct endpoint witness family. -/
+theorem clayBStatement_base_axiom_e2e_of_endpoint_family
+    (endpoint_family :
+      ∀ H : ClayBHypotheses,
+        ∃ NS : IncompressibleNavierStokes .euclidean3,
+          NS.nu = H.ν ∧
+          NS.forcing = 0 ∧
+          ∃ sol : StrongSolution NS,
+            sol.vel 0 = H.u0 ∧
+            Condition10 sol.vel ∧
+            Condition11 NS sol) :
     ClayBStatement_base_axiom_e2e := by
-  exact clayBStatement_base_axiom_e2e_direct Fmodel Fsolution
+  exact endpoint_family
 
 /-- The base-axiom endpoint proposition is equivalent to `ClayBStatement`. -/
 theorem clayBStatement_base_axiom_e2e_iff_clayBStatement :
@@ -74,13 +81,5 @@ theorem base_axiom_e2e_to_clayBStatement
     (h : ClayBStatement_base_axiom_e2e) :
     ClayBStatement := by
   exact h
-
-/-- Endpoint dependency policy marker for the base-axiom route. -/
-def BaseAxiomEndpointDependencyPolicy : Prop := True
-
-/-- Endpoint dependency policy is active in the base-axiom route. -/
-theorem baseAxiom_endpoint_dependency_policy :
-    BaseAxiomEndpointDependencyPolicy := by
-  trivial
 
 end Gibbs.ContinuumField.NavierStokes

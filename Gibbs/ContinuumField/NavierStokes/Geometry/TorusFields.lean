@@ -1,4 +1,5 @@
 import Gibbs.ContinuumField.NavierStokes.Geometry.TorusModel
+import Mathlib.Topology.Basic
 
 /-! # True torus field layer
 
@@ -17,10 +18,12 @@ abbrev TrueTorusScalarField : Type := TorusPoint3 → ℝ
 abbrev TrueTorusVectorField : Type := TorusPoint3 → Coord3
 
 /-- Smoothness predicate for true-torus scalar fields. -/
-def IsSmoothTrueTorusScalarField (_f : TrueTorusScalarField) : Prop := True
+def IsSmoothTrueTorusScalarField (f : TrueTorusScalarField) : Prop :=
+  Continuous f
 
 /-- Smoothness predicate for true-torus vector fields. -/
-def IsSmoothTrueTorusVectorField (_u : TrueTorusVectorField) : Prop := True
+def IsSmoothTrueTorusVectorField (u : TrueTorusVectorField) : Prop :=
+  Continuous u
 
 /-- Smooth periodic scalar-field package on `(ℝ/ℤ)^3`. -/
 structure SmoothPeriodicScalarField where

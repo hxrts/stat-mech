@@ -71,8 +71,11 @@ theorem hardStep_global_extension_from_continuation_route
     (global_closure : HardStepGlobalClosureTheorem) :
     HardStepGlobalExtensionTheorem := by
   intro H M A L
-  have hclosure : HardStepGlobalClosure := global_closure H M A L
-  exact baseAxiom_global_extension_from_continuation_direct hclosure L
+  have _hclosure : HardStepGlobalClosure := global_closure H M A L
+  refine ⟨L.strong, L.init_match, L.periodicity_preserved, ?_⟩
+  constructor <;> intro t
+  · exact L.strong.smooth_vel t
+  · exact L.strong.smooth_press t
 
 /-- Continuation/long-time control theorem interface from hard-step control package. -/
 theorem hardStep_continuation_control_theorem

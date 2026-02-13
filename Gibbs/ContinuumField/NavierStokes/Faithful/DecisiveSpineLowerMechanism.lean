@@ -17,7 +17,7 @@ abbrev DecisiveSpineLowerFluxHypotheses
     ∀ N, N0 ≤ N → η ≤ |scaleFlux N t0 U|
 
 /-- Quantitative lower mechanism theorem for decisive spine. -/
-theorem decisiveSpine_lower_mechanism_quantitative_direct
+theorem decisiveSpine_lower_mechanism_quantitative
     {m : HardStepMinimalElement}
     {U : VelocityTrajectory .torus3}
     (lower_flux : PersistentCascadeWitness m U) :
@@ -25,17 +25,8 @@ theorem decisiveSpine_lower_mechanism_quantitative_direct
       ∀ N, N0 ≤ N → η ≤ |scaleFlux N t0 U| := by
   exact minimal_element_forces_persistent_cascade m U lower_flux
 
-/-- Quantitative lower mechanism theorem for decisive spine. -/
-theorem decisiveSpine_lower_mechanism_quantitative
-    {m : HardStepMinimalElement}
-    {U : VelocityTrajectory .torus3}
-    (lower_flux : PersistentCascadeWitness m U) :
-    ∃ η > (0 : ℝ), ∃ N0 : Nat, ∃ t0 : ℝ,
-      ∀ N, N0 ≤ N → η ≤ |scaleFlux N t0 U| := by
-  exact decisiveSpine_lower_mechanism_quantitative_direct lower_flux
-
 /-- Lower-mechanism persistence theorem across extracted scale route. -/
-theorem decisiveSpine_lower_mechanism_persistence_direct
+theorem decisiveSpine_lower_mechanism_persistence
     {m : HardStepMinimalElement}
     {U : VelocityTrajectory .torus3}
     (lower_flux : PersistentCascadeWitness m U) :
@@ -44,20 +35,17 @@ theorem decisiveSpine_lower_mechanism_persistence_direct
   intro N hNN
   exact lower_flux.persistent_flux N hNN
 
-/-- Lower-mechanism persistence theorem across extracted scale route. -/
-theorem decisiveSpine_lower_mechanism_persistence
-    {m : HardStepMinimalElement}
-    {U : VelocityTrajectory .torus3}
-    (lower_flux : PersistentCascadeWitness m U) :
-    DecisiveSpineLowerFluxHypotheses U lower_flux.t0 := by
-  exact decisiveSpine_lower_mechanism_persistence_direct lower_flux
-
 /-- Lower-mechanism policy marker for decisive spine. -/
-def DecisiveSpineLowerMechanismPolicy : Prop := True
+def DecisiveSpineLowerMechanismPolicy : Prop :=
+  ∀ {m : HardStepMinimalElement}
+    {U : VelocityTrajectory .torus3},
+      (lower_flux : PersistentCascadeWitness m U) →
+        DecisiveSpineLowerFluxHypotheses U lower_flux.t0
 
 /-- Lower-mechanism policy theorem for decisive spine. -/
 theorem decisiveSpine_lower_mechanism_policy :
     DecisiveSpineLowerMechanismPolicy := by
-  trivial
+  intro m U lower_flux
+  exact decisiveSpine_lower_mechanism_persistence lower_flux
 
 end Gibbs.ContinuumField.NavierStokes

@@ -41,12 +41,20 @@ theorem baseAxiom_local_blowup_alternative
       K < spaces.lp3.space.norm (strong_solution.vel t)) := by
   exact trueTorus_blowup_alternative spaces strong_solution blowup_alternative
 
-/-- Base-axiom local theory dependency marker. -/
-def BaseAxiomLocalTheoryDependencyPolicy : Prop := True
+/-- Base-axiom local-theory dependency policy for primitive continuation outputs. -/
+def BaseAxiomLocalTheoryDependencyPolicy : Prop :=
+  ∀ (spaces : DefinitiveFunctionSpaceStack)
+    (strong_solution : TrueTorusStrongPeriodicSolution)
+    (continuation : TrueTorusContinuationCriterion spaces strong_solution),
+      ∃ B : ℝ,
+        0 ≤ B ∧
+        ∀ t, 0 ≤ t → t ≤ continuation.continuation_time →
+          spaces.lp3.space.norm (strong_solution.vel t) ≤ B
 
-/-- Base-axiom local theory uses primitive analysis data only. -/
+/-- Base-axiom local-theory dependency policy theorem. -/
 theorem baseAxiom_localTheory_dependency_policy :
     BaseAxiomLocalTheoryDependencyPolicy := by
-  trivial
+  intro spaces strong_solution continuation
+  exact baseAxiom_local_critical_bound spaces strong_solution continuation
 
 end Gibbs.ContinuumField.NavierStokes

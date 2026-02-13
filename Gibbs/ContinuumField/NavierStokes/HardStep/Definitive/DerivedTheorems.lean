@@ -45,13 +45,6 @@ def DefinitiveTailVanishingTheorem : Prop :=
       (∀ N, |scaleFlux N t0 U| ≤ tail N) ∧
       TendsToZeroNat tail
 
-/-- Bundle collecting theorem-level replacements for witness-centric APIs. -/
-structure DefinitiveDerivedTheoremSuite where
-  longTimePerturbation : DefinitiveLongTimePerturbationTheorem
-  envelopeRobustness : DefinitiveEnvelopeRobustnessTheorem
-  lowerBoundRigidity : DefinitiveLowerBoundRigidityTheorem
-  tailVanishing : DefinitiveTailVanishingTheorem
-
 /-- Bridge: witness-rich perturbation data imply the theorem-level perturbation statement. -/
 theorem definitiveLongTimePerturbation_fromWitness
     (hgen :

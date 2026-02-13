@@ -34,8 +34,6 @@ def zeroNSEuclidean : IncompressibleNavierStokes .euclidean3 where
   nu := 1
   nu_pos := by norm_num
   forcing := 0
-  smoothVelocity := fun _ => True
-  smoothPressure := fun _ => True
 
 /-- Zero-trajectory strong solution for the concrete zero NSE model. -/
 def zeroStrongSolutionEuclidean : StrongSolution zeroNSEuclidean where
@@ -44,10 +42,12 @@ def zeroStrongSolutionEuclidean : StrongSolution zeroNSEuclidean where
   dvel := fun _ _ => 0
   smooth_vel := by
     intro t
-    trivial
+    simpa [IsSmoothField, ConcreteSmoothVelocity] using
+      (continuous_const : Continuous (fun _ : Coord3 => (0 : Coord3)))
   smooth_press := by
     intro t
-    trivial
+    simpa [IsSmoothPressure, ConcreteSmoothPressure] using
+      (continuous_const : Continuous (fun _ : Coord3 => (0 : ℝ)))
   solves := by
     intro t
     constructor
@@ -66,7 +66,13 @@ theorem zeroStrongSolutionEuclidean_condition10 :
 /-- Condition (11) for the concrete zero strong solution. -/
 theorem zeroStrongSolutionEuclidean_condition11 :
     Condition11 zeroNSEuclidean zeroStrongSolutionEuclidean := by
-  constructor <;> intro t <;> trivial
+  constructor
+  · intro t
+    simpa [zeroStrongSolutionEuclidean, IsSmoothField, ConcreteSmoothVelocity] using
+      (continuous_const : Continuous (fun _ : Coord3 => (0 : Coord3)))
+  · intro t
+    simpa [zeroStrongSolutionEuclidean, IsSmoothPressure, ConcreteSmoothPressure] using
+      (continuous_const : Continuous (fun _ : Coord3 => (0 : ℝ)))
 
 /-! ## Clay instance theorem -/
 
@@ -75,8 +81,12 @@ def zeroClayBHypotheses : ClayBHypotheses where
   ν := 1
   ν_pos := by norm_num
   u0 := zeroVelocityFieldEuclidean
-  u0_smooth := True
-  u0_divfree := True
+  u0_smooth := by
+    simpa [InitialDataSmooth, ConcreteSmoothVelocity, zeroVelocityFieldEuclidean] using
+      (continuous_const : Continuous (fun _ : Coord3 => (0 : Coord3)))
+  u0_divfree := by
+    intro x
+    simp [zeroVelocityFieldEuclidean]
   f := zeroForce .euclidean3
   f_zero := forceIsZero_zeroForce .euclidean3
   cond8 := by
