@@ -55,7 +55,7 @@ theorem decisiveSpine_excludes_all_minimal_elements
 /-- Threshold-unbounded proxy statement for decisive spine route. -/
 def DecisiveSpineAstarInfinite
     (threshold : DecisiveThresholdData) : Prop :=
-  ∀ B : ℝ, 0 ≤ B → B ≤ baseAxiomAstar threshold
+  ∀ B : ℝ, 0 ≤ B → B ≤ DecisiveAstarFromFailure threshold
 
 /-- Corollary threshold-unbounded theorem from decisive incompatibility route. -/
 theorem decisiveSpine_Astar_infinite

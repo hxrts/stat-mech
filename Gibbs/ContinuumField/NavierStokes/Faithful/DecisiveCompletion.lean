@@ -122,6 +122,15 @@ theorem clayBStatement_from_decisive_completion
   exact clayBStatement_of_faithful_pipeline_of_exists
     (faithfulPipelineExists_from_decisive_global_closure global_closure S)
 
+/-- Constructive completion route from a packaged constructive no-local-fallback route. -/
+theorem clayBStatement_from_decisive_completion_constructive_of_component_package
+    (P : DecisiveSpineConstructiveComponentPackage)
+    (S : DecisiveCompletionSeedFamily) :
+    ClayBStatement := by
+  exact clayBStatement_from_decisive_completion
+    (decisiveGlobalClosureTheorem_constructive_of_component_package P)
+    S
+
 /-- Constructive completion route that removes external global-closure inputs. -/
 theorem clayBStatement_from_decisive_completion_constructive
     (threshold_of : DecisiveSpineConstructiveThresholdComponentFamily)
@@ -135,10 +144,14 @@ theorem clayBStatement_from_decisive_completion_constructive
       DecisiveSpineConstructiveUpperFluxHypothesisComponentFamily U_of t0_of)
     (S : DecisiveCompletionSeedFamily) :
     ClayBStatement := by
-  exact clayBStatement_from_decisive_completion
-    (decisiveGlobalClosureTheorem_constructive
-      threshold_of minimizing_of minimal_element_of U_of t0_of
-      lower_hypotheses_of upper_hypotheses_of)
+  exact clayBStatement_from_decisive_completion_constructive_of_component_package
+    { threshold_of := threshold_of
+      minimizing_of := minimizing_of
+      minimal_element_of := minimal_element_of
+      U_of := U_of
+      t0_of := t0_of
+      lower_hypotheses_of := lower_hypotheses_of
+      upper_hypotheses_of := upper_hypotheses_of }
     S
 
 /-! ## Seedwise threshold chain -/
@@ -181,14 +194,17 @@ theorem decisiveSeedwise_threshold_chain_on_seeds_of_data
   exact decisiveSpine_threshold_minimal_flux_chain_nonempty_of_data
     threshold minimizing minimal_element flux_hypotheses
 
-/-- Build seedwise threshold-chain nonemptiness from a global chain-generator theorem. -/
+/-- Build seedwise threshold-chain nonemptiness from a global chain-generator theorem, via canonical data-family extraction. -/
 theorem decisiveSeedwise_threshold_chain_on_seeds_of_chain_generator
     (S : DecisiveCompletionSeedFamily)
     (chain_generator : DecisiveSpineThresholdChainGenerator) :
     DecisiveSeedwiseThresholdChainOnSeeds S := by
-  intro H
-  let seed := S H
-  exact chain_generator H seed.1 seed.2.1 seed.2.2
+  exact decisiveSeedwise_threshold_chain_on_seeds_of_data S
+    (by
+      intro H
+      let seed := S H
+      exact (decisiveSpine_threshold_chain_data_family_of_chain_generator chain_generator)
+        H seed.1 seed.2.1 seed.2.2)
 
 /-! ## Seedwise closure -/
 
@@ -229,22 +245,46 @@ theorem clayBStatement_from_decisive_completion_no_local_fallback_seedwise
   exact clayBStatement_from_seedwise_decisive_completion
     S (decisiveSeedwise_global_closure_no_local_fallback_of_chain_on_seeds S seedwise_chain)
 
+/-- Canonical seedwise no-local-fallback completion route (chain-output-family surface). -/
+theorem clayBStatement_from_decisive_completion_no_local_fallback_seedwise_canonical
+    (output_family : DecisiveSpineThresholdChainOutputFamily)
+    (S : DecisiveCompletionSeedFamily) :
+    ClayBStatement := by
+  exact clayBStatement_from_seedwise_decisive_completion S
+    (decisiveSeedwise_global_closure_no_local_fallback_of_data_on_seeds
+      S
+      (by
+        intro H
+        let seed := S H
+        exact (decisiveSpine_threshold_chain_data_family_of_chain_output_family output_family)
+          H seed.1 seed.2.1 seed.2.2))
+
 /-- Seedwise no-local-fallback completion route from global chain-generator assumptions. -/
 theorem clayBStatement_from_decisive_completion_no_local_fallback_seedwise_of_chain_generator
     (chain_generator : DecisiveSpineThresholdChainGenerator)
     (S : DecisiveCompletionSeedFamily) :
     ClayBStatement := by
-  exact clayBStatement_from_decisive_completion_no_local_fallback_seedwise
-    S (decisiveSeedwise_threshold_chain_on_seeds_of_chain_generator S chain_generator)
+  exact clayBStatement_from_decisive_completion_no_local_fallback_seedwise_canonical
+    (decisiveSpine_chain_output_family_of_chain_generator chain_generator)
+    S
+
+/-- Seedwise no-local-fallback completion route from global chain-output-family assumptions. -/
+theorem clayBStatement_from_decisive_completion_no_local_fallback_seedwise_of_chain_output_family
+    (output_family : DecisiveSpineThresholdChainOutputFamily)
+    (S : DecisiveCompletionSeedFamily) :
+    ClayBStatement := by
+  exact clayBStatement_from_decisive_completion_no_local_fallback_seedwise_canonical
+    output_family
+    S
 
 /-- Seedwise no-local-fallback completion route from global data-family assumptions. -/
 theorem clayBStatement_from_decisive_completion_no_local_fallback_seedwise_of_data_family
     (data_family : DecisiveSpineThresholdChainDataFamily)
     (S : DecisiveCompletionSeedFamily) :
     ClayBStatement := by
-  exact clayBStatement_from_seedwise_decisive_completion S
-    (decisiveSeedwise_global_closure_no_local_fallback_of_data_on_seeds
-      S (decisiveSeedwise_threshold_chain_data_on_seeds_of_data_family S data_family))
+  exact clayBStatement_from_decisive_completion_no_local_fallback_seedwise_canonical
+    (decisiveSpine_chain_output_family_of_data_family data_family)
+    S
 
 /-- Seedwise no-local-fallback completion route from explicit seedwise threshold-chain data. -/
 theorem clayBStatement_from_decisive_completion_no_local_fallback_seedwise_of_data_on_seeds
@@ -254,7 +294,16 @@ theorem clayBStatement_from_decisive_completion_no_local_fallback_seedwise_of_da
   exact clayBStatement_from_seedwise_decisive_completion
     S (decisiveSeedwise_global_closure_no_local_fallback_of_data_on_seeds S seedwise_data)
 
-/-- Seedwise no-local-fallback completion route from global component-families assumptions. -/
+/-- Seedwise no-local-fallback completion route from a packaged component route. -/
+theorem clayBStatement_from_decisive_completion_no_local_fallback_seedwise_of_component_package
+    (P : DecisiveSpineConstructiveComponentPackage)
+    (S : DecisiveCompletionSeedFamily) :
+    ClayBStatement := by
+  exact clayBStatement_from_decisive_completion_no_local_fallback_seedwise_canonical
+    (decisiveSpine_chain_output_family_of_component_package P)
+    S
+
+/-- Compatibility wrapper: global component-families assumptions routed via package form. -/
 theorem clayBStatement_from_decisive_completion_no_local_fallback_seedwise_of_global_direct_component_families
     (threshold_of : DecisiveSpineConstructiveThresholdComponentFamily)
     (minimizing_of : DecisiveSpineConstructiveMinimizingComponentFamily threshold_of)
@@ -267,10 +316,14 @@ theorem clayBStatement_from_decisive_completion_no_local_fallback_seedwise_of_gl
       DecisiveSpineConstructiveUpperFluxHypothesisComponentFamily U_of t0_of)
     (S : DecisiveCompletionSeedFamily) :
     ClayBStatement := by
-  exact clayBStatement_from_decisive_completion_no_local_fallback_seedwise_of_data_family
-    (decisiveSpine_threshold_chain_data_family_of_direct_constructive_components
-      threshold_of minimizing_of minimal_element_of U_of t0_of
-      lower_hypotheses_of upper_hypotheses_of)
+  exact clayBStatement_from_decisive_completion_no_local_fallback_seedwise_of_component_package
+    { threshold_of := threshold_of
+      minimizing_of := minimizing_of
+      minimal_element_of := minimal_element_of
+      U_of := U_of
+      t0_of := t0_of
+      lower_hypotheses_of := lower_hypotheses_of
+      upper_hypotheses_of := upper_hypotheses_of }
     S
 
 end Gibbs.ContinuumField.NavierStokes

@@ -10,11 +10,21 @@ namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
 
-/-- Decisive-native local-energy field alias. -/
-abbrev DecisiveLocalEnergyField := BaseAxiomPrimitiveLocalEnergyField
+/-- Decisive-native local-energy field wrapper. -/
+structure DecisiveLocalEnergyField where
+  toBase : BaseAxiomPrimitiveLocalEnergyField
 
-/-- Decisive-native epsilon-regularity predicate alias. -/
-abbrev DecisiveEpsilonRegularity := BaseAxiomPrimitiveEpsilonRegularity
+/-- Decisive-native epsilon-regularity predicate wrapper. -/
+structure DecisiveEpsilonRegularity where
+  toBase : BaseAxiomPrimitiveEpsilonRegularity
+
+/-- Coercion from decisive local-energy wrappers to callable fields. -/
+instance : CoeFun DecisiveLocalEnergyField (fun _ => ℝ → TrueTorusVectorField → ℝ) where
+  coe d := d.toBase
+
+/-- Coercion from decisive epsilon-regularity wrappers to callable predicates. -/
+instance : CoeFun DecisiveEpsilonRegularity (fun _ => VelocityField .torus3 → Prop) where
+  coe d := d.toBase
 
 /-- Exact local-energy inequality theorem for decisive spine. -/
 theorem decisiveSpine_local_energy_inequality
@@ -27,7 +37,8 @@ theorem decisiveSpine_local_energy_inequality
         epsilon_regularity u) :
     ∀ t u, 0 ≤ localEnergy t u := by
   exact (baseAxiom_local_energy_epsilon_regularity
-    localEnergy epsilon epsilon_regularity local_energy_nonneg epsilon_regularity_holds
+    localEnergy.toBase epsilon epsilon_regularity.toBase
+    local_energy_nonneg epsilon_regularity_holds
     ).1
 
 /-- Exact epsilon-regularity theorem for decisive spine. -/
@@ -43,7 +54,8 @@ theorem decisiveSpine_epsilon_regularity
       hardStepNormL3 u ≤ epsilon →
         epsilon_regularity u := by
   exact (baseAxiom_local_energy_epsilon_regularity
-    localEnergy epsilon epsilon_regularity local_energy_nonneg epsilon_regularity_holds
+    localEnergy.toBase epsilon epsilon_regularity.toBase
+    local_energy_nonneg epsilon_regularity_holds
     ).2
 
 /-- Local-energy compatibility theorem for minimal-element scale route. -/

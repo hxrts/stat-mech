@@ -91,8 +91,17 @@ theorem clayBStatement_from_no_local_fallback_seedwise_chain_generator_and_seed_
     (chain_generator : DecisiveSpineThresholdChainGenerator)
     (build_seed : ConstructiveDecisiveSeedFamily) :
     ClayBStatement := by
-  exact clayBStatement_from_decisive_completion_no_local_fallback_seedwise_of_chain_generator
-    chain_generator build_seed
+  exact clayBStatement_from_decisive_completion_no_local_fallback_seedwise_of_chain_output_family
+    (decisiveSpine_chain_output_family_of_chain_generator chain_generator)
+    build_seed
+
+/-- Final endpoint route from chain-output-family hypotheses via seedwise no-fallback completion. -/
+theorem clayBStatement_from_no_local_fallback_seedwise_chain_output_family_and_seed_construction
+    (output_family : DecisiveSpineThresholdChainOutputFamily)
+    (build_seed : ConstructiveDecisiveSeedFamily) :
+    ClayBStatement := by
+  exact clayBStatement_from_decisive_completion_no_local_fallback_seedwise_of_chain_output_family
+    output_family build_seed
 
 /-- Final endpoint route from seedwise chain nonemptiness on chosen seed triples. -/
 theorem clayBStatement_from_no_local_fallback_seedwise_chain_on_seeds_and_seed_construction
@@ -102,13 +111,39 @@ theorem clayBStatement_from_no_local_fallback_seedwise_chain_on_seeds_and_seed_c
   exact clayBStatement_from_decisive_completion_no_local_fallback_seedwise
     build_seed seedwise_chain
 
+/-- Canonical no-local-fallback endpoint route (chain-output-family + seed construction). -/
+theorem clayBStatement_from_no_local_fallback_canonical_chain_output_route_and_seed_construction
+    (output_family : DecisiveSpineThresholdChainOutputFamily)
+    (build_seed : ConstructiveDecisiveSeedFamily) :
+    ClayBStatement := by
+  exact clayBStatement_from_no_local_fallback_seedwise_chain_output_family_and_seed_construction
+    output_family build_seed
+
 /-- Final endpoint route from explicit per-instance chain data and constructive seeds. -/
 theorem clayBStatement_from_no_local_fallback_data_family_and_seed_construction
     (data_family : DecisiveSpineThresholdChainDataFamily)
     (build_seed : ConstructiveDecisiveSeedFamily) :
     ClayBStatement := by
-  exact clayBStatement_from_decisive_completion_no_local_fallback_seedwise_of_data_family
+  exact clayBStatement_from_no_local_fallback_canonical_chain_output_route_and_seed_construction
+    (decisiveSpine_chain_output_family_of_data_family data_family)
+    build_seed
+
+/-- Compatibility wrapper preserving the previous canonical data-route endpoint surface. -/
+theorem clayBStatement_from_no_local_fallback_canonical_data_route_and_seed_construction
+    (data_family : DecisiveSpineThresholdChainDataFamily)
+    (build_seed : ConstructiveDecisiveSeedFamily) :
+    ClayBStatement := by
+  exact clayBStatement_from_no_local_fallback_data_family_and_seed_construction
     data_family build_seed
+
+/-- Canonical no-local-fallback endpoint route from a packaged component route. -/
+theorem clayBStatement_from_no_local_fallback_component_package_and_seed_construction
+    (P : DecisiveSpineConstructiveComponentPackage)
+    (build_seed : ConstructiveDecisiveSeedFamily) :
+    ClayBStatement := by
+  exact clayBStatement_from_no_local_fallback_canonical_chain_output_route_and_seed_construction
+    (decisiveSpine_chain_output_family_of_component_package P)
+    build_seed
 
 /-- Final endpoint route from explicit seedwise chain data on chosen seed triples. -/
 theorem clayBStatement_from_no_local_fallback_seedwise_data_on_seeds_and_seed_construction
@@ -144,7 +179,7 @@ theorem clayBStatement_from_no_local_fallback_seedwise_component_families_and_se
       exact ⟨threshold_on_seeds H, minimizing_on_seeds H, minimal_element_on_seeds H,
         flux_hypotheses_on_seeds H⟩)
 
-/-- Final endpoint route from explicit component theorem families and constructive seeds. -/
+/-- Compatibility wrapper: component-family route reduced to packaged-component route. -/
 theorem clayBStatement_from_no_local_fallback_component_families_and_seed_construction
     (threshold_of : DecisiveSpineConstructiveThresholdComponentFamily)
     (minimizing_of : DecisiveSpineConstructiveMinimizingComponentFamily threshold_of)
@@ -157,8 +192,14 @@ theorem clayBStatement_from_no_local_fallback_component_families_and_seed_constr
       DecisiveSpineConstructiveUpperFluxHypothesisComponentFamily U_of t0_of)
     (build_seed : ConstructiveDecisiveSeedFamily) :
     ClayBStatement := by
-  exact clayBStatement_from_decisive_completion_no_local_fallback_seedwise_of_global_direct_component_families
-    threshold_of minimizing_of minimal_element_of U_of t0_of
-    lower_hypotheses_of upper_hypotheses_of build_seed
+  exact clayBStatement_from_no_local_fallback_component_package_and_seed_construction
+    { threshold_of := threshold_of
+      minimizing_of := minimizing_of
+      minimal_element_of := minimal_element_of
+      U_of := U_of
+      t0_of := t0_of
+      lower_hypotheses_of := lower_hypotheses_of
+      upper_hypotheses_of := upper_hypotheses_of }
+    build_seed
 
 end Gibbs.ContinuumField.NavierStokes

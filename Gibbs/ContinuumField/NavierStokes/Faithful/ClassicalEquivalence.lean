@@ -78,10 +78,44 @@ theorem clayBStatement_classical_equivalent_no_local_fallback_seedwise_chain_gen
     (chain_generator : DecisiveSpineThresholdChainGenerator)
     (build_seed : ConstructiveDecisiveSeedFamily) :
     ClayBStatement := by
-  exact clayBStatement_from_no_local_fallback_seedwise_chain_generator_and_seed_construction
-    chain_generator build_seed
+  exact clayBStatement_from_no_local_fallback_seedwise_chain_output_family_and_seed_construction
+    (decisiveSpine_chain_output_family_of_chain_generator chain_generator)
+    build_seed
 
-/-- Classical-equivalent route from seedwise no-local-fallback global component-families completion. -/
+/-- Classical-equivalent route from seedwise no-local-fallback chain-output-family completion. -/
+theorem clayBStatement_classical_equivalent_no_local_fallback_seedwise_chain_output_family_route
+    (output_family : DecisiveSpineThresholdChainOutputFamily)
+    (build_seed : ConstructiveDecisiveSeedFamily) :
+    ClayBStatement := by
+  exact clayBStatement_from_no_local_fallback_seedwise_chain_output_family_and_seed_construction
+    output_family build_seed
+
+/-- Classical-equivalent canonical no-local-fallback route (chain-output-family + seed construction). -/
+theorem clayBStatement_classical_equivalent_no_local_fallback_chain_output_family_route
+    (output_family : DecisiveSpineThresholdChainOutputFamily)
+    (build_seed : ConstructiveDecisiveSeedFamily) :
+    ClayBStatement := by
+  exact clayBStatement_from_no_local_fallback_canonical_chain_output_route_and_seed_construction
+    output_family build_seed
+
+/-- Classical-equivalent compatibility wrapper preserving the previous data-family route surface. -/
+theorem clayBStatement_classical_equivalent_no_local_fallback_data_family_route
+    (data_family : DecisiveSpineThresholdChainDataFamily)
+    (build_seed : ConstructiveDecisiveSeedFamily) :
+    ClayBStatement := by
+  exact clayBStatement_classical_equivalent_no_local_fallback_chain_output_family_route
+    (decisiveSpine_chain_output_family_of_data_family data_family)
+    build_seed
+
+/-- Classical-equivalent canonical no-local-fallback route (component-package + seed construction). -/
+theorem clayBStatement_classical_equivalent_no_local_fallback_component_package_route
+    (P : DecisiveSpineConstructiveComponentPackage)
+    (build_seed : ConstructiveDecisiveSeedFamily) :
+    ClayBStatement := by
+  exact clayBStatement_from_no_local_fallback_component_package_and_seed_construction
+    P build_seed
+
+/-- Compatibility wrapper from global component families to packaged-component route. -/
 theorem clayBStatement_classical_equivalent_no_local_fallback_seedwise_global_direct_component_families_route
     (threshold_of : DecisiveSpineConstructiveThresholdComponentFamily)
     (minimizing_of : DecisiveSpineConstructiveMinimizingComponentFamily threshold_of)
@@ -94,8 +128,14 @@ theorem clayBStatement_classical_equivalent_no_local_fallback_seedwise_global_di
       DecisiveSpineConstructiveUpperFluxHypothesisComponentFamily U_of t0_of)
     (build_seed : ConstructiveDecisiveSeedFamily) :
     ClayBStatement := by
-  exact clayBStatement_from_no_local_fallback_component_families_and_seed_construction
-    threshold_of minimizing_of minimal_element_of U_of t0_of
-    lower_hypotheses_of upper_hypotheses_of build_seed
+  exact clayBStatement_classical_equivalent_no_local_fallback_component_package_route
+    { threshold_of := threshold_of
+      minimizing_of := minimizing_of
+      minimal_element_of := minimal_element_of
+      U_of := U_of
+      t0_of := t0_of
+      lower_hypotheses_of := lower_hypotheses_of
+      upper_hypotheses_of := upper_hypotheses_of }
+    build_seed
 
 end Gibbs.ContinuumField.NavierStokes
