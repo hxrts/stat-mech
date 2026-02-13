@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-THEOREM_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/HardStep/Definitive/TrueTorusClayBUnconditional.lean"
+THEOREM_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/BaseAxiomCompletion.lean"
 OUT="$ROOT/work/navier_clayb_checkpoint.txt"
 
 if [[ ! -f "$THEOREM_FILE" ]]; then
@@ -23,11 +23,10 @@ Git HEAD: $HEAD_SHA
 Dirty entries at freeze time: $DIRTY_COUNT
 
 Theorem file:
-Gibbs/ContinuumField/NavierStokes/HardStep/Definitive/TrueTorusClayBUnconditional.lean
+Gibbs/ContinuumField/NavierStokes/Faithful/BaseAxiomCompletion.lean
 
 SHA-256:
 $THEOREM_SHA
 EOF
 
 echo "[freeze-clayb-checkpoint] wrote $OUT"
-

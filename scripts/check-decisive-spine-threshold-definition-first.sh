@@ -8,9 +8,7 @@ echo "[check-decisive-spine-threshold-definition-first] checking definition-firs
 
 for pattern in \
   "DecisiveContinuationFailurePredicate" \
-  "decisiveAstarFromFailure_direct" \
   "DecisiveAstarFromFailure" \
-  "decisiveDefinitionFirst_threshold_foundations_direct" \
   "decisiveDefinitionFirst_threshold_foundations"
 do
   if ! rg -n "$pattern" "$FILE" >/dev/null; then
@@ -21,6 +19,12 @@ done
 
 if rg -n '^import Gibbs\.ContinuumField\.NavierStokes\.HardStep\.Definitive\.' "$FILE" >/dev/null; then
   echo "[check-decisive-spine-threshold-definition-first] FAIL: threshold route imports definitive hard-step packages" >&2
+  exit 1
+fi
+
+if rg -n "^def decisiveAstarFromFailure_direct\\b|^theorem decisiveDefinitionFirst_threshold_foundations_direct\\b" "$FILE" >/dev/null; then
+  echo "[check-decisive-spine-threshold-definition-first] FAIL: retired threshold direct wrappers reintroduced" >&2
+  rg -n "^def decisiveAstarFromFailure_direct\\b|^theorem decisiveDefinitionFirst_threshold_foundations_direct\\b" "$FILE" >&2
   exit 1
 fi
 

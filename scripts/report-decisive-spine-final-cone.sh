@@ -4,7 +4,6 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/work/navier_decisive_spine_final_cone_report.txt"
 FILES=(
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineSetting.lean"
   "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineThreshold.lean"
   "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineProfile.lean"
   "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineMinimalElement.lean"
@@ -25,6 +24,9 @@ FILES=(
   echo ""
   echo "## Imports"
   for f in "${FILES[@]}"; do
+    if [[ ! -f "$f" ]]; then
+      continue
+    fi
     rel="${f#${ROOT}/}"
     echo ""
     echo "### $rel"

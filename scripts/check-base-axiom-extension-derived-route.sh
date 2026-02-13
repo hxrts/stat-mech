@@ -7,13 +7,10 @@ FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/BaseAxiomGlobal.lean"
 echo "[check-base-axiom-extension-derived-route] checking derived extension route in $FILE"
 
 for pattern in \
-  "baseAxiom_unconditional_global_control_direct" \
-  "baseAxiom_global_extension_from_continuation_direct" \
-  "baseAxiom_global_extension_from_primitive_contradiction_direct" \
+  "baseAxiom_unconditional_global_control" \
+  "baseAxiom_global_extension_from_continuation" \
   "baseAxiom_global_extension_from_primitive_contradiction" \
-  "baseAxiom_global_strong_solution_extension_direct" \
   "baseAxiom_global_strong_solution_extension" \
-  "baseAxiom_faithfulHardGlobalClosure_constructive_direct" \
   "FaithfulMildLocalTheory" \
   "baseAxiom_faithfulHardGlobalClosure_constructive"
 do
@@ -48,7 +45,24 @@ if rg -n "BaseAxiomPrimitiveExtensionWitness|extension_hypotheses" "$FILE" >/dev
   exit 1
 fi
 
-BLOCK="$(rg -n -A10 "theorem baseAxiom_global_strong_solution_extension" "$FILE" || true)"
+if rg -n "^theorem baseAxiom_unconditional_global_control_direct\\b|^theorem baseAxiom_global_extension_from_continuation_direct\\b|^theorem baseAxiom_global_extension_from_primitive_contradiction_direct\\b|^theorem baseAxiom_global_strong_solution_extension_direct\\b|^theorem baseAxiom_faithfulHardGlobalClosure_constructive_direct\\b" "$FILE" >/dev/null; then
+  echo "[check-base-axiom-extension-derived-route] FAIL: retired base-axiom global direct wrappers reintroduced" >&2
+  rg -n "^theorem baseAxiom_unconditional_global_control_direct\\b|^theorem baseAxiom_global_extension_from_continuation_direct\\b|^theorem baseAxiom_global_extension_from_primitive_contradiction_direct\\b|^theorem baseAxiom_global_strong_solution_extension_direct\\b|^theorem baseAxiom_faithfulHardGlobalClosure_constructive_direct\\b" "$FILE" >&2
+  exit 1
+fi
+
+CONT_BLOCK="$(rg -n -A30 "theorem baseAxiom_global_extension_from_primitive_contradiction" "$FILE" || true)"
+if [[ -z "$CONT_BLOCK" ]]; then
+  echo "[check-base-axiom-extension-derived-route] FAIL: primitive contradiction extension theorem block missing" >&2
+  exit 1
+fi
+
+if ! echo "$CONT_BLOCK" | rg -n "baseAxiom_global_extension_from_continuation" >/dev/null; then
+  echo "[check-base-axiom-extension-derived-route] FAIL: contradiction extension theorem is not routed through continuation theorem" >&2
+  exit 1
+fi
+
+BLOCK="$(rg -n -A30 "theorem baseAxiom_global_strong_solution_extension" "$FILE" || true)"
 if [[ -z "$BLOCK" ]]; then
   echo "[check-base-axiom-extension-derived-route] FAIL: global extension theorem block missing" >&2
   exit 1

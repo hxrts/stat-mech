@@ -23,7 +23,6 @@ if rg -n "DecisiveSeedFromAnalysisTheorem|HardStepGlobalControlTheorem|DecisiveC
 fi
 
 for pattern in \
-  "clayBStatement_base_axiom_e2e_direct" \
   "clayBStatement_base_axiom_e2e_iff_clayBStatement"
 do
   if ! rg -n "$pattern" "$FILE" >/dev/null; then
@@ -31,6 +30,12 @@ do
     exit 1
   fi
 done
+
+if rg -n "^theorem clayBStatement_base_axiom_e2e_direct\\b" "$FILE" >/dev/null; then
+  echo "[check-base-axiom-no-package-assumptions] FAIL: retired base-axiom endpoint direct wrapper reintroduced" >&2
+  rg -n "^theorem clayBStatement_base_axiom_e2e_direct\\b" "$FILE" >&2
+  exit 1
+fi
 
 EQUIV_BLOCK="$(rg -n -A4 "theorem clayBStatement_base_axiom_e2e_iff_clayBStatement" "$FILE" || true)"
 if echo "$EQUIV_BLOCK" | rg -n "Iff\\.rfl" >/dev/null; then

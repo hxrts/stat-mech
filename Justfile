@@ -28,6 +28,14 @@ escape:
 check-navier-final-cone:
     bash ./scripts/check-navier-final-cone-placeholders.sh
 
+# Enforce no retired unconditional shortcut routing in the active final theorem path
+check-navier-final-no-shortcut-route:
+    bash ./scripts/check-navier-final-no-shortcut-route.sh
+
+# Enforce no trivial smoothness assignments in active final-route endpoint files
+check-navier-final-no-trivial-smoothness:
+    bash ./scripts/check-navier-final-no-trivial-smoothness.sh
+
 # Enforce no `axiom`/`sorry` in the Navier-Stokes theorem cone
 check-clayb-cone-no-axiom-sorry:
     bash ./scripts/check-clayb-cone-no-axiom-sorry.sh
@@ -44,6 +52,8 @@ freeze-clayb-checkpoint:
 check-clayb-proof-gate:
     LEAN_NUM_THREADS={{lean_threads}} lake build Gibbs.ContinuumField.NavierStokes
     bash ./scripts/check-navier-final-cone-placeholders.sh
+    bash ./scripts/check-navier-final-no-shortcut-route.sh
+    bash ./scripts/check-navier-final-no-trivial-smoothness.sh
     bash ./scripts/check-clayb-cone-no-axiom-sorry.sh
     bash ./scripts/report-clayb-dependency-cone.sh
 
@@ -105,6 +115,10 @@ check-faithful-smoothness-fidelity:
 # Enforce quantitative hard-step theorem routing in decisive global closure
 check-hardstep-quantitative-route:
     bash ./scripts/check-hardstep-quantitative-route.sh
+
+# Enforce unified quantitative crux routing across hard-step/definitive/faithful contradiction endpoints
+check-crux-quantitative-unified-route:
+    bash ./scripts/check-crux-quantitative-unified-route.sh
 
 # Prevent direct closed-form solution injection in decisive closure constructors
 check-no-direct-closure-injection:
@@ -285,13 +299,33 @@ check-base-axiom-cone-no-axiom-sorry:
 # Remaining classical-content closure gate
 check-classical-closure-proof-gate:
     LEAN_NUM_THREADS={{lean_threads}} lake build Gibbs.ContinuumField.NavierStokes.Faithful.ClassicalEquivalence
+    bash ./scripts/check-navier-final-no-shortcut-route.sh
+    bash ./scripts/check-navier-final-no-trivial-smoothness.sh
     bash ./scripts/check-decisive-no-seed-family.sh
     bash ./scripts/check-decisive-completion-no-nonempty-seeds.sh
     bash ./scripts/check-decisive-kernel-no-carriers.sh
+    bash ./scripts/check-final-no-hardstep-closure-inputs.sh
+    bash ./scripts/check-final-no-closuredata-inputs.sh
+    bash ./scripts/check-final-no-witness-inputs.sh
+    bash ./scripts/check-final-no-trajectory-flux-inputs.sh
+    bash ./scripts/check-final-no-threshold-chain-inputs.sh
+    bash ./scripts/check-decisive-global-chain-route.sh
+    bash ./scripts/check-decisive-global-no-threshold-closure-shortcut.sh
+    bash ./scripts/check-decisive-global-no-fallback-chain-generator-route.sh
+    bash ./scripts/check-decisive-completion-seedwise-no-fallback.sh
+    bash ./scripts/check-no-non-seedwise-no-fallback-endpoints.sh
+    bash ./scripts/check-decisive-global-chain-priority.sh
+    bash ./scripts/check-decisive-global-fallback-isolated.sh
+    bash ./scripts/check-decisive-no-witness-bridges.sh
+    bash ./scripts/check-decisive-component-route.sh
     bash ./scripts/check-classical-equivalence-no-payload-carriers.sh
     bash ./scripts/check-classical-bridge-no-carriers.sh
+    bash ./scripts/check-classical-equivalence-seedwise-no-fallback-route.sh
     bash ./scripts/check-faithful-smoothness-fidelity.sh
     bash ./scripts/check-hardstep-quantitative-route.sh
+    bash ./scripts/check-crux-quantitative-unified-route.sh
+    bash ./scripts/check-hardstep-contradiction-no-carrier.sh
+    bash ./scripts/check-hardstep-definitive-no-carriers.sh
     bash ./scripts/check-no-direct-closure-injection.sh
     bash ./scripts/report-classical-equivalence-cone.sh
 
@@ -328,6 +362,8 @@ check-fullproof-clay-proof-gate:
     just check-base-axiom-definitive-readiness
     bash ./scripts/check-final-endpoint-no-carrier-types.sh
     bash ./scripts/check-final-cone-no-synthetic-local-constructors.sh
+    bash ./scripts/check-lower-global-no-hardstep-closure-inputs.sh
+    bash ./scripts/check-global-no-closuredata-carriers.sh
     bash ./scripts/check-fullproof-no-simplified-standins.sh
     bash ./scripts/check-fullproof-local-theory-derived.sh
     bash ./scripts/check-fullproof-analysis-no-route-carriers.sh
@@ -343,6 +379,8 @@ check-fullproof-clay-proof-gate:
 check-decisive-spine-proof-gate:
     LEAN_NUM_THREADS={{lean_threads}} lake build Gibbs.ContinuumField.NavierStokes.Faithful.DecisiveSpineClayEquivalence
     just check-fullproof-clay-proof-gate
+    bash ./scripts/check-navier-final-no-shortcut-route.sh
+    bash ./scripts/check-navier-final-no-trivial-smoothness.sh
     bash ./scripts/check-decisive-spine-frozen-setting-imports.sh
     bash ./scripts/check-decisive-spine-threshold-definition-first.sh
     bash ./scripts/check-decisive-spine-profile-derived.sh
@@ -351,6 +389,18 @@ check-decisive-spine-proof-gate:
     bash ./scripts/check-decisive-spine-lower-upper-derived.sh
     bash ./scripts/check-decisive-spine-incompatibility.sh
     bash ./scripts/check-decisive-spine-no-route-carriers.sh
+    bash ./scripts/check-decisive-global-chain-route.sh
+    bash ./scripts/check-decisive-global-no-threshold-closure-shortcut.sh
+    bash ./scripts/check-decisive-global-no-fallback-chain-generator-route.sh
+    bash ./scripts/check-decisive-completion-seedwise-no-fallback.sh
+    bash ./scripts/check-no-non-seedwise-no-fallback-endpoints.sh
+    bash ./scripts/check-decisive-global-chain-priority.sh
+    bash ./scripts/check-decisive-global-fallback-isolated.sh
+    bash ./scripts/check-decisive-no-witness-bridges.sh
+    bash ./scripts/check-decisive-component-route.sh
+    bash ./scripts/check-hardstep-contradiction-no-carrier.sh
+    bash ./scripts/check-hardstep-definitive-no-carriers.sh
+    bash ./scripts/check-crux-quantitative-unified-route.sh
     bash ./scripts/check-decisive-spine-global-derived.sh
     bash ./scripts/check-decisive-spine-clay-equivalence.sh
     bash ./scripts/report-decisive-spine-final-cone.sh
