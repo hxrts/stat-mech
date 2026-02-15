@@ -43,11 +43,16 @@ import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.TrueTorusLocalEnerg
 import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.TrueTorusLowerFluxRigidity
 import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.TrueTorusUpperTailVanishing
 import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.TrueTorusFluxBarrier
+import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.ChainOutput
 import Gibbs.ContinuumField.NavierStokes.Erasure.Operators
 import Gibbs.ContinuumField.NavierStokes.Erasure.ExactIdentities
 import Gibbs.ContinuumField.NavierStokes.Erasure.EnergyFlux
 import Gibbs.ContinuumField.NavierStokes.Erasure.TrueTorusCoarseSystem
 import Gibbs.ContinuumField.NavierStokes.Erasure.ConcretePeriodic
+import Gibbs.ContinuumField.NavierStokes.Erasure.DyadicCore
+import Gibbs.ContinuumField.NavierStokes.Erasure.DyadicL2
+import Gibbs.ContinuumField.NavierStokes.Erasure.DyadicObservable
+import Gibbs.ContinuumField.NavierStokes.Erasure.DyadicPeriodic
 import Gibbs.ContinuumField.NavierStokes.Defect.Envelope
 import Gibbs.ContinuumField.NavierStokes.Defect.Estimates
 import Gibbs.ContinuumField.NavierStokes.Defect.Continuation
@@ -78,6 +83,7 @@ import Gibbs.ContinuumField.NavierStokes.Faithful.TrueHardStep
 import Gibbs.ContinuumField.NavierStokes.Faithful.DecisiveGlobal
 import Gibbs.ContinuumField.NavierStokes.Faithful.DecisiveCompletion
 import Gibbs.ContinuumField.NavierStokes.Faithful.SeedConstruction
+import Gibbs.ContinuumField.NavierStokes.Faithful.RootDischarge
 import Gibbs.ContinuumField.NavierStokes.Faithful.ClassicalEquivalence
 import Gibbs.ContinuumField.NavierStokes.Faithful.BaseAxiomAnalysis
 import Gibbs.ContinuumField.NavierStokes.Faithful.BaseAxiomLocalTheory

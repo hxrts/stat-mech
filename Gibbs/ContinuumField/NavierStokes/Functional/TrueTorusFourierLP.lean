@@ -30,8 +30,14 @@ structure TrueTorusFourierNormTheorems
   hausdorff_young :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ u, S.lp3.space.norm u ≤ C * S.lp3.space.norm u
 
-/-- Dyadic shell predicate for `Δ_j`. -/
-def torusDyadicShell (_j : Int) (_k : TorusFrequency3) : Prop := True
+/-- Frequency radius used by dyadic shell predicates. -/
+def torusFrequencyRadius (k : TorusFrequency3) : Nat :=
+  Int.natAbs (k 0) + Int.natAbs (k 1) + Int.natAbs (k 2)
+
+/-- Dyadic shell predicate for `Δ_j` based on frequency radius scale. -/
+def torusDyadicShell (j : Int) (k : TorusFrequency3) : Prop :=
+  let r := torusFrequencyRadius k
+  2 ^ Int.toNat j ≤ r ∧ r < 2 ^ (Int.toNat j + 1)
 
 /-- Genuine LP projector family (`Δ_j`, `S_j`) and paraproduct interfaces on `T^3`. -/
 structure TrueTorusLittlewoodPaley where

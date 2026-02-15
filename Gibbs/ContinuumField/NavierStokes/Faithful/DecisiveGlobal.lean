@@ -2,6 +2,7 @@ import Gibbs.ContinuumField.NavierStokes.Faithful.Rigidity
 import Gibbs.ContinuumField.NavierStokes.Faithful.HardGlobal
 import Gibbs.ContinuumField.NavierStokes.Faithful.TrueHardStep
 import Gibbs.ContinuumField.NavierStokes.Faithful.DecisiveSpineGlobal
+import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.ChainOutput
 
 /-! # Decisive unconditional global closure
 
@@ -65,6 +66,26 @@ theorem decisiveSpine_chain_output_family_of_chain_generator
     DecisiveSpineThresholdChainOutputFamily := by
   intro H M A L
   exact Classical.choice (chain_generator H M A L)
+
+/-- Build decisive chain-output families from definitive hard-step chain-output theorem data. -/
+theorem decisiveSpine_chain_output_family_of_definitive_chain_output
+    (definitive_output : DefinitiveThresholdMinimalFluxChainOutput) :
+    DecisiveSpineThresholdChainOutputFamily := by
+  rcases definitive_output with
+    ⟨threshold, minimizing, minimal_element, flux_hypotheses⟩
+  intro H M A L
+  refine ⟨⟨threshold⟩, ⟨minimizing⟩, minimal_element, ?_⟩
+  intro m
+  rcases flux_hypotheses m with ⟨U, t0, hLower, hUpper⟩
+  exact ⟨U, t0, hLower, hUpper⟩
+
+/-- Build decisive chain generators from definitive hard-step chain-output theorem data. -/
+theorem decisiveSpine_chain_generator_of_definitive_chain_output
+    (definitive_output : DefinitiveThresholdMinimalFluxChainOutput) :
+    DecisiveSpineThresholdChainGenerator := by
+  intro H M A L
+  exact ⟨(decisiveSpine_chain_output_family_of_definitive_chain_output definitive_output)
+    H M A L⟩
 
 /-- Any explicit chain-output family induces a chain-generator theorem. -/
 theorem decisiveSpine_chain_generator_of_chain_output_family
@@ -193,8 +214,15 @@ theorem decisiveSpine_chain_output_family_of_data_family
     (data_family : DecisiveSpineThresholdChainDataFamily) :
     DecisiveSpineThresholdChainOutputFamily := by
   intro H M A L
-  exact Classical.choice
-    (decisiveSpine_threshold_chain_generator_of_data_family data_family H M A L)
+  rcases data_family H M A L with
+    ⟨threshold, minimizing, minimal_element, flux_hypotheses⟩
+  exact ⟨threshold, minimizing, minimal_element, flux_hypotheses⟩
+
+/-- Build nonempty threshold/minimal-flux chains directly from explicit chain outputs. -/
+theorem decisiveSpine_threshold_minimal_flux_chain_nonempty_of_chain_output
+    (output : DecisiveSpineThresholdMinimalFluxChain) :
+    Nonempty DecisiveSpineThresholdMinimalFluxChain := by
+  exact ⟨output⟩
 
 /-- Build chain-data assumptions from chain-generator theorem outputs by witness extraction. -/
 theorem decisiveSpine_threshold_chain_data_family_of_chain_generator
@@ -202,6 +230,66 @@ theorem decisiveSpine_threshold_chain_data_family_of_chain_generator
     DecisiveSpineThresholdChainDataFamily := by
   exact decisiveSpine_threshold_chain_data_family_of_chain_output_family
     (decisiveSpine_chain_output_family_of_chain_generator chain_generator)
+
+/-- Nonempty constructive component-package corollary from chain-output-family assumptions. -/
+theorem decisiveSpine_constructive_component_package_exists_of_chain_output_family
+    (output_family : DecisiveSpineThresholdChainOutputFamily) :
+    Nonempty DecisiveSpineConstructiveComponentPackage := by
+  classical
+  refine ⟨{
+    threshold_of := fun H M A L => Classical.choose (output_family H M A L)
+    minimizing_of := fun H M A L =>
+      Classical.choose (Classical.choose_spec (output_family H M A L))
+    minimal_element_of := fun H M A L =>
+      Classical.choose (Classical.choose_spec (Classical.choose_spec (output_family H M A L)))
+    U_of := fun H M A L m =>
+      let hflux :
+          ∀ _m : HardStepMinimalElement,
+            ∃ U : VelocityTrajectory .torus3,
+              ∃ t0 : ℝ,
+                DecisiveSpineLowerHypotheses U t0 ∧
+                DecisiveSpineUpperHypotheses U t0 :=
+        Classical.choose_spec
+          (Classical.choose_spec (Classical.choose_spec (output_family H M A L)))
+      Classical.choose (hflux m)
+    t0_of := fun H M A L m =>
+      let hflux :
+          ∀ _m : HardStepMinimalElement,
+            ∃ U : VelocityTrajectory .torus3,
+              ∃ t0 : ℝ,
+                DecisiveSpineLowerHypotheses U t0 ∧
+                DecisiveSpineUpperHypotheses U t0 :=
+        Classical.choose_spec
+          (Classical.choose_spec (Classical.choose_spec (output_family H M A L)))
+      Classical.choose (Classical.choose_spec (hflux m))
+    lower_hypotheses_of := fun H M A L m =>
+      let hflux :
+          ∀ _m : HardStepMinimalElement,
+            ∃ U : VelocityTrajectory .torus3,
+              ∃ t0 : ℝ,
+                DecisiveSpineLowerHypotheses U t0 ∧
+                DecisiveSpineUpperHypotheses U t0 :=
+        Classical.choose_spec
+          (Classical.choose_spec (Classical.choose_spec (output_family H M A L)))
+      (Classical.choose_spec (Classical.choose_spec (hflux m))).1
+    upper_hypotheses_of := fun H M A L m =>
+      let hflux :
+          ∀ _m : HardStepMinimalElement,
+            ∃ U : VelocityTrajectory .torus3,
+              ∃ t0 : ℝ,
+                DecisiveSpineLowerHypotheses U t0 ∧
+                DecisiveSpineUpperHypotheses U t0 :=
+        Classical.choose_spec
+          (Classical.choose_spec (Classical.choose_spec (output_family H M A L)))
+      (Classical.choose_spec (Classical.choose_spec (hflux m))).2
+    }⟩
+
+/-- Nonempty constructive component-package corollary from chain-data-family assumptions. -/
+theorem decisiveSpine_constructive_component_package_exists_of_data_family
+    (data_family : DecisiveSpineThresholdChainDataFamily) :
+    Nonempty DecisiveSpineConstructiveComponentPackage := by
+  exact decisiveSpine_constructive_component_package_exists_of_chain_output_family
+    (decisiveSpine_chain_output_family_of_data_family data_family)
 
 /-- Build chain-data families directly from constructive per-instance theorem components. -/
 theorem decisiveSpine_threshold_chain_data_family_of_direct_constructive_components
@@ -222,13 +310,24 @@ theorem decisiveSpine_threshold_chain_data_family_of_direct_constructive_compone
   · exact lower_hypotheses_of H M A L m
   · exact upper_hypotheses_of H M A L m
 
-/-- Build chain-data family from a packaged constructive no-local-fallback route. -/
-theorem decisiveSpine_threshold_chain_data_family_of_component_package
-    (P : DecisiveSpineConstructiveComponentPackage) :
-    DecisiveSpineThresholdChainDataFamily := by
-  exact decisiveSpine_threshold_chain_data_family_of_direct_constructive_components
-    P.threshold_of P.minimizing_of P.minimal_element_of P.U_of P.t0_of
-    P.lower_hypotheses_of P.upper_hypotheses_of
+/-- Build explicit chain-output family directly from constructive per-instance theorem components. -/
+theorem decisiveSpine_chain_output_family_of_direct_constructive_components
+    (threshold_of : DecisiveSpineConstructiveThresholdComponentFamily)
+    (minimizing_of : DecisiveSpineConstructiveMinimizingComponentFamily threshold_of)
+    (minimal_element_of : DecisiveSpineConstructiveMinimalElementComponentFamily)
+    (U_of : DecisiveSpineConstructiveTrajectoryComponentFamily)
+    (t0_of : DecisiveSpineConstructiveTimeComponentFamily U_of)
+    (lower_hypotheses_of :
+      DecisiveSpineConstructiveLowerFluxHypothesisComponentFamily U_of t0_of)
+    (upper_hypotheses_of :
+      DecisiveSpineConstructiveUpperFluxHypothesisComponentFamily U_of t0_of) :
+    DecisiveSpineThresholdChainOutputFamily := by
+  intro H M A L
+  refine ⟨threshold_of H M A L, minimizing_of H M A L, minimal_element_of H M A L, ?_⟩
+  intro m
+  refine ⟨(U_of H M A L) m, (t0_of H M A L m), ?_, ?_⟩
+  · exact lower_hypotheses_of H M A L m
+  · exact upper_hypotheses_of H M A L m
 
 /-- Build chain generators directly from constructive per-instance theorem components. -/
 theorem decisiveSpine_threshold_chain_generator_of_direct_constructive_components
@@ -242,8 +341,8 @@ theorem decisiveSpine_threshold_chain_generator_of_direct_constructive_component
     (upper_hypotheses_of :
       DecisiveSpineConstructiveUpperFluxHypothesisComponentFamily U_of t0_of) :
     DecisiveSpineThresholdChainGenerator := by
-  exact decisiveSpine_threshold_chain_generator_of_data_family
-    (decisiveSpine_threshold_chain_data_family_of_direct_constructive_components
+  exact decisiveSpine_chain_generator_of_chain_output_family
+    (decisiveSpine_chain_output_family_of_direct_constructive_components
       threshold_of minimizing_of minimal_element_of U_of t0_of
       lower_hypotheses_of upper_hypotheses_of)
 
@@ -251,34 +350,18 @@ theorem decisiveSpine_threshold_chain_generator_of_direct_constructive_component
 theorem decisiveSpine_chain_output_family_of_component_package
     (P : DecisiveSpineConstructiveComponentPackage) :
     DecisiveSpineThresholdChainOutputFamily := by
-  exact decisiveSpine_chain_output_family_of_data_family
-    (decisiveSpine_threshold_chain_data_family_of_component_package P)
+  exact decisiveSpine_chain_output_family_of_direct_constructive_components
+    P.threshold_of P.minimizing_of P.minimal_element_of P.U_of P.t0_of
+    P.lower_hypotheses_of P.upper_hypotheses_of
 
 /-- Build chain generator from a packaged constructive no-local-fallback route. -/
 theorem decisiveSpine_threshold_chain_generator_of_component_package
     (P : DecisiveSpineConstructiveComponentPackage) :
     DecisiveSpineThresholdChainGenerator := by
-  exact decisiveSpine_threshold_chain_generator_of_data_family
-    (decisiveSpine_threshold_chain_data_family_of_component_package P)
+  exact decisiveSpine_chain_generator_of_chain_output_family
+    (decisiveSpine_chain_output_family_of_component_package P)
 
 /-! ## No-local-fallback closure -/
-
-/-- No-local-fallback decisive global closure from explicit data-family hypotheses. -/
-def decisiveGlobalClosureTheorem_no_local_fallback_of_data_family
-    (data_family : DecisiveSpineThresholdChainDataFamily) :
-    ∀ H : ClayBHypotheses,
-      ∀ M : DecisiveFaithfulPeriodicModel H,
-        ∀ A : FaithfulAnalyticStack,
-          ∀ L : FaithfulMildLocalTheory H M.base A,
-              ∃ _Gd : FaithfulHardGlobalData H M.base A L, True := by
-  intro H M A L
-  rcases data_family H M A L with
-    ⟨threshold, minimizing, minimal_element, flux_hypotheses⟩
-  have hchain : Nonempty DecisiveSpineThresholdMinimalFluxChain :=
-    decisiveSpine_threshold_minimal_flux_chain_nonempty_of_data
-      threshold minimizing minimal_element flux_hypotheses
-  exact decisiveGlobalClosureTheorem_from_threshold_minimal_chain
-    (Classical.choice hchain) H M A L
 
 /-- No-local-fallback decisive global closure from explicit chain-output families. -/
 def decisiveGlobalClosureTheorem_no_local_fallback_of_chain_output_family
@@ -287,9 +370,10 @@ def decisiveGlobalClosureTheorem_no_local_fallback_of_chain_output_family
       ∀ M : DecisiveFaithfulPeriodicModel H,
         ∀ A : FaithfulAnalyticStack,
           ∀ L : FaithfulMildLocalTheory H M.base A,
-              ∃ _Gd : FaithfulHardGlobalData H M.base A L, True :=
-  decisiveGlobalClosureTheorem_no_local_fallback_of_data_family
-    (decisiveSpine_threshold_chain_data_family_of_chain_output_family output_family)
+              ∃ _Gd : FaithfulHardGlobalData H M.base A L, True := by
+  intro H M A L
+  exact decisiveGlobalClosureTheorem_from_threshold_minimal_chain
+    (output_family H M A L) H M A L
 
 /-- No-local-fallback decisive global closure from explicit chain-generator hypotheses. -/
 def decisiveGlobalClosureTheorem_no_local_fallback_of_chain_generator
@@ -320,8 +404,8 @@ def decisiveGlobalClosureTheorem_constructive
         ∀ A : FaithfulAnalyticStack,
           ∀ L : FaithfulMildLocalTheory H M.base A,
               ∃ _Gd : FaithfulHardGlobalData H M.base A L, True :=
-  decisiveGlobalClosureTheorem_no_local_fallback_of_data_family
-    (decisiveSpine_threshold_chain_data_family_of_direct_constructive_components
+  decisiveGlobalClosureTheorem_no_local_fallback_of_chain_output_family
+    (decisiveSpine_chain_output_family_of_direct_constructive_components
       threshold_of minimizing_of minimal_element_of U_of t0_of
       lower_hypotheses_of upper_hypotheses_of)
 

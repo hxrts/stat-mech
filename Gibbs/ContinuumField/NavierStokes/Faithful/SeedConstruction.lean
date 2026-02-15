@@ -26,6 +26,31 @@ theorem decisiveSeed_concrete_triple_exists
   let seed := build_seed H
   exact ⟨seed.1, seed.2.1, seed.2.2, trivial⟩
 
+/-- Explicit per-hypothesis existence of decisive seed triples. -/
+abbrev ConstructiveDecisiveSeedTripleExistence : Prop :=
+  ∀ H : ClayBHypotheses,
+    ∃ M : DecisiveFaithfulPeriodicModel H,
+      ∃ A : FaithfulAnalyticStack,
+        ∃ _L : FaithfulMildLocalTheory H M.base A, True
+
+/-- Nonempty constructive decisive seed-family corollary from explicit seed-triple existence. -/
+theorem constructiveDecisiveSeedFamily_exists_of_seed_triple_existence
+    (seed_exists : ConstructiveDecisiveSeedTripleExistence) :
+    Nonempty ConstructiveDecisiveSeedFamily := by
+  classical
+  refine ⟨?_⟩
+  intro H
+  let M : DecisiveFaithfulPeriodicModel H := Classical.choose (seed_exists H)
+  let hA :
+      ∃ A : FaithfulAnalyticStack,
+        ∃ _L : FaithfulMildLocalTheory H M.base A, True :=
+    Classical.choose_spec (seed_exists H)
+  let A : FaithfulAnalyticStack := Classical.choose hA
+  let hL : ∃ _L : FaithfulMildLocalTheory H M.base A, True :=
+    Classical.choose_spec hA
+  let L : FaithfulMildLocalTheory H M.base A := Classical.choose hL
+  exact ⟨M, A, L⟩
+
 /-! ## Pipeline existence and completion -/
 
 /-- Pipeline existence from decisive closure and constructive seed family. -/
@@ -95,6 +120,15 @@ theorem clayBStatement_from_no_local_fallback_seedwise_chain_generator_and_seed_
     (decisiveSpine_chain_output_family_of_chain_generator chain_generator)
     build_seed
 
+/-- Final endpoint route from chain-generator hypotheses and seed-triple existence. -/
+theorem clayBStatement_from_no_local_fallback_seedwise_chain_generator_and_seed_triple_existence
+    (chain_generator : DecisiveSpineThresholdChainGenerator)
+    (seed_exists : ConstructiveDecisiveSeedTripleExistence) :
+    ClayBStatement := by
+  rcases constructiveDecisiveSeedFamily_exists_of_seed_triple_existence seed_exists with ⟨S⟩
+  exact clayBStatement_from_no_local_fallback_seedwise_chain_generator_and_seed_construction
+    chain_generator S
+
 /-- Final endpoint route from chain-output-family hypotheses via seedwise no-fallback completion. -/
 theorem clayBStatement_from_no_local_fallback_seedwise_chain_output_family_and_seed_construction
     (output_family : DecisiveSpineThresholdChainOutputFamily)
@@ -102,6 +136,42 @@ theorem clayBStatement_from_no_local_fallback_seedwise_chain_output_family_and_s
     ClayBStatement := by
   exact clayBStatement_from_decisive_completion_no_local_fallback_seedwise_of_chain_output_family
     output_family build_seed
+
+/-- Final endpoint route from definitive chain-output theorem data via seedwise no-fallback completion. -/
+theorem clayBStatement_from_definitive_chain_output_and_seed_construction
+    (definitive_output : DefinitiveThresholdMinimalFluxChainOutput)
+    (build_seed : ConstructiveDecisiveSeedFamily) :
+    ClayBStatement := by
+  exact clayBStatement_from_no_local_fallback_seedwise_chain_output_family_and_seed_construction
+    (decisiveSpine_chain_output_family_of_definitive_chain_output definitive_output)
+    build_seed
+
+/-- Canonical no-local-fallback endpoint route from definitive chain-output theorem data and seed-triple existence. -/
+theorem clayBStatement_from_definitive_chain_output_and_seed_triple_existence
+    (definitive_output : DefinitiveThresholdMinimalFluxChainOutput)
+    (seed_exists : ConstructiveDecisiveSeedTripleExistence) :
+    ClayBStatement := by
+  rcases constructiveDecisiveSeedFamily_exists_of_seed_triple_existence seed_exists with ⟨S⟩
+  exact clayBStatement_from_definitive_chain_output_and_seed_construction
+    definitive_output S
+
+/-- Canonical no-local-fallback endpoint route from chain-output-family assumptions and seed-triple existence. -/
+theorem clayBStatement_from_no_local_fallback_chain_output_family_and_seed_triple_existence
+    (output_family : DecisiveSpineThresholdChainOutputFamily)
+    (seed_exists : ConstructiveDecisiveSeedTripleExistence) :
+    ClayBStatement := by
+  rcases constructiveDecisiveSeedFamily_exists_of_seed_triple_existence seed_exists with ⟨S⟩
+  exact clayBStatement_from_no_local_fallback_seedwise_chain_output_family_and_seed_construction
+    output_family S
+
+/-- Canonical endpoint route from chain-output-family assumptions via constructed component package and seed-triple existence. -/
+theorem clayBStatement_from_chain_output_family_via_constructive_component_package_and_seed_triple_existence
+    (output_family : DecisiveSpineThresholdChainOutputFamily)
+    (seed_exists : ConstructiveDecisiveSeedTripleExistence) :
+    ClayBStatement := by
+  rcases decisiveSpine_constructive_component_package_exists_of_chain_output_family output_family with ⟨P⟩
+  rcases constructiveDecisiveSeedFamily_exists_of_seed_triple_existence seed_exists with ⟨S⟩
+  exact clayBStatement_from_decisive_completion_no_local_fallback_seedwise_of_component_package P S
 
 /-- Final endpoint route from seedwise chain nonemptiness on chosen seed triples. -/
 theorem clayBStatement_from_no_local_fallback_seedwise_chain_on_seeds_and_seed_construction
@@ -127,6 +197,15 @@ theorem clayBStatement_from_no_local_fallback_data_family_and_seed_construction
   exact clayBStatement_from_no_local_fallback_canonical_chain_output_route_and_seed_construction
     (decisiveSpine_chain_output_family_of_data_family data_family)
     build_seed
+
+/-- Final endpoint route from explicit per-instance chain data and seed-triple existence. -/
+theorem clayBStatement_from_no_local_fallback_data_family_and_seed_triple_existence
+    (data_family : DecisiveSpineThresholdChainDataFamily)
+    (seed_exists : ConstructiveDecisiveSeedTripleExistence) :
+    ClayBStatement := by
+  rcases constructiveDecisiveSeedFamily_exists_of_seed_triple_existence seed_exists with ⟨S⟩
+  exact clayBStatement_from_no_local_fallback_data_family_and_seed_construction
+    data_family S
 
 /-- Compatibility wrapper preserving the previous canonical data-route endpoint surface. -/
 theorem clayBStatement_from_no_local_fallback_canonical_data_route_and_seed_construction

@@ -31,7 +31,10 @@ structure TrueTorusLocalEnergyFluxBridge where
   bridge_holds : ∀ t : ℝ, 0 ≤ t → bridge_pred t
 
 /-- No-concentration consequence used in rigidity arguments. -/
-def TrueTorusNoConcentrationConsequence : Prop := True
+def TrueTorusNoConcentrationConsequence : Prop :=
+  ∀ (E : TrueTorusEpsilonRegularityCriterion)
+    (u : VelocityField .torus3),
+    hardStepNormL3 u ≤ E.εreg → E.criterion u
 
 /-- Definitive local energy inequality theorem interface. -/
 theorem definitive_local_energy_inequality
@@ -54,6 +57,7 @@ theorem definitive_local_energy_flux_bridge
 /-- Definitive no-concentration consequence for rigidity route. -/
 theorem definitive_no_concentration_consequence :
     TrueTorusNoConcentrationConsequence := by
-  trivial
+  intro E u hu
+  exact definitive_epsilon_regularity E u hu
 
 end Gibbs.ContinuumField.NavierStokes

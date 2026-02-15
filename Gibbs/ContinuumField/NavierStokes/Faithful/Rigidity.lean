@@ -1,4 +1,5 @@
 import Gibbs.ContinuumField.NavierStokes.Faithful.CriticalElement
+import Gibbs.ContinuumField.NavierStokes.Faithful.DecisiveSpineIncompatibility
 import Gibbs.ContinuumField.NavierStokes.HardStep.TailVanishing
 import Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.TrueTorusLocalEnergyRegularity
 
@@ -34,6 +35,42 @@ theorem decisive_flux_bounds
       TendsToZeroNat (fun N => scaleFlux N t0 U) ∧
       TendsToZeroNat (fun N => Edef.defectNorm (t0 + N))) := by
   exact ⟨lower_flux_bound, upper_tail_vanishing⟩
+
+/-- Dyadic decisive lower/upper flux theorem interfaces. -/
+theorem decisive_flux_bounds_dyadic
+    (lower_flux_bound :
+      ∀ F : DyadicErasureFamily .torus3,
+      ∀ U : VelocityTrajectory .torus3,
+        ∃ η > (0 : ℝ), ∃ N0 : Nat, ∃ t0 : ℝ,
+          ∀ N, N0 ≤ N → η ≤ |scaleFluxDyadic F N t0 U|)
+    (upper_tail_vanishing :
+      ∀ F : DyadicErasureFamily .torus3,
+      ∀ Edef : DefectEnvelope .torus3,
+      ∀ U : VelocityTrajectory .torus3,
+      ∀ t0 : ℝ,
+        TendsToZeroNat (fun N => scaleFluxDyadic F N t0 U) ∧
+        TendsToZeroNat (fun N => Edef.defectNorm (t0 + N))) :
+    (∀ F : DyadicErasureFamily .torus3,
+      ∀ U : VelocityTrajectory .torus3,
+        ∃ η > (0 : ℝ), ∃ N0 : Nat, ∃ t0 : ℝ,
+          ∀ N, N0 ≤ N → η ≤ |scaleFluxDyadic F N t0 U|) ∧
+    (∀ F : DyadicErasureFamily .torus3,
+      ∀ Edef : DefectEnvelope .torus3,
+      ∀ U : VelocityTrajectory .torus3,
+      ∀ t0 : ℝ,
+        TendsToZeroNat (fun N => scaleFluxDyadic F N t0 U) ∧
+        TendsToZeroNat (fun N => Edef.defectNorm (t0 + N))) := by
+  exact ⟨lower_flux_bound, upper_tail_vanishing⟩
+
+/-- Dyadic incompatibility alias theorem for decisive spine route. -/
+theorem decisive_rigidity_contradiction_dyadic_alias
+    {F : DyadicErasureFamily .torus3}
+    {U : VelocityTrajectory .torus3}
+    {t0 : ℝ}
+    (lower_hypotheses : DecisiveSpineLowerHypothesesDyadic F U t0)
+    (upper_hypotheses : DecisiveSpineUpperHypothesesDyadic F U t0) :
+    False :=
+  decisiveSpine_incompatibility_theorem_dyadic lower_hypotheses upper_hypotheses
 
 /-- Decisive rigidity contradiction excludes the decisive minimal element. -/
 theorem decisive_rigidity_contradiction

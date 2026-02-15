@@ -108,21 +108,19 @@ theorem isIncompressible_iff
 
 end LocalModel
 
-noncomputable section
-
 section KernelModel
 
 variable {X V : Type*}
 variable [MeasureTheory.MeasureSpace X] [Add X]
 variable [NormedAddCommGroup V] [NormedSpace ℝ V]
 
-/-- Kernel-induced nonlocal diffusion, pointwise in space. -/
-def nonlocalDiffusion (K : GlobalKernel X) (u : Field X V) : Field X V :=
-  fun x => nonlocalLocal K u x
+/-- Kernel-induced nonlocal diffusion operator wrapper. -/
+def nonlocalDiffusion (diffusion : Field X V → Field X V) (u : Field X V) : Field X V :=
+  diffusion u
 
-/-- The local and global nonlocal operators coincide pointwise. -/
+/-- The canonical local and global nonlocal operators coincide pointwise. -/
 theorem nonlocalDiffusion_eq_global (K : GlobalKernel X) (u : Field X V) :
-    nonlocalDiffusion K u = fun x => nonlocalGlobal K u x := by
+    nonlocalDiffusion (fun v x => nonlocalLocal K v x) u = fun x => nonlocalGlobal K u x := by
   funext x
   simpa [nonlocalDiffusion] using (nonlocal_exact K u x).symm
 
@@ -133,6 +131,10 @@ structure KernelNavierStokesModel (X : Type*) (V : Type*)
   base : NavierStokesModel X V
   /-- Interaction kernel for nonlocal viscosity. -/
   K : GlobalKernel X
+  /-- Chosen nonlocal diffusion operator (computable interface). -/
+  diffusion : Field X V → Field X V
+  /-- Semantic compatibility with the canonical kernel integral view. -/
+  diffusion_eq_global : ∀ u : Field X V, diffusion u = fun x => nonlocalGlobal K u x
   /-- Strength of nonlocal diffusion. -/
   kappa : ℝ
   /-- Nonlocal diffusion coefficient is nonnegative. -/
@@ -142,7 +144,7 @@ structure KernelNavierStokesModel (X : Type*) (V : Type*)
 def kernelMomentumRHS (M : KernelNavierStokesModel X V) (s : NavierStokesState X V) :
     Field X V :=
   momentumRHS M.base s
-    + M.kappa • nonlocalDiffusion M.K (NavierStokesState.velocity s)
+    + M.kappa • nonlocalDiffusion M.diffusion (NavierStokesState.velocity s)
 
 /-- Residual form for the kernel-augmented momentum equation. -/
 def kernelMomentumResidual (M : KernelNavierStokesModel X V) (s : NavierStokesState X V)
@@ -165,10 +167,8 @@ theorem kernelMomentumRHS_eq_global (M : KernelNavierStokesModel X V)
     kernelMomentumRHS M s =
       momentumRHS M.base s
         + M.kappa • (fun x => nonlocalGlobal M.K (NavierStokesState.velocity s) x) := by
-  simp [kernelMomentumRHS, nonlocalDiffusion_eq_global]
+  simp [kernelMomentumRHS, nonlocalDiffusion, M.diffusion_eq_global]
 
 end KernelModel
-
-end
 
 end Gibbs.ContinuumField

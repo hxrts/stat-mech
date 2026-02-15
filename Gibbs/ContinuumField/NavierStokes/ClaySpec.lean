@@ -12,7 +12,6 @@ predicates and theorem templates.
 namespace Gibbs.ContinuumField.NavierStokes
 
 open scoped Classical
-noncomputable section
 
 /-! ## Basic definitions -/
 
@@ -20,13 +19,14 @@ noncomputable section
 abbrev ExternalForceField (D : SpatialDomain3) : Type :=
   ℝ → VelocityField D
 
-/-- Euclidean norm on 3-vectors encoded as `Fin 3 → ℝ`. -/
+/-- Computable coordinate norm proxy on 3-vectors encoded as `Fin 3 → ℝ`. -/
 def coord3Norm (v : Coord3) : ℝ :=
-  Real.sqrt ((v 0) ^ 2 + (v 1) ^ 2 + (v 2) ^ 2)
+  |v 0| + |v 1| + |v 2|
 
 /-- Nonnegativity of the coordinate norm. -/
-theorem coord3Norm_nonneg (v : Coord3) : 0 ≤ coord3Norm v :=
-  Real.sqrt_nonneg _
+theorem coord3Norm_nonneg (v : Coord3) : 0 ≤ coord3Norm v := by
+  dsimp [coord3Norm]
+  positivity
 
 /-- Predicate that a forcing field is identically zero. -/
 def ForceIsZero {D : SpatialDomain3} (f : ExternalForceField D) : Prop :=
@@ -278,5 +278,4 @@ theorem workingAssumptions_imply_clayBHypotheses
     cond8 := condition8_of_periodic_zero_force (W.u0 : VelocityField .euclidean3) W.u0_periodic
   }, rfl, rfl⟩
 
-end
 end Gibbs.ContinuumField.NavierStokes

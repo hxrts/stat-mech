@@ -45,13 +45,14 @@ def resolvedClayBGlobalClosureLemmaGraph : DependencyGraph where
     , "HS-8 discharge map hard closure -> ClayBRegularityData family"
     ]
 
-/-- Marker predicate that the closure branch is complete once a discharge package is provided. -/
-def HardStepClosureBranchComplete : Prop := True
+/-- Closure branch is complete once the unresolved closure lemma has a witness. -/
+def HardStepClosureBranchComplete : Prop :=
+  Nonempty UnresolvedClayBGlobalClosureLemma
 
 /-- Completion theorem for the hard-step closure branch. -/
 theorem hardStepClosureBranchComplete_of_discharge
-    (_P : HardStepDischargePackage) :
+    (P : HardStepDischargePackage) :
     HardStepClosureBranchComplete := by
-  trivial
+  exact ⟨unresolvedClayBGlobalClosureLemma_of_hardStep P⟩
 
 end Gibbs.ContinuumField.NavierStokes

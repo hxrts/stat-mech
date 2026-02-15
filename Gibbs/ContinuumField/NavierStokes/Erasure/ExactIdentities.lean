@@ -1,8 +1,10 @@
 import Gibbs.ContinuumField.NavierStokes.Erasure.Operators
+import Gibbs.ContinuumField.NavierStokes.Erasure.DyadicL2
 
 /-! # Exact erasure identities
 
 Exact algebraic identities for coarse/residual decomposition and defect terms.
+This file also exposes `L2` decomposition bridges used by dyadic erasure paths.
 -/
 
 namespace Gibbs.ContinuumField.NavierStokes
@@ -71,5 +73,33 @@ theorem coarse_momentum_defect_eq_difference {D : SpatialDomain3}
       E.map (MomentumResidual NS u p du_dt)
         - MomentumResidual NS (E.map u) p (E.map du_dt) :=
   rfl
+
+/-- If legacy and dyadic maps align at scale `N`, residual components coincide. -/
+theorem residual_eq_dyadicResidual_of_map_alignment {D : SpatialDomain3}
+    (E : ErasureOperator D)
+    (F : DyadicErasureFamily D)
+    (N : Nat)
+    (u : VelocityField D)
+    (hMap : E.map u = F.atScale N u) :
+    residualComponent E u = dyadicResidual F N u := by
+  funext x
+  simp [residualComponent, dyadicResidual, hMap]
+
+/-- `L2` exact split from the dyadic projection-energy interface. -/
+theorem exact_l2_split_from_dyadic {D : SpatialDomain3}
+    (F : DyadicErasureFamily D)
+    (N : Nat)
+    (u : VelocityField D) :
+    (F.l2Norm u) ^ 2 = dyadicResolvedEnergy F N u + dyadicDefectEnergy F N u :=
+  dyadic_total_eq_resolved_plus_defect F N u
+
+/-- Dyadic defect equals residual-square under the projection theorem package. -/
+theorem exact_l2_defect_eq_residual_sq_from_dyadic {D : SpatialDomain3}
+    {F : DyadicErasureFamily D}
+    (A : DyadicProjectionL2Theorems F)
+    (N : Nat)
+    (u : VelocityField D) :
+    dyadicDefectEnergy F N u = (F.l2Norm (dyadicResidual F N u)) ^ 2 :=
+  dyadic_defectEnergy_eq_residual_sq (A := A) N u
 
 end Gibbs.ContinuumField.NavierStokes

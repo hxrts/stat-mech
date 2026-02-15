@@ -206,6 +206,18 @@ theorem decisiveSeedwise_threshold_chain_on_seeds_of_chain_generator
       exact (decisiveSpine_threshold_chain_data_family_of_chain_generator chain_generator)
         H seed.1 seed.2.1 seed.2.2)
 
+/-- Build seedwise threshold-chain nonemptiness from a global chain-output-family theorem. -/
+theorem decisiveSeedwise_threshold_chain_on_seeds_of_chain_output_family
+    (S : DecisiveCompletionSeedFamily)
+    (output_family : DecisiveSpineThresholdChainOutputFamily) :
+    DecisiveSeedwiseThresholdChainOnSeeds S := by
+  exact decisiveSeedwise_threshold_chain_on_seeds_of_data S
+    (by
+      intro H
+      let seed := S H
+      exact (decisiveSpine_threshold_chain_data_family_of_chain_output_family output_family)
+        H seed.1 seed.2.1 seed.2.2)
+
 /-! ## Seedwise closure -/
 
 /-- Seedwise no-local-fallback closure on chosen seed triples from chain nonemptiness. -/
@@ -215,8 +227,9 @@ theorem decisiveSeedwise_global_closure_no_local_fallback_of_chain_on_seeds
     DecisiveSeedwiseGlobalClosure S := by
   intro H
   let seed := S H
+  rcases seedwise_chain H with ⟨chain⟩
   exact decisiveGlobalClosureTheorem_from_threshold_minimal_chain
-    (Classical.choice (seedwise_chain H)) H seed.1 seed.2.1 seed.2.2
+    chain H seed.1 seed.2.1 seed.2.2
 
 /-- Seedwise no-local-fallback closure on chosen seed triples from explicit seedwise data. -/
 theorem decisiveSeedwise_global_closure_no_local_fallback_of_data_on_seeds

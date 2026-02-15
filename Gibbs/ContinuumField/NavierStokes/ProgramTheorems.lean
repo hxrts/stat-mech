@@ -1,6 +1,8 @@
 import Gibbs.ContinuumField.NavierStokes.Functional.CriticalSpace
 import Gibbs.ContinuumField.NavierStokes.Linear.DuhamelFixedPoint
 import Gibbs.ContinuumField.NavierStokes.Erasure.ExactIdentities
+import Gibbs.ContinuumField.NavierStokes.Erasure.DyadicObservable
+import Gibbs.ContinuumField.NavierStokes.HardStep.FluxTail
 import Gibbs.ContinuumField.NavierStokes.Defect.Continuation
 import Gibbs.ContinuumField.NavierStokes.Global.ClosureAttempt
 import Gibbs.ContinuumField.NavierStokes.Blowup.Rigidity
@@ -84,5 +86,28 @@ theorem major_rigidity_contradiction {D : SpatialDomain3}
     (hnontrivial : ∃ x i, cp.limitingVelocity x i ≠ 0) :
     ¬ IsMinimalBlowupObject cp := by
   exact backward_uniqueness_liouville_excludes_minimal_blowup cp hbu hliouville hnontrivial
+
+/-- Dyadic defect observable is nonnegative under projection-energy assumptions. -/
+theorem major_dyadic_defect_nonneg {D : SpatialDomain3}
+    (Hscale : MajorTheoremScalingHypotheses)
+    (_hcritical : (L3CriticalSpace D).critical_wrt Hscale.regime)
+    (F : DyadicErasureFamily D)
+    (A : DyadicProjectionL2Theorems F)
+    (N : Nat)
+    (u : VelocityField D) :
+    0 ≤ dyadicObservable F N u := by
+  exact dyadicObservable_nonneg (A := A) N u
+
+/-- Dyadic cumulative-tail control by total `L2` energy on periodic trajectories. -/
+theorem major_dyadic_tail_control_periodic
+    (Hscale : MajorTheoremScalingHypotheses)
+    (_hcritical : (L3CriticalSpace .torus3).critical_wrt Hscale.regime)
+    (F : DyadicErasureFamily .torus3)
+    (T : DyadicIncrementTheorems F)
+    (N K : Nat)
+    (t : ℝ)
+    (U : VelocityTrajectory .torus3) :
+    cumulativeHighFrequencyTailDyadic F N K t U ≤ (F.l2Norm (U t)) ^ 2 := by
+  exact cumulativeHighFrequencyTailDyadic_le_totalEnergy F T N K t U
 
 end Gibbs.ContinuumField.NavierStokes

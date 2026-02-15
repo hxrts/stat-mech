@@ -3,6 +3,9 @@ import Gibbs.ContinuumField.NavierStokes.Equation
 /-! # Erasure operators
 
 Exact coarse-graining operator interface for Navier-Stokes erasure analysis.
+This is the legacy algebraic layer used across the hard-step cone; dyadic
+conditional-expectation families refine this layer by adding `L2` and
+refinement laws on top of the same projection-style primitives.
 -/
 
 namespace Gibbs.ContinuumField.NavierStokes
@@ -19,7 +22,8 @@ structure ErasureOperator (D : SpatialDomain3) where
   preserves_divfree : (div : VelocityField D → ScalarField D) →
     ∀ u, IsDivergenceFreeWith div u → IsDivergenceFreeWith div (map u)
 
-/-- Scale-indexed erasure family `E_N`. -/
+/-- Scale-indexed erasure family `E_N`.
+In dyadic instantiations this corresponds to a scale projection chain. -/
 structure ErasureFamily (D : SpatialDomain3) where
   /-- Erasure operator at level `N`. -/
   atScale : Nat → ErasureOperator D

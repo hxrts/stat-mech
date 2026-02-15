@@ -129,4 +129,58 @@ theorem baseAxiom_global_closure_from_primitive_rigidity
     HardStepGlobalClosure := by
   exact baseAxiom_excludes_all_minimal_elements trajectoryOf flux_hypotheses
 
+
+/-! ## Dyadic flux hypothesis aliases -/
+
+/-- Dyadic lower-flux hypothesis shape used in base-axiom rigidity closure. -/
+abbrev BaseAxiomLowerFluxHypothesesDyadic
+    (F : DyadicErasureFamily .torus3)
+    (U : VelocityTrajectory .torus3)
+    (t0 : ℝ) : Prop :=
+  ∃ η > (0 : ℝ), ∃ N0 : Nat,
+    ∀ N, N0 ≤ N → η ≤ |scaleFluxDyadic F N t0 U|
+
+/-- Dyadic upper-flux hypothesis shape used in base-axiom rigidity closure. -/
+abbrev BaseAxiomUpperFluxHypothesesDyadic
+    (F : DyadicErasureFamily .torus3)
+    (U : VelocityTrajectory .torus3)
+    (t0 : ℝ) : Prop :=
+  TendsToZeroNat (fun N => scaleFluxDyadic F N t0 U)
+
+/-- Dyadic quantitative contradiction from lower-vs-upper flux hypotheses. -/
+theorem baseAxiom_flux_barrier_contradiction_from_hypotheses_dyadic
+    {F : DyadicErasureFamily .torus3}
+    {U : VelocityTrajectory .torus3}
+    {t0 : ℝ}
+    (lower_hypotheses : BaseAxiomLowerFluxHypothesesDyadic F U t0)
+    (upper_hypotheses : BaseAxiomUpperFluxHypothesesDyadic F U t0) :
+    False := by
+  rcases lower_hypotheses with ⟨η, hη_pos, N0, hLower⟩
+  exact hardStep_quantitative_flux_incompatibility_dyadic hη_pos hLower upper_hypotheses
+
+/-- Identity-family compatibility for base-axiom lower hypotheses. -/
+theorem baseAxiomLowerFluxHypotheses_iff_dyadic_identity
+    (U : VelocityTrajectory .torus3)
+    (t0 : ℝ) :
+    BaseAxiomLowerFluxHypotheses U t0 ↔
+      BaseAxiomLowerFluxHypothesesDyadic periodicCanonicalDyadicErasureFamily U t0 := by
+  constructor
+  · rintro ⟨η, hη, N0, hLower⟩
+    refine ⟨η, hη, N0, ?_⟩
+    intro N hN
+    simpa [scaleFlux, scaleFluxDyadic, periodicDyadicDefectObservable,
+      periodicDyadicDefectAtScale] using hLower N hN
+  · rintro ⟨η, hη, N0, hLower⟩
+    refine ⟨η, hη, N0, ?_⟩
+    intro N hN
+    simpa [scaleFlux, scaleFluxDyadic, periodicDyadicDefectObservable,
+      periodicDyadicDefectAtScale] using hLower N hN
+
+/-- Identity-family compatibility for base-axiom upper hypotheses. -/
+theorem baseAxiomUpperFluxHypotheses_iff_dyadic_identity
+    (U : VelocityTrajectory .torus3)
+    (t0 : ℝ) :
+    BaseAxiomUpperFluxHypotheses U t0 ↔
+      BaseAxiomUpperFluxHypothesesDyadic periodicCanonicalDyadicErasureFamily U t0 :=
+  Iff.rfl
 end Gibbs.ContinuumField.NavierStokes

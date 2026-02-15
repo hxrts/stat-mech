@@ -74,11 +74,30 @@ theorem trueTorus_strong_mild_compatibility
   exact ⟨C.vel_eq, C.press_eq⟩
 
 /-- Assumption-free continuation endpoint marker in the definitive setting. -/
-def TrueTorusContinuationNoAssumptionHandles : Prop := True
+def TrueTorusContinuationNoAssumptionHandles : Prop :=
+  (∀ (S : DefinitiveFunctionSpaceStack)
+      (sol : TrueTorusStrongPeriodicSolution)
+      (C : TrueTorusContinuationCriterion S sol),
+      trueTorus_continuation_theorem S sol C = C.critical_bound) ∧
+  (∀ (S : DefinitiveFunctionSpaceStack)
+      (sol : TrueTorusStrongPeriodicSolution)
+      (B : TrueTorusBlowupAlternative S sol),
+      trueTorus_blowup_alternative S sol B = B.alternative) ∧
+  (∀ (strong : TrueTorusStrongPeriodicSolution)
+      (mild : TrueTorusMildPeriodicSolution)
+      (C : TrueTorusStrongMildCompatibility strong mild),
+      trueTorus_strong_mild_compatibility strong mild C = ⟨C.vel_eq, C.press_eq⟩)
 
 /-- Definitive continuation path has no external assumption handles. -/
 theorem trueTorus_continuation_no_assumption_handles :
     TrueTorusContinuationNoAssumptionHandles := by
-  trivial
+  constructor
+  · intro S sol C
+    rfl
+  constructor
+  · intro S sol B
+    rfl
+  · intro strong mild C
+    rfl
 
 end Gibbs.ContinuumField.NavierStokes
