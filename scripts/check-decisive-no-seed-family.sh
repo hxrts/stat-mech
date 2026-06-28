@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/SeedConstruction.lean"
+FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/SeedConstruction.lean"
 
 echo "[check-decisive-no-seed-family] checking endpoint signature in $FILE"
 

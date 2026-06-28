@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-TARGET="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful"
+TARGET="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful"
 
 echo "[check-decisive-no-witness-bridges] scanning $TARGET"
 

@@ -3,9 +3,9 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 FILES=(
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/BaseAxiomGlobal.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/FullProofExactGlobal.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineGlobal.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/BaseAxiomGlobal.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/FullProofExactGlobal.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveSpineGlobal.lean"
 )
 
 echo "[check-global-no-closuredata-carriers] checking global-route files"

@@ -2,8 +2,8 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/HardStep/ContradictionClosure.lean"
-TARGET_DIR="$ROOT/Gibbs"
+FILE="$ROOT/StatMech/ContinuumField/NavierStokes/HardStep/ContradictionClosure.lean"
+TARGET_DIR="$ROOT/StatMech"
 
 echo "[check-hardstep-contradiction-no-carrier] checking hard-step contradiction de-carrierization"
 

@@ -1,10 +1,10 @@
 # Getting Started
 
-This document covers how to set up, build, and extend the Gibbs project. For an overview of the project structure, see [Gibbs Overview](00-overview.md).
+This document covers how to set up, build, and extend the Stat Mech project. For an overview of the project structure, see [Stat Mech Overview](00-overview.md).
 
 ## Prerequisites
 
-Gibbs requires Lean 4 (v4.26.0), managed through elan. The project uses nix and direnv for environment setup, and just as a task runner. Install elan from the Lean 4 documentation if you do not already have it.
+Stat Mech requires Lean 4 (v4.26.0), managed through elan. The project uses nix and direnv for environment setup, and just as a task runner. Install elan from the Lean 4 documentation if you do not already have it.
 
 ## Building
 
@@ -20,35 +20,35 @@ The first command loads the nix environment, which provides elan, just, and othe
 To type-check a single file during development:
 
 ```bash
-lake env lean Gibbs/Path/To/File.lean
+lake env lean StatMech/Path/To/File.lean
 ```
 
 This is faster than a full build when iterating on one module. Use `just clean` to remove `.lake` build artifacts and `just update` to refresh Lake dependencies.
 
 ## Dependencies
 
-Gibbs depends on two local path dependencies:
+Stat Mech depends on two local path dependencies:
 
 - Mathlib from `../lean_common/mathlib4` (shared installation with pre-built artifacts)
 - Telltale from `../telltale/lean` (effects and session-type spatial system)
 
 Both must be checked out at the expected relative paths before building. The `lakefile.lean` declares them as `require mathlib` and `require telltale`.
 
-## Using Gibbs as a Dependency
+## Using Stat Mech as a Dependency
 
-To use Gibbs in your own Lean project, add it as a dependency in your `lakefile.lean`:
+To use Stat Mech in your own Lean project, add it as a dependency in your `lakefile.lean`:
 
 ```lean
-require gibbs from .."../gibbs"
+require statMech from "../stat-mech"
 ```
 
 Then import the modules you need:
 
 ```lean
-import Gibbs.Hamiltonian
-import Gibbs.MeanField
-import Gibbs.ContinuumField
-import Gibbs.Consensus
+import StatMech.Hamiltonian
+import StatMech.MeanField
+import StatMech.ContinuumField
+import StatMech.Consensus
 ```
 
-Each of these is a facade file that re-exports all submodules within that directory. You can also import individual files for finer-grained control, for example `import Gibbs.Hamiltonian.Stability`.
+Each of these is a facade file that re-exports all submodules within that directory. You can also import individual files for finer-grained control, for example `import StatMech.Hamiltonian.Stability`.

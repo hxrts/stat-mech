@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-FACADE="$ROOT/Gibbs/ContinuumField/NavierStokes.lean"
+FACADE="$ROOT/StatMech/ContinuumField/NavierStokes.lean"
 REPORT="$ROOT/scripts/report-clayb-dependency-cone.sh"
 FREEZE="$ROOT/scripts/freeze-clayb-checkpoint.sh"
 
@@ -15,7 +15,7 @@ for f in "$FACADE" "$REPORT" "$FREEZE"; do
   fi
 done
 
-if rg -n '^import Gibbs\.ContinuumField\.NavierStokes\.HardStep\.Definitive\.TrueTorusClayBUnconditional' "$FACADE" >/dev/null; then
+if rg -n '^import StatMech\.ContinuumField\.NavierStokes\.HardStep\.Definitive\.TrueTorusClayBUnconditional' "$FACADE" >/dev/null; then
   echo "[check-navier-final-no-shortcut-route] FAIL: facade re-imports retired shortcut module" >&2
   exit 1
 fi
@@ -27,12 +27,12 @@ if rg -n 'clayBStatement_unconditional_no_bridge|TrueTorusClayBUnconditional' "$
 fi
 
 TARGETS=(
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/Final.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/BaseAxiomCompletion.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveCompletion.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/SeedConstruction.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/ClassicalEquivalence.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/HardStep/Definitive/ClayB.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/Final.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/BaseAxiomCompletion.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveCompletion.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/SeedConstruction.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/ClassicalEquivalence.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/HardStep/Definitive/ClayB.lean"
 )
 
 for f in "${TARGETS[@]}"; do

@@ -1,15 +1,15 @@
 import Lake
 open Lake DSL
 
-/-! # Gibbs Lean Package
+/-! # Stat Mech Lean Package
 
-Lake build definition for the Gibbs verification library.
+Lake build definition for the StatMech verification library.
 Mean-field theory meets multiparty session types.
 
 Uses shared mathlib from ../lean_common/mathlib4 to avoid rebuilding.
 -/
 
-package gibbs
+package statMech
 
 -- Use shared local mathlib installation (with pre-built artifacts)
 require mathlib from "../lean_common/mathlib4"
@@ -18,5 +18,5 @@ require telltale from "../telltale/lean"
 
 /-- Main library for mean-field session types formalization. -/
 @[default_target]
-lean_lib Gibbs where
-  globs := #[`Gibbs.*]
+lean_lib StatMech where
+  globs := #[`StatMech.*]

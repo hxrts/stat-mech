@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-TARGET_DIR="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful"
+TARGET_DIR="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful"
 
 echo "[check-faithful-smoothness-fidelity] scanning $TARGET_DIR"
 

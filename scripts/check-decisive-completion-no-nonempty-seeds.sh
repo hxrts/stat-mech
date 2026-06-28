@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveCompletion.lean"
+FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveCompletion.lean"
 
 echo "[check-decisive-completion-no-nonempty-seeds] checking decisive completion seed assumptions"
 

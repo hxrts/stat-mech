@@ -1,0 +1,59 @@
+import StatMech.ContinuumField.NavierStokes.Core
+import StatMech.ContinuumField.NavierStokes.Domain
+import StatMech.ContinuumField.NavierStokes.Geometry.TorusModel
+import StatMech.ContinuumField.NavierStokes.Geometry.TorusFields
+import StatMech.ContinuumField.NavierStokes.Geometry.TorusCalculus
+import StatMech.ContinuumField.NavierStokes.Geometry.TorusIntegral
+import StatMech.ContinuumField.NavierStokes.Equation
+import StatMech.ContinuumField.NavierStokes.Projector
+import StatMech.ContinuumField.NavierStokes.SolutionNotions
+import StatMech.ContinuumField.NavierStokes.ClaySpec
+import StatMech.ContinuumField.NavierStokes.LocalTheory
+import StatMech.ContinuumField.NavierStokes.Functional.CriticalSpace
+import StatMech.ContinuumField.NavierStokes.Functional.TrueTorusFunctionSpaces
+import StatMech.ContinuumField.NavierStokes.Functional.TrueTorusFourierLP
+import StatMech.ContinuumField.NavierStokes.Functional.TrueTorusLerayPressure
+import StatMech.ContinuumField.NavierStokes.Functional.TrueTorusNonlinearDefinitive
+import StatMech.ContinuumField.NavierStokes.Functional.HelmholtzLeray
+import StatMech.ContinuumField.NavierStokes.Functional.ConcretePeriodic
+import StatMech.ContinuumField.NavierStokes.Functional.LittlewoodPaley
+import StatMech.ContinuumField.NavierStokes.Functional.NonlinearEstimates
+import StatMech.ContinuumField.NavierStokes.Linear.Semigroup
+import StatMech.ContinuumField.NavierStokes.Linear.DuhamelFixedPoint
+import StatMech.ContinuumField.NavierStokes.Linear.TrueTorusStokesSemigroup
+import StatMech.ContinuumField.NavierStokes.Linear.TrueTorusContinuation
+import StatMech.ContinuumField.NavierStokes.Linear.ConstructiveLocalPeriodic
+import StatMech.ContinuumField.NavierStokes.Erasure.Operators
+import StatMech.ContinuumField.NavierStokes.Erasure.ExactIdentities
+import StatMech.ContinuumField.NavierStokes.Erasure.EnergyFlux
+import StatMech.ContinuumField.NavierStokes.Erasure.TrueTorusCoarseSystem
+import StatMech.ContinuumField.NavierStokes.Erasure.ConcretePeriodic
+import StatMech.ContinuumField.NavierStokes.Erasure.DyadicCore
+import StatMech.ContinuumField.NavierStokes.Erasure.DyadicL2
+import StatMech.ContinuumField.NavierStokes.Erasure.DyadicObservable
+import StatMech.ContinuumField.NavierStokes.Erasure.DyadicPeriodic
+import StatMech.ContinuumField.NavierStokes.Defect.Envelope
+import StatMech.ContinuumField.NavierStokes.Defect.Estimates
+import StatMech.ContinuumField.NavierStokes.Defect.Continuation
+import StatMech.ContinuumField.NavierStokes.Defect.TrueTorusQuantitativeEnvelope
+import StatMech.ContinuumField.NavierStokes.Defect.ConcretePeriodic
+import StatMech.ContinuumField.NavierStokes.Global.ClosureAttempt
+import StatMech.ContinuumField.NavierStokes.Global.NoBlowup
+import StatMech.ContinuumField.NavierStokes.Global.ClayPeriodic
+import StatMech.ContinuumField.NavierStokes.Global.ClayEndgame
+import StatMech.ContinuumField.NavierStokes.Blowup.Extraction
+import StatMech.ContinuumField.NavierStokes.Blowup.Compactness
+import StatMech.ContinuumField.NavierStokes.Blowup.Rigidity
+import StatMech.ContinuumField.NavierStokes.Blowup.ClayPeriodic
+import StatMech.ContinuumField.NavierStokes.Runtime.CertifiedApproximation
+import StatMech.ContinuumField.NavierStokes.Runtime.ObservationalAdequacy
+import StatMech.ContinuumField.NavierStokes.Runtime.NoBlowupCertificate
+import StatMech.ContinuumField.NavierStokes.ProgramTheorems
+import StatMech.ContinuumField.NavierStokes.ProofB
+
+/-! # Navier-Stokes facade
+
+Single entry point for the Navier-Stokes program in the continuum-field layer.
+This facade re-exports the core interface, domain setup, solution notions,
+erasure/defect machinery, and global/blow-up strategy scaffolding.
+-/

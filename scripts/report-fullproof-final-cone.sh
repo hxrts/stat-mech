@@ -4,27 +4,27 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/work/navier_fullproof_final_cone_report.txt"
 FILES=(
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/FullProofExactAnalysis.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/FullProofExactLocalTheory.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/FullProofExactCompactness.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/FullProofExactRigidity.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/FullProofExactGlobal.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/FullProofClayFinalization.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/FullProofExactAnalysis.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/FullProofExactLocalTheory.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/FullProofExactCompactness.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/FullProofExactRigidity.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/FullProofExactGlobal.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/FullProofClayFinalization.lean"
 )
 
 {
   echo "# Full-Proof Final Cone Report"
   echo ""
   echo "Generated: $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
-  echo "Primary theorem handle: Gibbs.ContinuumField.NavierStokes.fullProof_clayQuantifier_equivalence"
-  echo "Primary theorem file: Gibbs/ContinuumField/NavierStokes/Faithful/FullProofClayFinalization.lean"
+  echo "Primary theorem handle: StatMech.ContinuumField.NavierStokes.fullProof_clayQuantifier_equivalence"
+  echo "Primary theorem file: StatMech/ContinuumField/NavierStokes/Faithful/FullProofClayFinalization.lean"
   echo ""
   echo "## Imports"
   for f in "${FILES[@]}"; do
     rel="${f#${ROOT}/}"
     echo ""
     echo "### $rel"
-    rg '^import Gibbs\.ContinuumField\.NavierStokes\.' "$f" | sed 's/^import /- /'
+    rg '^import StatMech\.ContinuumField\.NavierStokes\.' "$f" | sed 's/^import /- /'
   done
   echo ""
   echo "## Required Gates"

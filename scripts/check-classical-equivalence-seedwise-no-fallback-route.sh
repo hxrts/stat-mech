@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/ClassicalEquivalence.lean"
+FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/ClassicalEquivalence.lean"
 
 echo "[check-classical-equivalence-seedwise-no-fallback-route] checking classical-equivalence seedwise no-fallback routes"
 
@@ -44,7 +44,7 @@ GLOBAL_COMPONENT_BLOCK="$({
   awk '
     /theorem clayBStatement_classical_equivalent_no_local_fallback_seedwise_global_direct_component_families_route/ {flag=1}
     flag {print}
-    flag && /end Gibbs\.ContinuumField\.NavierStokes/ {exit}
+    flag && /end StatMech\.ContinuumField\.NavierStokes/ {exit}
   ' "$FILE"
 })"
 

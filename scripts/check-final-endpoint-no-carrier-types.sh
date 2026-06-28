@@ -3,9 +3,9 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 FILES=(
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/BaseAxiomCompletion.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/FullProofClayFinalization.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineClayEquivalence.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/BaseAxiomCompletion.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/FullProofClayFinalization.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveSpineClayEquivalence.lean"
 )
 
 echo "[check-final-endpoint-no-carrier-types] checking final endpoint cone"

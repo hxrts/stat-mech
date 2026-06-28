@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineThreshold.lean"
+FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveSpineThreshold.lean"
 
 echo "[check-decisive-spine-threshold-definition-first] checking definition-first threshold route"
 
@@ -17,7 +17,7 @@ do
   fi
 done
 
-if rg -n '^import Gibbs\.ContinuumField\.NavierStokes\.HardStep\.Definitive\.' "$FILE" >/dev/null; then
+if rg -n '^import StatMech\.ContinuumField\.NavierStokes\.HardStep\.Definitive\.' "$FILE" >/dev/null; then
   echo "[check-decisive-spine-threshold-definition-first] FAIL: threshold route imports definitive hard-step packages" >&2
   exit 1
 fi

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineMinimalElement.lean"
+FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveSpineMinimalElement.lean"
 
 echo "[check-decisive-spine-minimal-element-derived] checking minimal-element layer"
 

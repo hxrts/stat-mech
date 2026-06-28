@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/FullProofExactRigidity.lean"
+FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/FullProofExactRigidity.lean"
 
 echo "[check-fullproof-rigidity-derived] checking rigidity derivation route"
 
@@ -35,7 +35,7 @@ WITNESS_BLOCK="$(
   awk '
     /theorem fullProof_exact_rigidity_contradiction$/ {flag=1}
     flag {print}
-    flag && /^end Gibbs\.ContinuumField\.NavierStokes/ {exit}
+    flag && /^end StatMech\.ContinuumField\.NavierStokes/ {exit}
   ' "$FILE"
 )"
 
@@ -124,7 +124,7 @@ if echo "$QUANT_BLOCK" | rg -n "baseAxiom_lower_cascade_from_minimality_direct|b
   exit 1
 fi
 
-if rg -n '^import Gibbs\.ContinuumField\.NavierStokes\.HardStep\.Definitive\.' "$FILE" >/dev/null; then
+if rg -n '^import StatMech\.ContinuumField\.NavierStokes\.HardStep\.Definitive\.' "$FILE" >/dev/null; then
   echo "[check-fullproof-rigidity-derived] FAIL: full-proof rigidity imports definitive hard-step modules" >&2
   exit 1
 fi

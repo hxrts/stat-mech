@@ -2,8 +2,8 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-GLOBAL_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveGlobal.lean"
-HARDSTEP_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/TrueHardStep.lean"
+GLOBAL_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveGlobal.lean"
+HARDSTEP_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/TrueHardStep.lean"
 
 echo "[check-no-direct-closure-injection] scanning $GLOBAL_FILE and $HARDSTEP_FILE"
 

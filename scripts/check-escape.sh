@@ -14,7 +14,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-LEAN_ROOT="${SCRIPT_DIR}/../Gibbs"
+LEAN_ROOT="${SCRIPT_DIR}/../StatMech"
 
 # Colors for output
 RED='\033[0;31m'

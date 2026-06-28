@@ -16,9 +16,9 @@ The power of this correspondence is that proofs in one domain transfer to the ot
 
 ## The Three Guarantees
 
-Session types provide three fundamental guarantees. Each maps to a physical property that Gibbs formalizes.
+Session types provide three fundamental guarantees. Each maps to a physical property that Stat Mech formalizes.
 
-| Session Property | Physical Property | Gibbs Implementation |
+| Session Property | Physical Property | Stat Mech Implementation |
 |---|---|---|
 | Progress | Existence of dynamics | `global_ode_exists`, `simplex_forward_invariant` |
 | Well-formedness | Conservation laws | `drift_sum_zero`, `KernelCoherent` |

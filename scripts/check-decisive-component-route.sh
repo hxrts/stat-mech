@@ -2,9 +2,9 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-DG="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveGlobal.lean"
-DC="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveCompletion.lean"
-SC="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/SeedConstruction.lean"
+DG="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveGlobal.lean"
+DC="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveCompletion.lean"
+SC="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/SeedConstruction.lean"
 
 echo "[check-decisive-component-route] checking direct-component constructive route"
 

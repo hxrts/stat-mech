@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-TARGET_DIR="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful"
+TARGET_DIR="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful"
 THRESHOLD_FILE="$TARGET_DIR/DecisiveSpineThreshold.lean"
 FILES=(
   "$TARGET_DIR/DecisiveSpineProfile.lean"
@@ -20,7 +20,7 @@ if [[ ! -f "$THRESHOLD_FILE" ]]; then
   echo "[check-decisive-spine-frozen-setting-imports] FAIL: missing file $THRESHOLD_FILE" >&2
   exit 1
 fi
-if ! rg -n '^import Gibbs\.ContinuumField\.NavierStokes\.Faithful\.BaseAxiomCompactness' "$THRESHOLD_FILE" >/dev/null; then
+if ! rg -n '^import StatMech\.ContinuumField\.NavierStokes\.Faithful\.BaseAxiomCompactness' "$THRESHOLD_FILE" >/dev/null; then
   echo "[check-decisive-spine-frozen-setting-imports] FAIL: $THRESHOLD_FILE must import base-axiom compactness directly" >&2
   exit 1
 fi
@@ -31,7 +31,7 @@ for f in "${FILES[@]}"; do
     exit 1
   fi
 
-  if ! rg -n '^import Gibbs\.ContinuumField\.NavierStokes\.Faithful\.DecisiveSpine' "$f" >/dev/null; then
+  if ! rg -n '^import StatMech\.ContinuumField\.NavierStokes\.Faithful\.DecisiveSpine' "$f" >/dev/null; then
     echo "[check-decisive-spine-frozen-setting-imports] FAIL: $f does not import decisive-spine frozen stack" >&2
     exit 1
   fi
@@ -43,15 +43,15 @@ if [[ ! -f "$EQ_FILE" ]]; then
   echo "[check-decisive-spine-frozen-setting-imports] FAIL: missing file $EQ_FILE" >&2
   exit 1
 fi
-if ! rg -n '^import Gibbs\.ContinuumField\.NavierStokes\.Faithful\.FullProofClayFinalization' "$EQ_FILE" >/dev/null; then
+if ! rg -n '^import StatMech\.ContinuumField\.NavierStokes\.Faithful\.FullProofClayFinalization' "$EQ_FILE" >/dev/null; then
   echo "[check-decisive-spine-frozen-setting-imports] FAIL: $EQ_FILE must import full-proof finalization layer" >&2
   exit 1
 fi
 
-if rg -n --glob 'DecisiveSpine*.lean' '^import Gibbs\.ContinuumField\.NavierStokes\.Faithful\.(FullProofExactAnalysis|BaseAxiomAnalysis)$' "$TARGET_DIR" >/dev/null; then
+if rg -n --glob 'DecisiveSpine*.lean' '^import StatMech\.ContinuumField\.NavierStokes\.Faithful\.(FullProofExactAnalysis|BaseAxiomAnalysis)$' "$TARGET_DIR" >/dev/null; then
   BAD="$(
     rg -n --glob 'DecisiveSpine*.lean' \
-      '^import Gibbs\\.ContinuumField\\.NavierStokes\\.Faithful\\.(FullProofExactAnalysis|BaseAxiomAnalysis)$' \
+      '^import StatMech\\.ContinuumField\\.NavierStokes\\.Faithful\\.(FullProofExactAnalysis|BaseAxiomAnalysis)$' \
       "$TARGET_DIR" || true
   )"
   if [[ -n "$BAD" ]]; then

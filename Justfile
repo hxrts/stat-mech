@@ -50,7 +50,7 @@ freeze-clayb-checkpoint:
 
 # Clay(B) proof-completion gate
 check-clayb-proof-gate:
-    LEAN_NUM_THREADS={{lean_threads}} lake build Gibbs.ContinuumField.NavierStokes
+    LEAN_NUM_THREADS={{lean_threads}} lake build StatMech.ContinuumField.NavierStokes
     bash ./scripts/check-navier-final-cone-placeholders.sh
     bash ./scripts/check-navier-final-no-shortcut-route.sh
     bash ./scripts/check-navier-final-no-trivial-smoothness.sh
@@ -71,7 +71,7 @@ freeze-faithful-clayb-checkpoint:
 
 # Faithful Clay(B) proof-completion gate
 check-faithful-clayb-proof-gate:
-    LEAN_NUM_THREADS={{lean_threads}} lake build Gibbs.ContinuumField.NavierStokes.Faithful.Final
+    LEAN_NUM_THREADS={{lean_threads}} lake build StatMech.ContinuumField.NavierStokes.Faithful.Final
     bash ./scripts/check-faithful-clayb-cone.sh
     bash ./scripts/check-clayb-cone-no-axiom-sorry.sh
     bash ./scripts/report-faithful-clayb-cone.sh
@@ -90,7 +90,7 @@ freeze-decisive-hardstep-checkpoint:
 
 # Decisive hard-step proof-completion gate
 check-decisive-hardstep-proof-gate:
-    LEAN_NUM_THREADS={{lean_threads}} lake build Gibbs.ContinuumField.NavierStokes.Faithful.DecisiveCompletion
+    LEAN_NUM_THREADS={{lean_threads}} lake build StatMech.ContinuumField.NavierStokes.Faithful.DecisiveCompletion
     bash ./scripts/check-faithful-clayb-cone.sh
     bash ./scripts/check-decisive-hardstep-cone.sh
     bash ./scripts/check-clayb-cone-no-axiom-sorry.sh
@@ -298,7 +298,7 @@ check-base-axiom-cone-no-axiom-sorry:
 
 # Remaining classical-content closure gate
 check-classical-closure-proof-gate:
-    LEAN_NUM_THREADS={{lean_threads}} lake build Gibbs.ContinuumField.NavierStokes.Faithful.ClassicalEquivalence
+    LEAN_NUM_THREADS={{lean_threads}} lake build StatMech.ContinuumField.NavierStokes.Faithful.ClassicalEquivalence
     bash ./scripts/check-navier-final-no-shortcut-route.sh
     bash ./scripts/check-navier-final-no-trivial-smoothness.sh
     bash ./scripts/check-decisive-no-seed-family.sh
@@ -331,7 +331,7 @@ check-classical-closure-proof-gate:
 
 # Base-axiom end-to-end closure gate
 check-base-axiom-e2e-proof-gate:
-    LEAN_NUM_THREADS={{lean_threads}} lake build Gibbs.ContinuumField.NavierStokes.Faithful.BaseAxiomCompletion
+    LEAN_NUM_THREADS={{lean_threads}} lake build StatMech.ContinuumField.NavierStokes.Faithful.BaseAxiomCompletion
     bash ./scripts/check-base-axiom-no-package-assumptions.sh
     bash ./scripts/check-base-axiom-primitive-imports.sh
     bash ./scripts/check-no-direct-closure-injection.sh
@@ -339,7 +339,7 @@ check-base-axiom-e2e-proof-gate:
 
 # Base-axiom definitive-readiness gate (current tranche)
 check-base-axiom-definitive-readiness:
-    LEAN_NUM_THREADS={{lean_threads}} lake build Gibbs.ContinuumField.NavierStokes.Faithful.BaseAxiomCompletion
+    LEAN_NUM_THREADS={{lean_threads}} lake build StatMech.ContinuumField.NavierStokes.Faithful.BaseAxiomCompletion
     bash ./scripts/check-base-axiom-no-package-assumptions.sh
     bash ./scripts/check-base-axiom-primitive-imports.sh
     bash ./scripts/check-base-axiom-no-definitive-shortcuts.sh
@@ -358,7 +358,7 @@ check-base-axiom-definitive-readiness:
 
 # Full-proof final gate
 check-fullproof-clay-proof-gate:
-    LEAN_NUM_THREADS={{lean_threads}} lake build Gibbs.ContinuumField.NavierStokes.Faithful.FullProofClayFinalization
+    LEAN_NUM_THREADS={{lean_threads}} lake build StatMech.ContinuumField.NavierStokes.Faithful.FullProofClayFinalization
     just check-base-axiom-definitive-readiness
     bash ./scripts/check-final-endpoint-no-carrier-types.sh
     bash ./scripts/check-final-cone-no-synthetic-local-constructors.sh
@@ -377,7 +377,7 @@ check-fullproof-clay-proof-gate:
 
 # Decisive contradiction-spine final gate
 check-decisive-spine-proof-gate:
-    LEAN_NUM_THREADS={{lean_threads}} lake build Gibbs.ContinuumField.NavierStokes.Faithful.DecisiveSpineClayEquivalence
+    LEAN_NUM_THREADS={{lean_threads}} lake build StatMech.ContinuumField.NavierStokes.Faithful.DecisiveSpineClayEquivalence
     just check-fullproof-clay-proof-gate
     bash ./scripts/check-navier-final-no-shortcut-route.sh
     bash ./scripts/check-navier-final-no-trivial-smoothness.sh

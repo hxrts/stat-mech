@@ -1,6 +1,6 @@
-# Gibbs
+# Stat Mech
 
-Gibbs is a statistical mechanics formalization in Lean 4. It develops three layers of physical theory: Hamiltonian mechanics in finite-dimensional phase space, mean-field population dynamics on the probability simplex, and continuum field theory with nonlocal integral kernels. The Hamiltonian layer formalizes convex energy functions, damped flows, Legendre duality, and Lyapunov stability. The mean-field layer constructs drift functions from stoichiometric rules and proves ODE existence on the simplex via Picard-Lindelöf. The continuum field layer lifts these dynamics to spatially extended systems where interactions are mediated by global integral kernels.
+Stat Mech is a statistical mechanics formalization in Lean 4. It develops three layers of physical theory: Hamiltonian mechanics in finite-dimensional phase space, mean-field population dynamics on the probability simplex, and continuum field theory with nonlocal integral kernels. The Hamiltonian layer formalizes convex energy functions, damped flows, Legendre duality, and Lyapunov stability. The mean-field layer constructs drift functions from stoichiometric rules and proves ODE existence on the simplex via Picard-Lindelöf. The continuum field layer lifts these dynamics to spatially extended systems where interactions are mediated by global integral kernels.
 
 The three layers form a stack. Hamiltonian mechanics provides the dynamical semantics: energy, stability, and equilibrium. Mean-field gives the population-level view: many agents choosing among finitely many states with no spatial structure. Continuum field adds space, replacing uniform all-to-all coupling with a kernel that weights interactions by distance and direction.
 

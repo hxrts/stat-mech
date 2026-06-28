@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/FullProofExactCompactness.lean"
+FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/FullProofExactCompactness.lean"
 
 echo "[check-fullproof-compactness-derived] checking compactness derivation route"
 
@@ -19,7 +19,7 @@ do
   fi
 done
 
-if rg -n '^import Gibbs\.ContinuumField\.NavierStokes\.HardStep\.Definitive\.' "$FILE" >/dev/null; then
+if rg -n '^import StatMech\.ContinuumField\.NavierStokes\.HardStep\.Definitive\.' "$FILE" >/dev/null; then
   echo "[check-fullproof-compactness-derived] FAIL: full-proof compactness imports definitive hard-step modules" >&2
   exit 1
 fi

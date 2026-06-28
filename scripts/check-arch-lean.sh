@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-LEAN_DIR="${ROOT_DIR}/Gibbs"
+LEAN_DIR="${ROOT_DIR}/StatMech"
 
 if ! command -v rg >/dev/null 2>&1; then
   echo "error: ripgrep (rg) is required" >&2
@@ -147,8 +147,8 @@ print_hits "error" "No sorry proofs" "${sorry_hits}" \
   "Replace sorry with complete proofs."
 
 undoc_axiom_hits="$(check_undocumented_axioms)"
-print_hits "warning" "Axioms should be in Gibbs/Axioms.lean" "${undoc_axiom_hits}" \
-  "Move axioms to Gibbs/Axioms.lean with documentation, or replace with concrete proofs."
+print_hits "warning" "Axioms should be in StatMech/Axioms.lean" "${undoc_axiom_hits}" \
+  "Move axioms to StatMech/Axioms.lean with documentation, or replace with concrete proofs."
 
 print_section "Lean Style-Guide Conformance"
 

@@ -13,9 +13,9 @@ cone_file_list="$(mktemp)"
 trap 'rm -f "$cone_file_list"' EXIT
 
 {
-  find "$repo_root/Gibbs/ContinuumField/NavierStokes/HardStep" -type f -name '*.lean'
-  printf '%s\n' "$repo_root/Gibbs/ContinuumField/NavierStokes/Global/ClayEndgame.lean"
-  printf '%s\n' "$repo_root/Gibbs/ContinuumField/NavierStokes/Global/ClayPeriodic.lean"
+  find "$repo_root/StatMech/ContinuumField/NavierStokes/HardStep" -type f -name '*.lean'
+  printf '%s\n' "$repo_root/StatMech/ContinuumField/NavierStokes/Global/ClayEndgame.lean"
+  printf '%s\n' "$repo_root/StatMech/ContinuumField/NavierStokes/Global/ClayPeriodic.lean"
 } | sort > "$cone_file_list"
 
 if [[ ! -s "$cone_file_list" ]]; then

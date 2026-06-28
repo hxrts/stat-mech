@@ -1,5 +1,5 @@
 {
-  description = "Gibbs - Mean-field theory meets multiparty session types";
+  description = "Stat Mech - Mean-field theory meets multiparty session types";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -40,7 +40,7 @@
           inherit nativeBuildInputs buildInputs;
 
           shellHook = ''
-            echo "Gibbs development environment"
+            echo "Stat Mech development environment"
             echo "Lean: $(elan show 2>/dev/null | head -1 || echo 'not configured')"
           '';
         };

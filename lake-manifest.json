@@ -122,5 +122,5 @@
    "inputRev": "933fce7e",
    "inherited": true,
    "configFile": "lakefile.toml"}],
- "name": "gibbs",
+ "name": "statMech",
  "lakeDir": ".lake"}

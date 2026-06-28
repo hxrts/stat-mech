@@ -3,11 +3,11 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 FILES=(
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveGlobal.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveCompletion.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/SeedConstruction.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/ClassicalEquivalence.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/Final.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveGlobal.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveCompletion.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/SeedConstruction.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/ClassicalEquivalence.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/Final.lean"
 )
 
 echo "[check-final-no-hardstep-closure-inputs] checking endpoint files"

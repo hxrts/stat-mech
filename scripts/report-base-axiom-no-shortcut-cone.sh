@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-TARGET_DIR="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful"
+TARGET_DIR="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful"
 OUT="$ROOT/work/navier_base_axiom_no_shortcut_cone.txt"
 
 FILES=(
@@ -25,13 +25,13 @@ FILES=(
     rel="${f#${ROOT}/}"
     echo ""
     echo "### $rel"
-    rg '^import Gibbs\.ContinuumField\.NavierStokes\.' "$f" | sed 's/^import /- /'
+    rg '^import StatMech\.ContinuumField\.NavierStokes\.' "$f" | sed 's/^import /- /'
   done
   echo ""
   echo "## Banned shortcut modules"
-  echo "- Gibbs.ContinuumField.NavierStokes.Global.ClayEndgame"
-  echo "- Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.TrueTorusClayBUnconditional"
-  echo "- Gibbs.ContinuumField.NavierStokes.HardStep.Definitive.TrueTorusFluxBarrier"
+  echo "- StatMech.ContinuumField.NavierStokes.Global.ClayEndgame"
+  echo "- StatMech.ContinuumField.NavierStokes.HardStep.Definitive.TrueTorusClayBUnconditional"
+  echo "- StatMech.ContinuumField.NavierStokes.HardStep.Definitive.TrueTorusFluxBarrier"
 } > "$OUT"
 
 echo "[report-base-axiom-no-shortcut-cone] wrote $OUT"

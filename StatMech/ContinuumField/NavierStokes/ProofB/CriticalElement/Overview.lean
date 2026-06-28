@@ -1,0 +1,31 @@
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.ClosureTheorem
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.ConstructionInterfaces
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.CriticalClass
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.DerivedInterfaces
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.FluxBarrier
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.FluxContradiction
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.FluxIncompatibility
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.LocalEnergyLayer
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.LocalEnergyRegularity
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.LongTimePerturbationTheorem
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.LowerFluxBound
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.LowerFluxMechanism
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.LowerFluxRigidityTheorem
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.MinimalElement
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.MinimalElementProperties
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.MinimalElementTheorem
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.PerturbationStability
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.ProfileDecompositionInterfaces
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.ProfileThreshold
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.ProfileThresholdTheorem
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.RigidityCore
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.ScaleFlux
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.ThresholdData
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.UpperFluxMechanism
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.UpperTailVanishing
+import StatMech.ContinuumField.NavierStokes.ProofB.CriticalElement.UpperTailVanishingTheorem
+
+/-! # ProofB Critical-Element Overview
+
+Threshold/profile/minimal-element/flux-contradiction modules.
+-/

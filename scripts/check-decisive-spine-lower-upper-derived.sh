@@ -2,8 +2,8 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-LOWER="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineLowerMechanism.lean"
-UPPER="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineUpperMechanism.lean"
+LOWER="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveSpineLowerMechanism.lean"
+UPPER="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveSpineUpperMechanism.lean"
 
 echo "[check-decisive-spine-lower-upper-derived] checking lower/upper mechanisms"
 

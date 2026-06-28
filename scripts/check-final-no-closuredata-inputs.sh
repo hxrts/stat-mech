@@ -3,9 +3,9 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 FILES=(
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveGlobal.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveCompletion.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/SeedConstruction.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveGlobal.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveCompletion.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/SeedConstruction.lean"
 )
 
 echo "[check-final-no-closuredata-inputs] checking decisive constructive-route files"

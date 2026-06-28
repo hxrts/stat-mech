@@ -2,8 +2,8 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-COMP_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveCompletion.lean"
-SEED_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/SeedConstruction.lean"
+COMP_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveCompletion.lean"
+SEED_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/SeedConstruction.lean"
 
 echo "[check-decisive-completion-seedwise-no-fallback] checking seedwise no-fallback route"
 
@@ -177,7 +177,7 @@ COMPONENT_FAMILY_BLOCK="$(
   awk '
     /theorem clayBStatement_from_no_local_fallback_component_families_and_seed_construction/ {flag=1}
     flag {print}
-    flag && /end Gibbs\.ContinuumField\.NavierStokes/ {exit}
+    flag && /end StatMech\.ContinuumField\.NavierStokes/ {exit}
   ' "$SEED_FILE"
 )"
 

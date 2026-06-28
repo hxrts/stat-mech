@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-TARGET="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful"
+TARGET="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful"
 ANALYSIS_FILE="$TARGET/FullProofExactAnalysis.lean"
 LOCAL_FILE="$TARGET/FullProofExactLocalTheory.lean"
 

@@ -2,8 +2,8 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SEED_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/SeedConstruction.lean"
-SEM_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/BaseAxiomClassicalSemantics.lean"
+SEED_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/SeedConstruction.lean"
+SEM_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/BaseAxiomClassicalSemantics.lean"
 
 echo "[check-classical-bridge-no-carriers] checking classical bridge carrier wrappers"
 

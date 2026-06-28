@@ -4,15 +4,15 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
 TARGETS=(
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/BaseAxiomCompletion.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/Final.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveGlobal.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveCompletion.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/SeedConstruction.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/ClassicalEquivalence.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/HardStep/ContradictionClosure.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/HardStep/Definitive/GlobalClosure.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/HardStep/Definitive/ClayB.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/BaseAxiomCompletion.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/Final.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveGlobal.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveCompletion.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/SeedConstruction.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/ClassicalEquivalence.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/HardStep/ContradictionClosure.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/HardStep/Definitive/GlobalClosure.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/HardStep/Definitive/ClayB.lean"
 )
 
 echo "[check-navier-final-no-trivial-smoothness] checking endpoint theorem route files"

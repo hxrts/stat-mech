@@ -2,11 +2,11 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-HARDSTEP_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/HardStep/ContradictionClosure.lean"
-DEFINITIVE_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/HardStep/Definitive/TrueTorusFluxBarrier.lean"
-BASE_AXIOM_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/BaseAxiomRigidity.lean"
-DECISIVE_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineIncompatibility.lean"
-FULLPROOF_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/FullProofExactRigidity.lean"
+HARDSTEP_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/HardStep/ContradictionClosure.lean"
+DEFINITIVE_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/HardStep/Definitive/TrueTorusFluxBarrier.lean"
+BASE_AXIOM_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/BaseAxiomRigidity.lean"
+DECISIVE_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveSpineIncompatibility.lean"
+FULLPROOF_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/FullProofExactRigidity.lean"
 
 echo "[check-crux-quantitative-unified-route] checking unified quantitative crux routing"
 
@@ -94,7 +94,7 @@ if echo "$DECISIVE_BLOCK" | rg -n "hardStep_flux_barrier_contradiction" >/dev/nu
   exit 1
 fi
 
-FULLPROOF_BLOCK="$(extract_block "$FULLPROOF_FILE" "^theorem fullProof_exact_rigidity_contradiction$" "^end Gibbs\\.ContinuumField\\.NavierStokes")"
+FULLPROOF_BLOCK="$(extract_block "$FULLPROOF_FILE" "^theorem fullProof_exact_rigidity_contradiction$" "^end StatMech\\.ContinuumField\\.NavierStokes")"
 if [[ -z "$FULLPROOF_BLOCK" ]]; then
   echo "[check-crux-quantitative-unified-route] FAIL: missing fullProof_exact_rigidity_contradiction block" >&2
   exit 1
@@ -109,12 +109,12 @@ if echo "$FULLPROOF_BLOCK" | rg -n "hardStep_flux_barrier_contradiction" >/dev/n
 fi
 
 if rg -n "hardStep_flux_barrier_contradiction" \
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful" \
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/HardStep/Definitive" >/dev/null; then
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful" \
+  "$ROOT/StatMech/ContinuumField/NavierStokes/HardStep/Definitive" >/dev/null; then
   echo "[check-crux-quantitative-unified-route] FAIL: wrapper theorem call still present in faithful/definitive contradiction cone" >&2
   rg -n "hardStep_flux_barrier_contradiction" \
-    "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful" \
-    "$ROOT/Gibbs/ContinuumField/NavierStokes/HardStep/Definitive" >&2
+    "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful" \
+    "$ROOT/StatMech/ContinuumField/NavierStokes/HardStep/Definitive" >&2
   exit 1
 fi
 

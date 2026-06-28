@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-TARGET="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful"
+TARGET="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful"
 SOURCE="$TARGET/FullProofExactRigidity.lean"
 
 echo "[check-fullproof-rigidity-carrier-isolated] checking FullProof rigidity carrier isolation"

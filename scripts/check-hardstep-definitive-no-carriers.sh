@@ -2,12 +2,12 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-LOWER_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/HardStep/Definitive/TrueTorusLowerFluxRigidity.lean"
-UPPER_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/HardStep/Definitive/TrueTorusUpperTailVanishing.lean"
-BARRIER_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/HardStep/Definitive/TrueTorusFluxBarrier.lean"
-GLOBAL_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/HardStep/Definitive/GlobalClosure.lean"
-CLAYB_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/HardStep/Definitive/ClayB.lean"
-DERIVED_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/HardStep/Definitive/DerivedTheorems.lean"
+LOWER_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/HardStep/Definitive/TrueTorusLowerFluxRigidity.lean"
+UPPER_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/HardStep/Definitive/TrueTorusUpperTailVanishing.lean"
+BARRIER_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/HardStep/Definitive/TrueTorusFluxBarrier.lean"
+GLOBAL_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/HardStep/Definitive/GlobalClosure.lean"
+CLAYB_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/HardStep/Definitive/ClayB.lean"
+DERIVED_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/HardStep/Definitive/DerivedTheorems.lean"
 
 echo "[check-hardstep-definitive-no-carriers] checking definitive hard-step de-carrierization"
 
@@ -32,7 +32,7 @@ do
   fi
 done
 
-if [[ -f "$ROOT/Gibbs/ContinuumField/NavierStokes/HardStep/Definitive/CriticalElement.lean" ]]; then
+if [[ -f "$ROOT/StatMech/ContinuumField/NavierStokes/HardStep/Definitive/CriticalElement.lean" ]]; then
   echo "[check-hardstep-definitive-no-carriers] FAIL: retired CriticalElement module reintroduced" >&2
   exit 1
 fi

@@ -4,23 +4,23 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/work/navier_decisive_spine_final_cone_report.txt"
 FILES=(
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineThreshold.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineProfile.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineMinimalElement.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineLocalEnergy.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineLowerMechanism.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineUpperMechanism.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineIncompatibility.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineGlobal.lean"
-  "$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineClayEquivalence.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveSpineThreshold.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveSpineProfile.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveSpineMinimalElement.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveSpineLocalEnergy.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveSpineLowerMechanism.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveSpineUpperMechanism.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveSpineIncompatibility.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveSpineGlobal.lean"
+  "$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveSpineClayEquivalence.lean"
 )
 
 {
   echo "# Decisive Spine Final Cone Report"
   echo ""
   echo "Generated: $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
-  echo "Primary theorem handle: Gibbs.ContinuumField.NavierStokes.decisiveSpine_clayB_equivalence"
-  echo "Primary theorem file: Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveSpineClayEquivalence.lean"
+  echo "Primary theorem handle: StatMech.ContinuumField.NavierStokes.decisiveSpine_clayB_equivalence"
+  echo "Primary theorem file: StatMech/ContinuumField/NavierStokes/Faithful/DecisiveSpineClayEquivalence.lean"
   echo ""
   echo "## Imports"
   for f in "${FILES[@]}"; do
@@ -30,7 +30,7 @@ FILES=(
     rel="${f#${ROOT}/}"
     echo ""
     echo "### $rel"
-    rg '^import Gibbs\.ContinuumField\.NavierStokes\.' "$f" | sed 's/^import /- /'
+    rg '^import StatMech\.ContinuumField\.NavierStokes\.' "$f" | sed 's/^import /- /'
   done
   echo ""
   echo "## Required Gates"

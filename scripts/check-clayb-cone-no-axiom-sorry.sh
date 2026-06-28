@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-TARGET_DIR="$ROOT/Gibbs/ContinuumField/NavierStokes"
+TARGET_DIR="$ROOT/StatMech/ContinuumField/NavierStokes"
 
 echo "[check-clayb-cone-no-axiom-sorry] scanning $TARGET_DIR"
 

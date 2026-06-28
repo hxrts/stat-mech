@@ -2,8 +2,8 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-HARDSTEP_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/TrueHardStep.lean"
-GLOBAL_FILE="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful/DecisiveGlobal.lean"
+HARDSTEP_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/TrueHardStep.lean"
+GLOBAL_FILE="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful/DecisiveGlobal.lean"
 
 echo "[check-hardstep-quantitative-route] checking hard-step quantitative route"
 

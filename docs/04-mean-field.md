@@ -1,6 +1,6 @@
 # Mean-Field Dynamics
 
-Many systems in Gibbs reduce to populations of agents in a finite number of states. Molecules in a chemical reaction network switch between species. Spins in an Ising model flip between up and down. Nodes in a consensus protocol vote for different values. In each case, the macroscopic behavior depends not on individual agents but on the fraction of the population in each state.
+Many systems in Stat Mech reduce to populations of agents in a finite number of states. Molecules in a chemical reaction network switch between species. Spins in an Ising model flip between up and down. Nodes in a consensus protocol vote for different values. In each case, the macroscopic behavior depends not on individual agents but on the fraction of the population in each state.
 
 This chapter formalizes how those fractions evolve over time. The state of a population lives on the probability simplex, the set of all valid distributions over a finite state space. Drift functions describe how the distribution changes. Rules (reaction rates, flip rates, vote-switching rates) compose into drift functions. The key results are that solutions always exist, always stay on the simplex, and converge to equilibrium under appropriate conditions.
 

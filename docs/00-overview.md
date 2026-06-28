@@ -1,8 +1,8 @@
-# Gibbs Overview
+# Stat Mech Overview
 
-[Gibbs](https://github.com/hxrts/gibbs) is a Lean 4 formalization of statistical mechanics within a session-type choreography framework. It provides machine-checked proofs connecting Hamiltonian mechanics, population dynamics, continuum field theory, and distributed consensus through shared mathematical structures. The codebase depends on Mathlib for analysis and algebra, and on Telltale for session-type and effects infrastructure.
+[Stat Mech](https://github.com/hxrts/stat-mech) is a Lean 4 formalization of statistical mechanics within a session-type choreography framework. It provides machine-checked proofs connecting Hamiltonian mechanics, population dynamics, continuum field theory, and distributed consensus through shared mathematical structures. The codebase depends on Mathlib for analysis and algebra, and on Telltale for session-type and effects infrastructure.
 
-## Gibbs Modules
+## Stat Mech Modules
 
 The project is organized into four modules that share a common foundation in `Session.lean`, which defines session identifiers, roles, endpoints, and directed communication edges. Each module builds on these primitives to formalize a different physical domain.
 
@@ -34,7 +34,7 @@ The **Consensus module** specializes the physics machinery to distributed agreem
 
 ## Proof Completeness
 
-Two statements remain as Lean `axiom` declarations, both components of Shannon's noisy channel coding theorem. Their proofs require probabilistic combinatorics (random codebook generation, joint typicality, the method of types) that is beyond current Mathlib infrastructure. These axioms are collected in `Gibbs/Axioms.lean` and imported through the Hamiltonian facade, making them available to downstream modules. They are used only in `Gibbs/Consensus/ChannelThreshold.lean` to prove `codingSafe_iff_positive_gap`. Everything else is fully proven from Lean's type theory and Mathlib.
+Two statements remain as Lean `axiom` declarations, both components of Shannon's noisy channel coding theorem. Their proofs require probabilistic combinatorics (random codebook generation, joint typicality, the method of types) that is beyond current Mathlib infrastructure. These axioms are collected in `StatMech/Axioms.lean` and imported through the Hamiltonian facade, making them available to downstream modules. They are used only in `StatMech/Consensus/ChannelThreshold.lean` to prove `codingSafe_iff_positive_gap`. Everything else is fully proven from Lean's type theory and Mathlib.
 
 `channel_coding_achievability` says that for any rate below capacity and any target error probability, codes achieving that rate with error at most that target exist at all sufficiently large blocklengths.
 
@@ -42,7 +42,7 @@ Two statements remain as Lean `axiom` declarations, both components of Shannon's
 
 ## Where to Start
 
-- [Getting Started](01-getting-started.md) covers setup, building, and importing Gibbs.
+- [Getting Started](01-getting-started.md) covers setup, building, and importing Stat Mech.
 - [The Session-Physics Correspondence](07-session-physics-correspondence.md) explains how session-type guarantees map to physical properties.
 - [Hamiltonian Mechanics](02-hamiltonian-mechanics.md) introduces the phase-space foundation.
 - [Convex Duality and Bregman Divergence](03-convex-duality.md) covers the convex analysis toolkit.
@@ -51,4 +51,4 @@ Two statements remain as Lean `axiom` declarations, both components of Shannon's
 - [Information Theory and Channels](06-information-theory.md) covers entropy, channels, and coding.
 - [Consensus as Statistical Mechanics](08-consensus-statistical-mechanics.md) presents the deepest synthesis.
 
-The full dependency tree with API tables per-file can be found in [Gibbs/CODE_MAP.md](https://github.com/hxrts/gibbs/blob/main/Gibbs/CODE_MAP.md).
+The full dependency tree with API tables per-file can be found in [StatMech/CODE_MAP.md](https://github.com/hxrts/stat-mech/blob/main/StatMech/CODE_MAP.md).

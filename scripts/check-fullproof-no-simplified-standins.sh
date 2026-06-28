@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-TARGET_DIR="$ROOT/Gibbs/ContinuumField/NavierStokes/Faithful"
+TARGET_DIR="$ROOT/StatMech/ContinuumField/NavierStokes/Faithful"
 
 echo "[check-fullproof-no-simplified-standins] scanning full-proof files"
 
